@@ -1,11 +1,19 @@
 import type { Metadata } from "next";
-import "@/styles/globals.css";
-import { kanit } from "@/styles/font";
+import { Kanit, Geist } from "next/font/google";
+import { cn } from "@/lib/utils";
+import "./globals.css";
+
+const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
+
+const kanit = Kanit({
+  subsets: ["latin", "thai"],
+  weight: ["400", "500", "600"],
+});
 
 export const metadata: Metadata = {
   title: {
     default: "Learney",
-    template: "%s - Learney"
+    template: "%s - Learney",
   },
   description: "...",
 };
@@ -16,10 +24,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${kanit.className} antialiased`}
-      >
+    <html
+      lang="en"
+      className={cn(
+        "h-full",
+        "antialiased",
+        kanit.className,
+        "font-sans",
+        geist.variable,
+      )}
+    >
+      <body className="min-h-full flex flex-col">
         {/* <Header /> */}
         {children}
       </body>
