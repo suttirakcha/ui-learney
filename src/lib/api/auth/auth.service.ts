@@ -1,18 +1,4 @@
-const API_URL = "http://localhost:8000"; // backend คุณ
-
-export async function login(data: { email: string; password: string }) {
-  const res = await fetch(`${API_URL}/auth/login`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  });
-
-  if (!res.ok) throw new Error("Login failed");
-
-  return res.json();
-}
+const API_URL = "http://localhost:8000";
 
 export async function register(data: {
   fullname: string;
@@ -28,7 +14,38 @@ export async function register(data: {
     body: JSON.stringify(data),
   });
 
-  if (!res.ok) throw new Error("Register failed");
+  const responseData = await res.json();
 
-  return res.json();
+  if (!res.ok) {
+    // ✅ THROW ให้ frontend ใช้ได้
+    throw {
+      response: {
+        data: responseData,
+      },
+    };
+  }
+
+  return responseData;
+}
+
+export async function login(data: { email: string; password: string }) {
+  const res = await fetch(`${API_URL}/auth/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+
+  const responseData = await res.json();
+
+  if (!res.ok) {
+    throw {
+      response: {
+        data: responseData,
+      },
+    };
+  }
+
+  return responseData;
 }
