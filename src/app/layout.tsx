@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Kanit, Geist } from "next/font/google";
 import { cn } from "@/lib/utils";
 import "./globals.css";
-
+import { Toaster } from "react-hot-toast";
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
 const kanit = Kanit({
@@ -37,6 +37,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         {/* <Header /> */}
         {children}
+        <Toaster position="top-center" />
       </body>
     </html>
   );
