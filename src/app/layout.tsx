@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Kanit, Geist } from "next/font/google";
 import { cn } from "@/lib/utils";
 import "./globals.css";
+import Navbar from "@/components/custom/Navbar";
+// import Header from "./components/custom/Header";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -36,6 +38,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         {/* <Header /> */}
+        <Navbar />
         {children}
       </body>
     </html>
