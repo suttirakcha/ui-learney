@@ -1,12 +1,18 @@
-import LnButton from '@/components/custom/LnButton';
-import Navbar from '@/components/custom/Navbar';
+import Navbar from "@/components/custom/Navbar";
+import Hero from "@/components/custom/Hero";
+import Stats from "@/components/custom/Stats";
+import CourseList from "@/components/custom/CourseList";
+import CTA from "@/components/custom/CTA";
+import Footer from "@/components/custom/Footer";
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <div>
-      <Navbar />
-      <LnButton>SWAGGGGG</LnButton>
-      <LnButton variant='ghost'>Ghost</LnButton>
-    </div>
+    <main className="flex flex-col">
+      <Hero />
+      <Stats />
+      <CourseList />
+      <CTA />
+      <Footer />
+    </main>
   );
 }
