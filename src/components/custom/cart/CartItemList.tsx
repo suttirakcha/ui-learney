@@ -1,11 +1,16 @@
+import { Course } from '@/types/course';
 import CartItem from './CartItem';
 
-export default function CartItemList() {
+interface CartItemListProps {
+  courses: Course[];
+}
+
+export default function CartItemList({ courses }: CartItemListProps) {
   return (
     <div className='flex flex-col gap-4'>
-      <CartItem />
-      <CartItem />
-      <CartItem />
+      {courses.map((course) => (
+        <CartItem key={course.id} course={course} />
+      ))}
     </div>
   );
 }

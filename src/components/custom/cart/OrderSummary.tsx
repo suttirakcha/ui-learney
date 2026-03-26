@@ -2,7 +2,7 @@ import { Input } from '@/components/ui/input';
 import LnButton from '../LnButton';
 import { Button } from '@/components/ui/button';
 
-export default function Payment() {
+export default function OrderSummary() {
   return (
     <div className='border rounded-xl p-6 space-y-6'>
       <h2 className='font-bold text-2xl'>สรุปรายการ</h2>
