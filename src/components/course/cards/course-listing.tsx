@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
-import CourseHeader from "./course-header";
+import CourseHeader from "../header/course-header";
 import CourseCard from "./course-card";
-import CategoryButtons from "./category/category-btn";
+import CategoryButtons from "../category/category-btn";
 import { coursesData } from "@/data/courses";
 
 const CourseListing: React.FC = () => {

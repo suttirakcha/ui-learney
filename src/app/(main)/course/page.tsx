@@ -1,4 +1,4 @@
-import CourseListing from "@/components/course/course-listing";
+import CourseListing from "@/components/course/cards/course-listing";
 
 export const metadata = {
   title: "คอร์สเรียนทั้งหมด",
