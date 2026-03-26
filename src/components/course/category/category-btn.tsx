@@ -1,0 +1,39 @@
+"use client";
+
+interface CategoryButtonsProps {
+  selectedCategory: string;
+  onCategoryChange: (category: string) => void;
+}
+
+const CategoryButtons: React.FC<CategoryButtonsProps> = ({
+  selectedCategory,
+  onCategoryChange,
+}) => {
+  const categories = [
+    "คอร์สเรียนทั้งหมด",
+    "คณิตศาสตร์",
+    "การพัฒนาซอฟต์แวร์",
+    "การออกแบบ",
+    "ภาษา",
+  ];
+
+  return (
+    <div className="flex gap-3 flex-wrap mb-8">
+      {categories.map((category) => (
+        <button
+          key={category}
+          onClick={() => onCategoryChange(category)}
+          className={`px-6 py-2.5 rounded-full font-semibold text-sm transition whitespace-nowrap ${
+            selectedCategory === category
+              ? "bg-cyan-400 text-white shadow-md hover:bg-cyan-500"
+              : "bg-white text-gray-800 border-2 border-gray-200 hover:border-gray-400 hover:bg-cyan-50"
+          }`}
+        >
+          {category}
+        </button>
+      ))}
+    </div>
+  );
+};
+
+export default CategoryButtons;
