@@ -1,0 +1,154 @@
+"use client";
+
+import { useState } from "react";
+import { login } from "@/lib/api/auth/auth.service";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { toast } from "react-hot-toast";
+
+export default function LoginForm() {
+  const router = useRouter();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [remember, setRemember] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  // 🔴 error state
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleLogin = async () => {
+    // reset error
+    setErrorMessage("");
+
+    if (!email || !password) {
+      const msg = "กรุณากรอกข้อมูลให้ครบ";
+      setErrorMessage(msg);
+      toast.error(msg);
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      const res = await login({ email, password });
+
+      // เก็บ token
+      if (remember) {
+        localStorage.setItem("token", res.token);
+      } else {
+        sessionStorage.setItem("token", res.token);
+      }
+
+      toast.success("เข้าสู่ระบบสำเร็จ 🎉");
+
+      router.push("/dashboard");
+    } catch (err: unknown) {
+      const error = err as {
+        response?: {
+          data?: {
+            message?: string;
+          };
+        };
+      };
+
+      const message = error.response?.data?.message || "เข้าสู่ระบบไม่สำเร็จ";
+
+      setErrorMessage(message); // 👈 แสดงใต้ input
+      toast.error(message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow">
+      {/* Logo */}
+      <div className="flex items-center justify-center gap-2 mb-4">
+        <div className="w-10 h-10 bg-cyan-400 rounded-lg"></div>
+        <h1 className="text-xl font-bold">Learny</h1>
+      </div>
+
+      {/* Title */}
+      <h2 className="text-xl font-semibold text-center">ยินดีต้อนรับกลับมา</h2>
+      <p className="text-sm text-gray-500 text-center mb-6">
+        เข้าสู่ระบบเพื่อเรียนต่อ
+      </p>
+
+      {/* Email */}
+      <div className="mb-4">
+        <label className="block text-sm font-medium mb-1">ที่อยู่อีเมล</label>
+        <input
+          className="input placeholder:text-gray-400"
+          placeholder="you@example.com"
+          value={email}
+          onChange={(e) => {
+            setEmail(e.target.value);
+            setErrorMessage(""); // reset error ตอนพิมพ์
+          }}
+        />
+      </div>
+
+      {/* Password */}
+      <div className="mb-2">
+        <label className="block text-sm font-medium mb-1">รหัสผ่าน</label>
+        <input
+          type="password"
+          className="input placeholder:text-gray-400"
+          placeholder="ป้อนรหัสผ่าน"
+          value={password}
+          onChange={(e) => {
+            setPassword(e.target.value);
+            setErrorMessage(""); // reset error ตอนพิมพ์
+          }}
+        />
+
+        {/* 🔴 Error ใต้ input */}
+        {errorMessage && (
+          <p className="text-red-500 text-sm mt-1">{errorMessage}</p>
+        )}
+      </div>
+
+      {/* Remember + Forgot */}
+      <div className="flex items-center justify-between mb-4 text-sm">
+        <label className="flex items-center gap-2">
+          <input
+            type="checkbox"
+            checked={remember}
+            onChange={(e) => setRemember(e.target.checked)}
+          />
+          จดจำฉัน
+        </label>
+
+        <span className="text-cyan-500 hover:underline cursor-pointer">
+          ลืมรหัสผ่าน?
+        </span>
+      </div>
+
+      {/* Button */}
+      <button
+        type="button"
+        onClick={handleLogin}
+        disabled={loading}
+        className="w-full bg-cyan-500 text-white py-3 rounded-xl hover:bg-cyan-600 transition disabled:bg-gray-400"
+      >
+        {loading ? "กำลังเข้าสู่ระบบ..." : "เข้าสู่ระบบ"}
+      </button>
+
+      {/* Divider */}
+      <div className="flex items-center my-6 text-gray-400 text-sm">
+        <div className="flex-1 h-px bg-gray-200"></div>
+        <span className="px-3">หรือ</span>
+        <div className="flex-1 h-px bg-gray-200"></div>
+      </div>
+
+      {/* Register */}
+      <div className="text-center text-sm">
+        ยังไม่มีบัญชี?{" "}
+        <Link href="/register" className="text-cyan-500 hover:underline">
+          สมัครสมาชิก
+        </Link>
+      </div>
+    </div>
+  );
+}
