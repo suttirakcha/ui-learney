@@ -2,7 +2,11 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import LnButton from '../custom/LnButton';
 
-export default function OrderSummary() {
+interface OrderSummaryProps {
+  onSubmit: () => void;
+}
+
+export default function OrderSummary({ onSubmit }: OrderSummaryProps) {
   return (
     <div className='border rounded-xl p-6 space-y-6'>
       <h2 className='font-bold text-2xl'>สรุปรายการ</h2>
@@ -22,7 +26,7 @@ export default function OrderSummary() {
           <h1 className='font-bold text-xl'>ยอดรวมทั้งหมด:</h1>
           <p className='text-primary font-bold text-xl'>฿1,290</p>
         </div>
-        <LnButton>ไปที่หน้าชำระเงิน</LnButton>
+        <LnButton onClick={onSubmit}>ไปที่หน้าชำระเงิน</LnButton>
         <p className='text-muted-foreground text-xs text-center'>
           รับประกันคืนเงิน 30 วัน
         </p>
