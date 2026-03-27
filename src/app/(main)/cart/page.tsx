@@ -1,7 +1,7 @@
-import EmptyCart from '@/components/custom/cart/EmptyCart';
+import EmptyCart from '@/components/cart/EmptyCart';
 import { Fragment } from 'react/jsx-runtime';
-import CartItemList from '@/components/custom/cart/CartItemList';
-import OrderSummary from '@/components/custom/cart/OrderSummary';
+import CartItemList from '@/components/cart/CartItemList';
+import OrderSummary from '@/components/cart/OrderSummary';
 
 /* TODO: Fetch the dynamic cart item */
 const carts = [
@@ -35,16 +35,14 @@ export default function CartPage() {
       </div>
       <div className='p-8'>
         {carts.length ? (
-          <div className='space-y-4'>
-            <main className='grid grid-cols-3 gap-6'>
-              <section className='col-span-2'>
-                <CartItemList courses={carts} />
-              </section>
-              <section>
-                <OrderSummary />
-              </section>
-            </main>
-          </div>
+          <main className='grid grid-cols-3 gap-6'>
+            <section className='col-span-2'>
+              <CartItemList courses={carts} />
+            </section>
+            <section>
+              <OrderSummary />
+            </section>
+          </main>
         ) : (
           <EmptyCart />
         )}
