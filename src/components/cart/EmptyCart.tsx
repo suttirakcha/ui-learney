@@ -1,5 +1,5 @@
 import { ShoppingCart } from 'lucide-react';
-import LnButton from '../LnButton';
+import LnButton from '../custom/LnButton';
 
 export default function EmptyCart() {
   return (

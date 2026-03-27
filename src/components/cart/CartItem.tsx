@@ -1,6 +1,6 @@
 import { Course } from '@/types/course';
-import LnButton from '../LnButton';
 import { Trash2 } from 'lucide-react';
+import LnButton from '../custom/LnButton';
 
 interface CartItemProps {
   course: Course;
