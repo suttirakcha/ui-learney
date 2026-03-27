@@ -1,11 +1,11 @@
-import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils";
+import { Input } from '@/components/ui/input';
+import { cn } from '@/lib/utils';
 
-export default function LnInput(props: React.ComponentProps<"input">) {
+export default function LnInput(props: React.ComponentProps<'input'>) {
   const { className, ...rest } = props;
   const inputProps = {
     ...rest,
-    className: cn("", className),
+    className: cn('input placeholder:text-gray-400', className),
   };
   return <Input {...inputProps} />;
 }

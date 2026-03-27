@@ -1,27 +1,52 @@
-import EmptyCart from '@/components/custom/cart/EmptyCart';
-import Payment from '@/components/custom/cart/Payment';
+import EmptyCart from '@/components/cart/EmptyCart';
 import { Fragment } from 'react/jsx-runtime';
-import CartItemList from '@/components/custom/cart/CartItemList';
+import CartItemList from '@/components/cart/CartItemList';
+import OrderSummary from '@/components/cart/OrderSummary';
+
+/* TODO: Fetch the dynamic cart item */
+const carts = [
+  {
+    id: '1',
+    courseName: 'Web Development for Beginners',
+    instructor: 'Dr. Jennie Sans',
+    price: 2000,
+  },
+  {
+    id: '2',
+    courseName: 'วิธีใช้ AI อย่างมีคุณภาพ',
+    instructor: 'เขต ดุ๋น',
+    price: 150,
+  },
+  {
+    id: '3',
+    courseName: 'English for Beginners',
+    instructor: 'Mrmark',
+    price: 2999,
+  },
+];
 
 export default function CartPage() {
-  const carts = ['test'];
   return (
     <Fragment>
-      {carts.length > 0 ? (
-        <div className='space-y-4'>
-          <h2 className='text-3xl font-bold'>ตะกร้าสินค้า (2)</h2>
+      <div className='bg-primary px-8 py-12'>
+        <h2 className='text-4xl font-medium text-white'>
+          ตะกร้าสินค้า ({carts.length ?? 0})
+        </h2>
+      </div>
+      <div className='p-8'>
+        {carts.length ? (
           <main className='grid grid-cols-3 gap-6'>
             <section className='col-span-2'>
-              <CartItemList />
+              <CartItemList courses={carts} />
             </section>
             <section>
-              <Payment />
+              <OrderSummary />
             </section>
           </main>
-        </div>
-      ) : (
-        <EmptyCart />
-      )}
+        ) : (
+          <EmptyCart />
+        )}
+      </div>
     </Fragment>
   );
 }
