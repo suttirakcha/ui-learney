@@ -1,4 +1,4 @@
-import { CircleCheck, CirclePlay, Clock, Star } from 'lucide-react';
+import { CircleCheck, CirclePlay, Clock, Dot, Star } from 'lucide-react';
 
 export default function CourseDetailsPage() {
   return (
@@ -24,11 +24,11 @@ export default function CourseDetailsPage() {
           </div>
           <div className="flex flex-between gap-2">
             <Clock />
-            <p className="text-white gap-2"> 20 hours</p>
+            <p className="text-white gap-2"> 20 ชั่วโมง</p>
           </div>
           <div className="flex flex-between gap-2">
             <CirclePlay />
-            <p className="text-white gap-2"> 2 lessons</p>
+            <p className="text-white gap-2"> 2 บทเรียน</p>
           </div>
         </div>
       </div>
@@ -50,6 +50,30 @@ export default function CourseDetailsPage() {
           <CircleCheck className="text-green-400" />
           <p>สามารถทบทวนได้ตลอด</p>
         </div>
+      </div>
+
+      <div className="flex-col border-2 rounded-lg h-35 m-2">
+        <h1 className="p-2">สิ่งที่นักเรียนต้องเตรียม</h1>
+        <div className="flex gap-2 p-2">
+          <Dot />
+          <p>คอมพิวเตอร์พกพา</p>
+        </div>
+
+        <div className="flex gap-2 p-2">
+          <Dot />
+          <p>เอกสารประกอบการเรียน</p>
+        </div>
+      </div>
+
+      <div className="border-2 rounded-lg h-65 m-2">
+        <h1 className="p-2">บทเรียนของคอร์สนี้</h1>
+        <CircleCheck className="text-green-400" />
+        <p>lesson 1</p>
+        <p>แนะนำรายละเอียดและเนื้อหาของวิชา</p>
+
+        <CircleCheck className="text-green-400" />
+        <p>lesson 2</p>
+        <p>Lorem ipsum dolor sit amet, consectetur</p>
       </div>
     </>
   );
