@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
-// แก้ Path ตามโครงสร้างโฟลเดอร์ในรูปของคุณ
 import CourseHeader from "../header/course-header";
 import CategoryButtons from "../category/category-btn";
 import CourseCard from "./course-card";
@@ -20,8 +19,7 @@ const CourseListing: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50/50">
-      {/* ใช้งาน Header ที่แยกออกมา */}
-      <CourseHeader categoryName={selectedCategory} />
+      <CourseHeader title={selectedCategory} />
 
       <main className="max-w-7xl mx-auto px-8 py-12">
         <CategoryButtons
