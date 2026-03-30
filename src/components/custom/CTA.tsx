@@ -1,15 +1,13 @@
-import Link from 'next/link';
-import LnButton from './LnButton';
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export default function CTA() {
   return (
-    <section className='bg-primary text-white text-center py-16 space-y-6'>
-      <h2 className='text-5xl font-bold'>มาเป็นผู้สอน</h2>
-      <p className='text-xl max-w-lg mx-auto'>
-        แบ่งปันความรู้ของคุณให้กับผู้เรียนทั่วโลก
-      </p>
-      <Link href='/become-instructor'>
-        <LnButton variant='secondary'>เริ่มสอน</LnButton>
+    <section className="bg-cyan-600 text-white text-center py-16">
+      <h3 className="text-2xl font-semibold mb-4">มาเป็นผู้สอน</h3>
+      <p className="mb-6">แบ่งปันความรู้ของคุณให้กับผู้เรียนทั่วโลก</p>
+      <Link href="/become-instructor">
+        <Button variant="secondary">เริ่มสอน</Button>
       </Link>
     </section>
   );
