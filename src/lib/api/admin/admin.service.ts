@@ -68,3 +68,38 @@ export async function getDashboard() {
 
   return res.json();
 }
+// ================= NEW (dashboard extra) =================
+
+// 📊 course performance
+export async function getCoursePerformanceServer() {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("token")?.value;
+
+  if (!token) throw new Error("Unauthorized");
+
+  const res = await fetch(`${API_URL}/admin/course-performance`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-store",
+  });
+
+  return safeJson(res);
+}
+
+// 📊 category stats
+export async function getCategoriesServer() {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("token")?.value;
+
+  if (!token) throw new Error("Unauthorized");
+
+  const res = await fetch(`${API_URL}/admin/categories`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    cache: "no-store",
+  });
+
+  return safeJson(res);
+}

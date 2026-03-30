@@ -3,7 +3,6 @@ const API_URL = process.env.NEXT_PUBLIC_API!;
 import { ApiError } from "@/types/api/type-api";
 // import { LoginResponse } from "@/types/auth/type-auth";
 import { setAccessToken } from "./auth-store";
-import { LoginResponse } from "@/types/auth/type-auth";
 
 async function handleResponse<T>(res: Response): Promise<T> {
   const text = await res.text();

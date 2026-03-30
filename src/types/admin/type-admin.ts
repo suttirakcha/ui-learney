@@ -12,3 +12,19 @@ export type Dashboard = {
   approved: number;
   totalUsers: number;
 };
+
+export type CoursePerformance = {
+  courseId: string;
+  courseName: string;
+  sales: number;
+  revenue: number;
+  platformFee: number;
+  instructorEarn: number;
+  students: number;
+  rating: number;
+};
+
+export type CategoryStat = {
+  name: string;
+  value: number;
+};
