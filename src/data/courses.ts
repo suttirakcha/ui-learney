@@ -56,7 +56,7 @@ export const coursesData: Course[] = [
     price: "฿9999",
     category: "ภาษา",
     title: "ภาษาอังกฤษเพื่อการเดินทางและท่องเที่ยว",
-    instructor: "David Kumar",
+    instructor: "อาจารย์มาร์ค",
     rating: 4.6,
     students: 10234,
     duration: "45 hours",

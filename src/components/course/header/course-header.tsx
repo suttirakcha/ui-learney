@@ -1,10 +1,12 @@
-import React from 'react';
-
 interface CourseHeaderProps {
-  categoryName: string;
+  title?: string;
+  description?: string;
 }
 
-const CourseHeader: React.FC<CourseHeaderProps> = ({ categoryName }) => {
+const CourseHeader: React.FC<CourseHeaderProps> = ({
+  title = "คอร์สเรียนทั้งหมด",
+  description = "ค้นพบคอร์สเรียนที่หลากหลาย และเริ่มต้นเรียนรู้ได้แล้ววันนี้",
+}) => {
   return (
     <div className='bg-linear-to-r from-cyan-400 to-cyan-300 px-8 py-16'>
       <div className='max-w-7xl mx-auto'>
