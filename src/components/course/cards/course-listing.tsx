@@ -1,42 +1,35 @@
-"use client";
+'use client';
 
-import React, { useState, useMemo } from "react";
-import CourseHeader from "../header/course-header";
-import CategoryButtons from "../category/category-btn";
-import CourseCard from "./course-card";
-import { coursesData } from "@/data/courses";
+import { useState, useMemo } from 'react';
+import CourseHeader from '../header/course-header';
+import { coursesData } from '@/data/courses';
+import CourseList from './course-list';
 
-const CourseListing: React.FC = () => {
-  const [selectedCategory, setSelectedCategory] = useState("คอร์สเรียนทั้งหมด");
+interface CourseListingProps {
+  showHeader?: boolean;
+}
+
+const CourseListing = ({ showHeader }: CourseListingProps) => {
+  const [selectedCategory, setSelectedCategory] = useState('คอร์สเรียนทั้งหมด');
 
   const filteredCourses = useMemo(() => {
-    return coursesData.filter(
-      (course) =>
-        selectedCategory === "คอร์สเรียนทั้งหมด" ||
-        course.category === selectedCategory,
-    );
+    return coursesData.filter((course) => {
+      const matchesCategory =
+        selectedCategory === 'คอร์สเรียนทั้งหมด' ||
+        course.category === selectedCategory;
+
+      return matchesCategory;
+    });
   }, [selectedCategory]);
 
   return (
-    <div className="min-h-screen bg-gray-50/50">
-      <CourseHeader title={selectedCategory} />
-
-      <main className="max-w-7xl mx-auto px-8 py-12">
-        <CategoryButtons
-          selectedCategory={selectedCategory}
-          onCategoryChange={setSelectedCategory}
-        />
-
-        <p className="text-gray-700 mb-8 font-bold text-lg">
-          พบ {filteredCourses.length} คอร์สเรียน
-        </p>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredCourses.map((course) => (
-            <CourseCard key={course.id} {...course} />
-          ))}
-        </div>
-      </main>
+    <div className='min-h-screen bg-gray-50'>
+      {showHeader && <CourseHeader title={selectedCategory} />}
+      <CourseList
+        courses={filteredCourses}
+        selectedCategory={selectedCategory}
+        onSelectedCategory={setSelectedCategory}
+      />
     </div>
   );
 };
