@@ -9,39 +9,13 @@ import {
   Trophy,
   User,
   Zap,
-} from 'lucide-react';
+} from "lucide-react";
 
 export default function OverviewPage() {
   return (
     <>
       <div>
-        <div className="bg-blue-400 h-25 text-white m-3 p-6">
-          test
-          <h1>สมชาย นักเรียน</h1>
-          <p>student@leaney.com</p>
-        </div>
-
-        {/* {sidebar} */}
         <div className="flex">
-          <div className="border-2 rounded-md m-6 max-w-50">
-            <button className="flex items-center p-2 m-4 gap-2">
-              <User />
-              <p>Overview</p>
-            </button>
-            <button className="flex items-center p-2 m-4 gap-2">
-              <BookOpen />
-              <p>Course history</p>
-            </button>
-            <button className="flex items-center p-2 m-4 gap-2">
-              <Settings />
-              <p>Setting</p>
-            </button>
-            <button className="flex items-center p-2 m-4 gap-2">
-              <LogOut />
-              <p>Logout</p>
-            </button>
-          </div>
-
           <div className="flex-1 m-7">
             <h1 className="text-2xl m-2">Learning Progress</h1>
 
