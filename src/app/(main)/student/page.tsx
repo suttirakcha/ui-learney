@@ -1,4 +1,5 @@
-import OverviewPage from '@/components/student/profile/OverviewPage';
+import ProfileSidebar from '@/components/profile/ProfileSidebar';
+import StudentCourseCard from '@/components/student/StudentCourseCard';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -7,8 +8,9 @@ export const metadata: Metadata = {
 
 export default function page() {
   return (
-    <div>
-      <OverviewPage />
+    <div className="">
+      <ProfileSidebar role="USER" />
+      <StudentCourseCard />
     </div>
   );
 }

@@ -10,11 +10,11 @@ export default function ProfileLayout({ children }: ProfileLayoutProps) {
   return (
     <div>
       <ProfileHeader />
-      <div className='max-w-7xl w-full mx-auto grid grid-cols-3 gap-10 p-8'>
+      <div className="max-w-7xl w-full mx-auto grid grid-cols-3 gap-10 p-8">
         <div>
-          <ProfileSidebar role={'INSTRUCTOR'} />
+          <ProfileSidebar role={'USER'} />
         </div>
-        <div className='col-span-2'>{children}</div>
+        <div className="col-span-2">{children}</div>
       </div>
     </div>
   );

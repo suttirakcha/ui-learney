@@ -7,7 +7,7 @@ interface InstructorProfilePageProps {
 
 export async function generateMetadata({ params }: InstructorProfilePageProps) {
   const { path } = await params;
-  const menus = getMenusWithRole('INSTRUCTOR');
+  const menus = getMenusWithRole('USER');
 
   const profileLabel = menus.find((menu) => menu.href === `/${path}`)?.label;
 
@@ -20,10 +20,10 @@ export default async function InstructorProfilePage({
   params,
 }: InstructorProfilePageProps) {
   const { path } = await params;
-  const menus = getMenusWithRole('INSTRUCTOR');
+  const menus = getMenusWithRole('USER');
 
   const profileComponent = menus.find(
-    (menu) => menu.href === `/${path}`
+    (menu) => menu.href === `/${path}`,
   )?.component;
 
   return <Fragment>{profileComponent}</Fragment>;
