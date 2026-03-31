@@ -15,7 +15,7 @@ export default function ProfileSidebar({ role }: ProfileSidebarProps) {
   const pathname = usePathname();
 
   return (
-    <div className='border border-accent rounded-xl'>
+    <div className='border border-accent rounded-xl lg:sticky top-10 w-full'>
       {menus.map((menu) => {
         const menuLink = `/profile${menu.href}`;
         return (
