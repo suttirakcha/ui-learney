@@ -4,13 +4,16 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { fetchWithAuth } from "@/lib/api/fetchWithAuth";
 import { PieChart, Pie, Cell, Tooltip } from "recharts";
+
 import { DashboardData } from "@/types/dashboard/dashboard";
 import { CategoryStat, CoursePerformance } from "@/types/admin/type-admin";
 
+// ================= UTIL =================
 function formatMoney(num: number) {
   return "฿" + num.toLocaleString();
 }
 
+// ================= MAIN =================
 export default function AdminPage() {
   const router = useRouter();
 
@@ -22,16 +25,13 @@ export default function AdminPage() {
   useEffect(() => {
     async function load() {
       try {
-        // 🔥 โหลดพร้อมกัน
         const [dRes, cRes, catRes] = await Promise.all([
           fetchWithAuth("/admin/dashboard"),
           fetchWithAuth("/admin/course-performance"),
           fetchWithAuth("/admin/categories"),
         ]);
 
-        if (!dRes.ok || !cRes.ok || !catRes.ok) {
-          throw new Error();
-        }
+        if (!dRes.ok || !cRes.ok || !catRes.ok) throw new Error();
 
         const dJson: DashboardData = await dRes.json();
         const cJson: CoursePerformance[] = await cRes.json();
@@ -40,7 +40,6 @@ export default function AdminPage() {
         setDashboard(dJson);
         setCourses(cJson);
 
-        // 🔥 FIX unknown → number
         const arr: CategoryStat[] = Object.entries(catJson).map(
           ([name, value]) => ({
             name,
@@ -61,26 +60,25 @@ export default function AdminPage() {
 
   if (loading || !dashboard) return <p className="p-10">Loading...</p>;
 
+  const COLORS = ["#06b6d4", "#67e8f9", "#22d3ee"];
+
   return (
     <div className="min-h-screen bg-gray-100 p-8">
-      {/* HEADER */}
-      <h1 className="text-3xl font-bold mb-6">Admin Dashboard</h1>
-
+      {/* HEADER */} <h1 className="text-3xl font-bold">Admin Dashboard</h1>{" "}
+      <p className="text-gray-500 mb-6">Platform overview and management </p>
       {/* ================= TOP CARDS ================= */}
       <div className="grid grid-cols-4 gap-6 mb-8">
         <Card
           title="Total Revenue"
           value={formatMoney(dashboard.totalRevenue)}
         />
-        <Card
-          title="Platform Fee"
-          value={formatMoney(dashboard.platformFee)}
-          highlight
-        />
+
+        <Card title="Platform Fee" value={formatMoney(dashboard.platformFee)} />
+
         <Card title="Total Sales" value={dashboard.totalSales} />
+
         <Card title="Total Courses" value={dashboard.totalCourses} />
       </div>
-
       {/* ================= MAIN ================= */}
       <div className="grid grid-cols-3 gap-6">
         {/* COURSE PERFORMANCE */}
@@ -88,7 +86,10 @@ export default function AdminPage() {
           <h2 className="font-bold mb-4 text-lg">All Courses Performance</h2>
 
           {courses.map((c) => (
-            <div key={c.courseId} className="border rounded-lg p-4 mb-4">
+            <div
+              key={c.courseId}
+              className="bg-gray-50 rounded-xl p-4 mb-4 shadow-sm"
+            >
               <div className="flex justify-between">
                 <h3 className="font-semibold">{c.courseName}</h3>
                 <span className="text-sm text-gray-500">
@@ -96,7 +97,7 @@ export default function AdminPage() {
                 </span>
               </div>
 
-              <div className="grid grid-cols-4 gap-4 mt-4 text-sm">
+              <div className="grid grid-cols-4 gap-4 mt-4">
                 <Stat label="Sales" value={c.sales} />
                 <Stat label="Revenue" value={formatMoney(c.revenue)} />
                 <Stat label="Platform Fee" value={formatMoney(c.platformFee)} />
@@ -121,15 +122,15 @@ export default function AdminPage() {
               outerRadius={90}
             >
               {categories.map((_, i) => (
-                <Cell key={i} />
+                <Cell key={i} fill={COLORS[i % COLORS.length]} />
               ))}
             </Pie>
             <Tooltip />
           </PieChart>
 
-          <div className="mt-4 text-sm">
+          <div className="mt-4 text-sm w-full">
             {categories.map((c) => (
-              <div key={c.name} className="flex justify-between w-40">
+              <div key={c.name} className="flex justify-between">
                 <span>{c.name}</span>
                 <span>{c.value}</span>
               </div>
@@ -143,30 +144,25 @@ export default function AdminPage() {
 
 // ================= COMPONENT =================
 
-function Card({
-  title,
-  value,
-  highlight = false,
-}: {
-  title: string;
-  value: string | number;
-  highlight?: boolean;
-}) {
+function Card({ title, value }: { title: string; value: string | number }) {
   return (
-    <div
-      className={`rounded-xl shadow p-6 ${highlight ? "bg-blue-500 text-white" : "bg-white"}`}
-    >
-      <p className="text-sm opacity-80">{title}</p>
-      <h2 className="text-2xl font-bold mt-2">{value}</h2>
+    <div className="bg-white rounded-xl p-6 shadow hover:shadow-lg transition flex justify-between items-center hover:bg-green-100">
+      <div>
+        <p className="text-gray-500 text-sm">{title}</p>
+        <h2 className="text-2xl font-bold mt-2">{value}</h2>
+      </div>
+
+      <div className="text-xl">💰</div>
     </div>
   );
 }
 
 function Stat({ label, value }: { label: string; value: string | number }) {
   return (
-    <div className="bg-gray-100 rounded-lg p-3 text-center">
-      <p className="text-xs text-gray-500">{label}</p>
-      <p className="font-semibold mt-1">{value}</p>
+    <div className="bg-cyan-50 rounded-lg p-3 text-center">
+      {" "}
+      <p className="text-xs text-gray-500">{label}</p>{" "}
+      <p className="font-semibold mt-1 text-cyan-700">{value}</p>{" "}
     </div>
   );
 }

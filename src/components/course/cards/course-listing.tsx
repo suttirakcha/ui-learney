@@ -1,35 +1,50 @@
-'use client';
+"use client";
 
-import { useState, useMemo } from 'react';
-import CourseHeader from '../header/course-header';
-import { coursesData } from '@/data/courses';
-import CourseList from './course-list';
+import { useState, useEffect } from "react";
+import CourseHeader from "../header/course-header";
+import CourseList from "./course-list";
+
+import { getCourses } from "@/lib/api/course/course.service";
+import { Course } from "@/types/conse/conse.type";
 
 interface CourseListingProps {
   showHeader?: boolean;
 }
 
 const CourseListing = ({ showHeader }: CourseListingProps) => {
-  const [selectedCategory, setSelectedCategory] = useState('คอร์สเรียนทั้งหมด');
+  const [selectedCategory, setSelectedCategory] = useState("คอร์สเรียนทั้งหมด");
+  const [courses, setCourses] = useState<Course[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const filteredCourses = useMemo(() => {
-    return coursesData.filter((course) => {
-      const matchesCategory =
-        selectedCategory === 'คอร์สเรียนทั้งหมด' ||
-        course.category === selectedCategory;
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        setLoading(true);
+        const data = await getCourses(selectedCategory);
+        setCourses(data);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-      return matchesCategory;
-    });
+    fetchCourses();
   }, [selectedCategory]);
 
   return (
-    <div className='min-h-screen bg-gray-50'>
+    <div className="min-h-screen bg-gray-50">
       {showHeader && <CourseHeader title={selectedCategory} />}
-      <CourseList
-        courses={filteredCourses}
-        selectedCategory={selectedCategory}
-        onSelectedCategory={setSelectedCategory}
-      />
+
+      {loading ? (
+        <div className="text-center py-20">กำลังโหลด...</div>
+      ) : (
+        <CourseList
+          courses={courses}
+          selectedCategory={selectedCategory}
+          onSelectedCategory={setSelectedCategory}
+        />
+      )}
     </div>
   );
 };

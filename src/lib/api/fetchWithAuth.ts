@@ -11,14 +11,14 @@ export async function fetchWithAuth(
   let res = await fetch(`${API_URL}${endpoint}`, {
     ...options,
     headers: {
-      ...options.headers,
-      Authorization: `Bearer ${token}`,
+      ...(options.headers || {}),
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
       "Content-Type": "application/json",
     },
     credentials: "include",
   });
 
-  // 🔥 ถ้า token หมด
+  // 🔥 refresh token ถ้า access token หมด
   if (res.status === 401) {
     const refreshRes = await fetch(`${API_URL}/auth/refresh`, {
       method: "POST",
@@ -37,7 +37,7 @@ export async function fetchWithAuth(
     res = await fetch(`${API_URL}${endpoint}`, {
       ...options,
       headers: {
-        ...options.headers,
+        ...(options.headers || {}),
         Authorization: `Bearer ${data.accessToken}`,
         "Content-Type": "application/json",
       },
