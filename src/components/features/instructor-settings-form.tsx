@@ -22,7 +22,10 @@ export default function InstructorSettingsForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className='space-y-6'>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className='space-y-6 p-6 border border-accent rounded-xl'
+    >
       <h2 className='text-2xl font-semibold'>Instructor Settings</h2>
       <div className='space-y-1'>
         <label className='block text-sm font-medium'>Display name</label>
