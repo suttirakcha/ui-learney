@@ -132,9 +132,32 @@
   input[type='submit']:not(:disabled) {
     @apply cursor-pointer;
   }
+
+  .loading-circle {
+    @apply w-5 h-5 bg-primary rounded-full;
+  }
+
+  .anim-loading {
+    animation: loading-anim 1s infinite;
+  }
 }
 .input {
   @apply w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-100 h-10
   transition-all duration-200
   focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 focus:bg-white;
+}
+
+@keyframes loading-anim {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(0.5);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
