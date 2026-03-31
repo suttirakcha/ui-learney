@@ -1,18 +1,29 @@
-'use client';
-
 import { getMenusWithRole } from '@/lib/profile-menus';
-import { useParams } from 'next/navigation';
 import { Fragment } from 'react';
 
-export default function InstructorProfilePage() {
-  const params = useParams();
-  {
-    /* TODO: Get the role from the user */
-  }
+interface InstructorProfilePageProps {
+  params: { path: string };
+}
+
+export async function generateMetadata({ params }: InstructorProfilePageProps) {
+  const { path } = await params;
+  const menus = getMenusWithRole('INSTRUCTOR');
+
+  const profileLabel = menus.find((menu) => menu.href === `/${path}`)?.label;
+
+  return {
+    title: profileLabel,
+  };
+}
+
+export default async function InstructorProfilePage({
+  params,
+}: InstructorProfilePageProps) {
+  const { path } = await params;
   const menus = getMenusWithRole('INSTRUCTOR');
 
   const profileComponent = menus.find(
-    (menu) => menu.href === `/${params.path}`
+    (menu) => menu.href === `/${path}`
   )?.component;
 
   return <Fragment>{profileComponent}</Fragment>;
