@@ -5,3 +5,9 @@ export type Course = {
   price: number;
   discount?: number;
 };
+
+export type Activity = {
+  type: 'review' | 'enrollment';
+  user: string;
+  course: string;
+};

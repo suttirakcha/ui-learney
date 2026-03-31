@@ -1,5 +1,5 @@
 import InstructorOverview from '@/components/profile/instructor/InstructorOverview';
-import InstructorSettings from '@/components/profile/instructor/InstructorSettings';
+import InstructorProfileSettings from '@/components/profile/instructor/InstructorProfileSettings';
 import { Role } from '@/types/user';
 import { BookOpen, Settings, User } from 'lucide-react';
 import { JSX, ReactNode } from 'react';
@@ -22,7 +22,7 @@ const instructorMenus: Menu[] = [
     label: 'การตั้งค่า',
     icon: <Settings />,
     href: '/settings',
-    component: <InstructorSettings />,
+    component: <InstructorProfileSettings />,
   },
 ];
 

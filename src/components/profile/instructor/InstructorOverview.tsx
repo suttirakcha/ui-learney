@@ -1,4 +1,5 @@
 import InstructorCourseCard from './InstructorCourseCard';
+import InstructorRecentActivity from './InstructorRecentActivity';
 
 export default function InstructorOverview() {
   return (
@@ -18,8 +19,9 @@ export default function InstructorOverview() {
       <section className='space-y-4'>
         <h2 className='text-2xl font-semibold'>กิจกรรมล่าสุด</h2>
 
-        <div className='flex flex-col gap-4'>
-          <InstructorCourseCard />
+        <div className='flex flex-col gap-4 p-6 border border-accent rounded-lg'>
+          <InstructorRecentActivity />
+          <InstructorRecentActivity />
         </div>
       </section>
     </div>
