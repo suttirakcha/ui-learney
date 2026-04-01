@@ -7,7 +7,7 @@ import { Course } from '@/types/course';
 export default function PendingCoursesPage() {
   const courses: Course[] = [
     {
-      id: 1,
+      id: '1',
       courseName: 'sdsdsd',
       instructor: 'ครูสมหญิง',
       category: 'marketing',
@@ -19,22 +19,22 @@ export default function PendingCoursesPage() {
   ];
 
   return (
-    <div className='p-8 space-y-6'>
-      <Link href='/profile/overview' className='text-sm text-muted-foreground'>
+    <div className="p-8 space-y-6">
+      <Link href="/profile/overview" className="text-sm text-muted-foreground">
         ← กลับไปยังโปรไฟล์
       </Link>
 
-      <div className='flex items-center justify-between'>
+      <div className="flex items-center justify-between">
         <div>
-          <h1 className='text-2xl font-semibold'>อนุมัติคอร์สที่รอตรวจสอบ</h1>
-          <p className='text-sm text-muted-foreground'>
+          <h1 className="text-2xl font-semibold">อนุมัติคอร์สที่รอตรวจสอบ</h1>
+          <p className="text-sm text-muted-foreground">
             ตรวจสอบและอนุมัติคอร์สจากผู้สอน
           </p>
         </div>
 
-        <div className='text-right'>
-          <p className='text-sm text-muted-foreground'>คอร์สที่รออนุมัติ</p>
-          <p className='text-2xl font-bold text-primary'>{courses.length}</p>
+        <div className="text-right">
+          <p className="text-sm text-muted-foreground">คอร์สที่รออนุมัติ</p>
+          <p className="text-2xl font-bold text-primary">{courses.length}</p>
         </div>
       </div>
 
@@ -43,7 +43,7 @@ export default function PendingCoursesPage() {
       {courses.length === 0 ? (
         <EmptyState />
       ) : (
-        <div className='space-y-4'>
+        <div className="space-y-4">
           {courses.map((course) => (
             <PendingCourseCard key={course.id} course={course} />
           ))}
