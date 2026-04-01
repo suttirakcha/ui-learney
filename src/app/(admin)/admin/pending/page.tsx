@@ -13,17 +13,13 @@ export default async function PendingPage() {
     redirect("/login");
   }
 
-  if (!courses) redirect("/login");
-
   return (
-    <div className="p-6">
-      {" "}
-      <h1 className="text-2xl font-bold mb-4">Pending Courses</h1>
-      <div className="space-y-4">
-        {courses.map((course: Course) => (
-          <CourseCard key={course.id} course={course} />
-        ))}
-      </div>
+    <div>
+      <h1>Pending</h1>
+
+      {courses.map((course: Course) => (
+        <CourseCard key={course.id} course={course} />
+      ))}
     </div>
   );
 }
