@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import ErrorComp from '@/components/custom/ErrorComp';
-import { useEffect } from 'react';
+import ErrorComp from "@/components/custom/ErrorComp";
+import { useEffect } from "react";
 
 interface ErrorPageProps {
   error: Error & { digest?: string };

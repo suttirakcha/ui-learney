@@ -6,19 +6,19 @@ import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "@/app/lib/AuthContext"; // ✅ เพิ่ม
 import MainContainer from "@/components/custom/MainContainer";
 
-const geist = Geist({ subsets: ['latin'], variable: '--font-sans' });
+const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
 const kanit = Kanit({
-  subsets: ['latin', 'thai'],
-  weight: ['400', '500', '600'],
+  subsets: ["latin", "thai"],
+  weight: ["400", "500", "600"],
 });
 
 export const metadata: Metadata = {
   title: {
-    default: 'Learney',
-    template: '%s - Learney',
+    default: "Learney",
+    template: "%s - Learney",
   },
-  description: '...',
+  description: "...",
 };
 
 export default function RootLayout({
@@ -28,13 +28,13 @@ export default function RootLayout({
 }) {
   return (
     <html
-      lang='en'
+      lang="en"
       className={cn(
-        'h-full',
-        'antialiased',
+        "h-full",
+        "antialiased",
         kanit.className,
-        'font-sans',
-        geist.variable
+        "font-sans",
+        geist.variable,
       )}
     >
       <body className="min-h-full flex flex-col">

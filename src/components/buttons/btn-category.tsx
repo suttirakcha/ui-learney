@@ -19,11 +19,11 @@ export default function BtnCategory() {
           </h2>
 
           <CategoryButtons
-            selectedCategory={currentCategory}
-            onCategoryChange={(category) => {
-              setCurrentCategory(category);
-              console.log("หมวดหมู่ที่ถูกคลิก:", category);
-            }}
+          // selectedCategory={currentCategory}
+          // onCategoryChange={(category) => {
+          //   setCurrentCategory(category);
+          //   console.log("หมวดหมู่ที่ถูกคลิก:", category);
+          // }}
           />
         </div>
       </div>

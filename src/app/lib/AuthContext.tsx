@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from "react";
 
 type User = {
   id?: string;
@@ -21,25 +21,25 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   // ✅ โหลด user จาก localStorage ตอนเปิดเว็บ
   useEffect(() => {
-    const storedUser = localStorage.getItem('user');
+    const storedUser = localStorage.getItem("user");
 
     if (storedUser) {
       try {
         setUser(JSON.parse(storedUser));
       } catch {
-        localStorage.removeItem('user');
+        localStorage.removeItem("user");
       }
     }
   }, []);
 
   const logout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    sessionStorage.removeItem('token');
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    sessionStorage.removeItem("token");
     setUser(null);
 
     // redirect ไป login
-    window.location.href = '/login';
+    window.location.href = "/login";
   };
 
   return (
@@ -53,7 +53,7 @@ export const useAuth = () => {
   const context = useContext(AuthContext);
 
   if (!context) {
-    throw new Error('useAuth must be used within AuthProvider');
+    throw new Error("useAuth must be used within AuthProvider");
   }
 
   return context;

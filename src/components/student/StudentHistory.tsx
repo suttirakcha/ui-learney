@@ -1,5 +1,5 @@
-import StudentCourseCard from './StudentCourseCard';
-import StudentInfoCard from './StudentInfoCard';
+import StudentCourseCard from "./StudentCourseCard";
+import StudentInfoCard from "./StudentInfoCard";
 
 export default function StudentHistory() {
   return (

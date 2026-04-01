@@ -1,5 +1,5 @@
-import LnButton from '../custom/LnButton';
-import { Progress } from '../ui/progress';
+import LnButton from "../custom/LnButton";
+import { Progress } from "../ui/progress";
 
 export default function StudentCourseCard() {
   return (
@@ -24,7 +24,7 @@ export default function StudentCourseCard() {
             <Progress value={45} className="gap-2 h-2 w-full" />
           </div>
         </div>
-        <LnButton>{'เรียนต่อ'}</LnButton>
+        <LnButton>{"เรียนต่อ"}</LnButton>
       </div>
     </div>
   );

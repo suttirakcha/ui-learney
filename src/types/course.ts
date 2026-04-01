@@ -6,7 +6,7 @@
 //   discount?: number;
 // };
 
-export type CourseStatus = 'new' | 'updated' | 'deleted';
+export type CourseStatus = "new" | "updated" | "deleted";
 
 export interface Course {
   id: string;
@@ -21,7 +21,7 @@ export interface Course {
 }
 
 export type Activity = {
-  type: 'review' | 'enrollment';
+  type: "review" | "enrollment";
   user: string;
   course: string;
 };

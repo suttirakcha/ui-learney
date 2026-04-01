@@ -1,9 +1,9 @@
 import AdminSettingsForm from "@/components/features/admin-settings-form";
 import AdminProfileOverview from "@/components/profile/admin/AdminProfileOverview";
 import InstructorOverview from "@/components/profile/instructor/InstructorOverview";
-import InstructorProfileSettings from '@/components/profile/instructor/InstructorProfileSettings';
-import StudentHistory from '@/components/student/StudentHistory';
-import StudentOverview from '@/components/student/StudentOverview';
+import InstructorProfileSettings from "@/components/profile/instructor/InstructorProfileSettings";
+import StudentHistory from "@/components/student/StudentHistory";
+import StudentOverview from "@/components/student/StudentOverview";
 import { Role } from "@/types/user";
 import { BookOpen, Settings, User } from "lucide-react";
 import { JSX, ReactNode } from "react";
@@ -25,7 +25,7 @@ const instructorMenus: Menu[] = [
   {
     label: "การตั้งค่า",
     icon: <Settings />,
-    href: '/settings',
+    href: "/settings",
     component: <InstructorProfileSettings />,
   },
 ];
@@ -49,13 +49,13 @@ const studentMenus: Menu[] = [
   {
     label: "ภาพรวม",
     icon: <User />,
-    href: '/overview',
+    href: "/overview",
     component: <StudentOverview />,
   },
   {
     label: "ประวัติคอร์สเรียน",
     icon: <BookOpen />,
-    href: '/history',
+    href: "/history",
     component: <StudentHistory />,
   },
   {

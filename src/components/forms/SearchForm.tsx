@@ -1,20 +1,20 @@
-'use client';
+"use client";
 
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupInput,
-} from '@/components/ui/input-group';
-import { Search, X } from 'lucide-react';
-import { useState } from 'react';
+} from "@/components/ui/input-group";
+import { Search, X } from "lucide-react";
+import { useState } from "react";
 
 export default function SearchForm() {
-  const [searchValue, setSearchValue] = useState('');
+  const [searchValue, setSearchValue] = useState("");
   return (
     <form>
       <InputGroup>
         <InputGroupInput
-          placeholder='Search...'
+          placeholder="Search..."
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
         />
@@ -23,9 +23,9 @@ export default function SearchForm() {
         </InputGroupAddon>
         {searchValue && (
           <InputGroupAddon
-            align='inline-end'
-            className='cursor-pointer'
-            onClick={() => setSearchValue('')}
+            align="inline-end"
+            className="cursor-pointer"
+            onClick={() => setSearchValue("")}
           >
             <X />
           </InputGroupAddon>

@@ -1,16 +1,16 @@
-import Hero from '@/components/custom/Hero';
-import Stats from '@/components/custom/Stats';
+import Hero from "@/components/custom/Hero";
+import Stats from "@/components/custom/Stats";
 
-import CTA from '@/components/custom/CTA';
+import CTA from "@/components/custom/CTA";
 
-import CourseListing from '@/components/course/cards/course-listing';
+import CourseList from "@/components/custom/CourseList";
 
 export default function HomePage() {
   return (
-    <main className='flex flex-col'>
+    <main className="flex flex-col">
       <Hero />
       <Stats />
-      <CourseListing />
+      <CourseList />
 
       <CTA />
     </main>
