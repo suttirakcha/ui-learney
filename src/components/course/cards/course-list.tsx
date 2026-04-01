@@ -6,21 +6,16 @@ import CourseCard from "./course-card";
 interface CourseListProps {
   courses: Course[];
   selectedCategory: string;
-  onSelectedCategory: (category: string) => void;
 }
 
 export default function CourseList({
   courses,
   selectedCategory,
-  onSelectedCategory,
 }: CourseListProps) {
   return (
     <div className="px-8 py-12">
       <div className="max-w-7xl mx-auto">
-        <CategoryButtons
-          selectedCategory={selectedCategory}
-          onCategoryChange={onSelectedCategory}
-        />
+        <CategoryButtons />
 
         <p className="text-gray-600 mb-6 font-medium">
           พบ {courses.length} คอร์สเรียน
