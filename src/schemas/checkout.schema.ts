@@ -19,5 +19,5 @@ export type CheckoutValues = {
   postalCode: string;
 };
 export type CheckoutProps = {
-  onSubmit: (values: CheckoutValues) => Promise<void>;
+  onSubmit: (values: CheckoutValues) => void;
 };
