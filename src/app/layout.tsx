@@ -5,6 +5,7 @@ import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "@/app/lib/AuthContext"; // ✅ เพิ่ม
 import MainContainer from "@/components/custom/MainContainer";
+import { NextIntlClientProvider } from "next-intl";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -38,12 +39,14 @@ export default function RootLayout({
       )}
     >
       <body className="min-h-full flex flex-col">
-        <AuthProvider>
-          {" "}
-          {/* ✅ ครอบตรงนี้ */}
-          <MainContainer>{children}</MainContainer>
-          <Toaster position="top-center" />
-        </AuthProvider>
+        <NextIntlClientProvider>
+          <AuthProvider>
+            {" "}
+            {/* ✅ ครอบตรงนี้ */}
+            <MainContainer>{children}</MainContainer>
+            <Toaster position="top-center" />
+          </AuthProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );
