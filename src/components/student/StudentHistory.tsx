@@ -1,4 +1,4 @@
-import StudentHistoryCourseCard from './StudentHistoryCard';
+import StudentCourseCard from './StudentCourseCard';
 import StudentInfoCard from './StudentInfoCard';
 
 export default function StudentHistory() {
@@ -14,7 +14,7 @@ export default function StudentHistory() {
       {/* Continue Learning */}
       <section className="space-y-4">
         <h2 className="text-2xl font-semibold">ประวัติคอร์สเรียน</h2>
-        <StudentHistoryCourseCard />
+        <StudentCourseCard />
       </section>
     </div>
   );

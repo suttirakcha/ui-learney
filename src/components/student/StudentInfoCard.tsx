@@ -32,7 +32,7 @@ export default function StudentInfoCard() {
           <h4 className="text-accent-foreground">จำนวนวันที่เรียนติดต่อกัน</h4>
           <p className="text-xl font-semibold">12</p>
         </div>
-        <Flame className="text-red-500" />
+        <Flame className="text-red-500 size-8" />
       </div>
     </div>
   );

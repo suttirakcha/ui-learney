@@ -1,4 +1,5 @@
 import AchieveMentCard from './AchievementCard';
+import StudentCourseCard from './StudentCourseCard';
 import StudentInfoCard from './StudentInfoCard';
 
 export default function StudentOverview() {
@@ -14,6 +15,7 @@ export default function StudentOverview() {
       {/* Continue Learning */}
       <section className="space-y-4">
         <h2 className="text-2xl font-semibold">เรียนต่อ</h2>
+        <StudentCourseCard />
       </section>
 
       {/* Achievement & Badges */}
