@@ -15,7 +15,7 @@ export default function ProfileSidebar({ role }: ProfileSidebarProps) {
   const pathname = usePathname();
 
   return (
-    <div className='space-y-4 lg:sticky top-10'>
+    <div className='space-y-4 lg:sticky top-24'>
       <div className='border border-accent rounded-xl w-full'>
         {menus.map((menu) => {
           const menuLink = `/profile${menu.href}`;

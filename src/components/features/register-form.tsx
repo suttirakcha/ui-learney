@@ -5,6 +5,7 @@ import { register as registerUser } from "@/lib/api/auth/auth.service";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { toast } from "react-hot-toast";
+import { isApiError } from "@/utils/isApiError"; // ✅ เพิ่ม
 
 type FormData = {
   fullname: string;
@@ -47,21 +48,17 @@ export default function RegisterForm() {
       toast.success("สมัครสมาชิกสำเร็จ 🎉");
       router.push("/login");
     } catch (err: unknown) {
-      const error = err as {
-        response?: {
-          data?: {
-            code?: string;
-            message?: string;
-          };
-        };
-      };
+      console.log("❌ ERROR:", err);
 
-      const errorData = error.response?.data;
-
-      if (errorData?.code === "EMAIL_EXISTS") {
-        toast.error("อีเมลนี้ถูกใช้ไปแล้ว");
+      // ✅ ใช้ type guard แทน any
+      if (isApiError(err)) {
+        if (err.code === "EMAIL_EXISTS") {
+          toast.error("อีเมลนี้ถูกใช้ไปแล้ว");
+        } else {
+          toast.error(err.message);
+        }
       } else {
-        toast.error(errorData?.message || "สมัครไม่สำเร็จ");
+        toast.error("สมัครไม่สำเร็จ");
       }
     }
   };
@@ -70,7 +67,6 @@ export default function RegisterForm() {
     <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow">
       <h2 className="text-xl font-semibold text-center mb-4">สร้างบัญชี</h2>
 
-      {/* ROLE */}
       <div className="flex gap-3 mb-6">
         <button
           type="button"
@@ -98,22 +94,20 @@ export default function RegisterForm() {
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        {/* fullname */}
         <div>
           <label className="block text-sm mb-1">ชื่อ-นามสกุล</label>
           <input
             {...register("fullname", {
               required: "กรุณากรอกชื่อ",
             })}
-            placeholder="เช่น สมชาย ใจดี"
             className="input"
+            placeholder="ชื่อ-นามสกุล"
           />
           {errors.fullname && (
             <p className="text-red-500 text-sm">{errors.fullname.message}</p>
           )}
         </div>
 
-        {/* email */}
         <div>
           <label className="block text-sm mb-1">อีเมล</label>
           <input
@@ -121,14 +115,13 @@ export default function RegisterForm() {
               required: "กรุณากรอกอีเมล",
             })}
             className="input"
-            placeholder="you@example.com"
+            placeholder="Example@mail.com"
           />
           {errors.email && (
             <p className="text-red-500 text-sm">{errors.email.message}</p>
           )}
         </div>
 
-        {/* password */}
         <div>
           <label className="block text-sm mb-1">รหัสผ่าน</label>
           <input
@@ -140,15 +133,14 @@ export default function RegisterForm() {
                 message: "รหัสผ่านอย่างน้อย 6 ตัว",
               },
             })}
-            placeholder="สร้างรหัสผ่าน"
             className="input"
+            placeholder="กรุณากรอกรหัสผ่าน"
           />
           {errors.password && (
             <p className="text-red-500 text-sm">{errors.password.message}</p>
           )}
         </div>
 
-        {/* confirm password */}
         <div>
           <label className="block text-sm mb-1">ยืนยันรหัสผ่าน</label>
           <input
@@ -158,8 +150,8 @@ export default function RegisterForm() {
               validate: (value) =>
                 value === watch("password") || "รหัสผ่านไม่ตรงกัน",
             })}
-            placeholder="ยืนยันรหัสผ่าน"
             className="input"
+            placeholder="กรุณายืนยันรหัสผ่าน"
           />
           {errors.confirmPassword && (
             <p className="text-red-500 text-sm">
@@ -168,7 +160,6 @@ export default function RegisterForm() {
           )}
         </div>
 
-        {/* ✅ checkbox กลับมาแล้ว */}
         <div>
           <label className="flex items-start gap-2 text-sm">
             <input
@@ -176,7 +167,6 @@ export default function RegisterForm() {
               {...register("accepted", {
                 required: "กรุณายอมรับข้อตกลง",
               })}
-              className="mt-1"
             />
             <span>
               ฉันยอมรับ{" "}
@@ -192,11 +182,10 @@ export default function RegisterForm() {
           )}
         </div>
 
-        {/* button */}
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full bg-cyan-500 text-white py-3 rounded-xl hover:bg-cyan-600 disabled:bg-gray-400"
+          className="w-full bg-cyan-500 text-white py-3 rounded-xl"
         >
           {isSubmitting ? "กำลังสมัคร..." : "สมัครสมาชิก"}
         </button>

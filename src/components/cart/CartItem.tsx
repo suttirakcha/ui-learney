@@ -1,6 +1,13 @@
+<<<<<<< HEAD
 import { Course } from "@/types/course/course";
 import { Trash2 } from "lucide-react";
 import LnButton from "../custom/LnButton";
+=======
+import { Course } from '@/types/course';
+import { Trash2 } from 'lucide-react';
+import LnButton from '../custom/LnButton';
+import toast from 'react-hot-toast';
+>>>>>>> 4e9504885ccb6f054c216f7bae08f9500c6d5829
 
 interface CartItemProps {
   course: Course;
@@ -11,6 +18,11 @@ export default function CartItem({ course }: CartItemProps) {
 
   const priceAmount =
     typeof price === "number" ? price?.toLocaleString() : price;
+
+  /* TODO: Remove course from cart dynamically */
+  const handleRemoveCourseFromCart = () => {
+    toast.success('ลบคอร์สออกจากตะกร้าแล้ว');
+  };
 
   return (
     <div className="border rounded-xl p-6">
@@ -31,8 +43,14 @@ export default function CartItem({ course }: CartItemProps) {
 
         {/* Delete item from cart */}
         <LnButton
+<<<<<<< HEAD
           variant="ghost"
           className="flex items-center gap-2 text-destructive"
+=======
+          variant='ghost'
+          className='flex items-center gap-2 text-destructive'
+          onClick={handleRemoveCourseFromCart}
+>>>>>>> 4e9504885ccb6f054c216f7bae08f9500c6d5829
         >
           <Trash2 />
           ลบ
