@@ -29,7 +29,7 @@ export default function Navbar() {
   const { user, logout } = useAuth();
 
   return (
-    <nav className='flex items-center justify-between px-8 border-b bg-white fixed inset-x-0 z-99 h-18'>
+    <nav className='flex items-center justify-between px-8 border-b bg-white fixed inset-x-0 z-10 h-18'>
       {/* Logo */}
       <LearneyLogo />
 
