@@ -1,7 +1,7 @@
 import AdminSettingsForm from "@/components/features/admin-settings-form";
 import AdminProfileOverview from "@/components/profile/admin/AdminProfileOverview";
 import InstructorOverview from "@/components/profile/instructor/InstructorOverview";
-import InstructorSettings from "@/components/profile/instructor/InstructorSettings";
+import InstructorProfileSettings from '@/components/profile/instructor/InstructorProfileSettings';
 import HistoryPage from "@/components/student/history/HistoryPage";
 import OverviewPage from "@/components/student/profile/OverviewPage";
 import { Role } from "@/types/user";
@@ -25,8 +25,8 @@ const instructorMenus: Menu[] = [
   {
     label: "การตั้งค่า",
     icon: <Settings />,
-    href: "/settings",
-    component: <InstructorSettings />,
+    href: '/settings',
+    component: <InstructorProfileSettings />,
   },
 ];
 

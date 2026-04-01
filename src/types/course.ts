@@ -18,4 +18,10 @@ export interface Course {
   description: string;
   type: CourseStatus;
   date: string;
-}
+};
+
+export type Activity = {
+  type: 'review' | 'enrollment';
+  user: string;
+  course: string;
+};
