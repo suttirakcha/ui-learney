@@ -5,20 +5,20 @@ import { login } from "@/lib/api/auth/auth.service";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { toast } from "react-hot-toast";
+import { useAuth } from "@/app/lib/AuthContext"; // ✅ เพิ่ม
 
 export default function LoginForm() {
   const router = useRouter();
+  const { setUser } = useAuth(); // ✅ เพิ่ม
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [remember, setRemember] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // 🔴 error state
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleLogin = async () => {
-    // reset error
     setErrorMessage("");
 
     if (!email || !password) {
@@ -33,28 +33,30 @@ export default function LoginForm() {
 
       const res = await login({ email, password });
 
-      // เก็บ token
-      if (remember) {
-        localStorage.setItem("token", res.token);
-      } else {
-        sessionStorage.setItem("token", res.token);
+      if (!res?.accessToken) {
+        throw new Error("Login failed");
       }
+
+      // ✅ เก็บ user + set context
+      localStorage.setItem("user", JSON.stringify(res.user));
+      setUser(res.user);
 
       toast.success("เข้าสู่ระบบสำเร็จ 🎉");
 
-      router.push("/dashboard");
+      if (res.user.role === "ADMIN") {
+        router.push("/admin");
+      } else if (res.user.role === "INSTRUCTOR") {
+        router.push("/instructor/dashboard");
+      } else {
+        router.push("/dashboard");
+      }
     } catch (err: unknown) {
-      const error = err as {
-        response?: {
-          data?: {
-            message?: string;
-          };
-        };
-      };
+      const error = err as { message?: string };
 
-      const message = error.response?.data?.message || "เข้าสู่ระบบไม่สำเร็จ";
+      const message = error.message || "เข้าสู่ระบบไม่สำเร็จ";
 
-      setErrorMessage(message); // 👈 แสดงใต้ input
+      setErrorMessage(message);
+      setErrorMessage(message);
       toast.error(message);
     } finally {
       setLoading(false);
@@ -63,19 +65,16 @@ export default function LoginForm() {
 
   return (
     <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow">
-      {/* Logo */}
       <div className="flex items-center justify-center gap-2 mb-4">
         <div className="w-10 h-10 bg-cyan-400 rounded-lg"></div>
         <h1 className="text-xl font-bold">Learny</h1>
       </div>
 
-      {/* Title */}
       <h2 className="text-xl font-semibold text-center">ยินดีต้อนรับกลับมา</h2>
       <p className="text-sm text-gray-500 text-center mb-6">
         เข้าสู่ระบบเพื่อเรียนต่อ
       </p>
 
-      {/* Email */}
       <div className="mb-4">
         <label className="block text-sm font-medium mb-1">ที่อยู่อีเมล</label>
         <input
@@ -84,12 +83,12 @@ export default function LoginForm() {
           value={email}
           onChange={(e) => {
             setEmail(e.target.value);
-            setErrorMessage(""); // reset error ตอนพิมพ์
+            setErrorMessage("");
+            setErrorMessage("");
           }}
         />
       </div>
 
-      {/* Password */}
       <div className="mb-2">
         <label className="block text-sm font-medium mb-1">รหัสผ่าน</label>
         <input
@@ -99,17 +98,16 @@ export default function LoginForm() {
           value={password}
           onChange={(e) => {
             setPassword(e.target.value);
-            setErrorMessage(""); // reset error ตอนพิมพ์
+            setErrorMessage("");
+            setErrorMessage("");
           }}
         />
 
-        {/* 🔴 Error ใต้ input */}
         {errorMessage && (
           <p className="text-red-500 text-sm mt-1">{errorMessage}</p>
         )}
       </div>
 
-      {/* Remember + Forgot */}
       <div className="flex items-center justify-between mb-4 text-sm">
         <label className="flex items-center gap-2">
           <input
@@ -125,7 +123,6 @@ export default function LoginForm() {
         </span>
       </div>
 
-      {/* Button */}
       <button
         type="button"
         onClick={handleLogin}
@@ -135,14 +132,12 @@ export default function LoginForm() {
         {loading ? "กำลังเข้าสู่ระบบ..." : "เข้าสู่ระบบ"}
       </button>
 
-      {/* Divider */}
       <div className="flex items-center my-6 text-gray-400 text-sm">
         <div className="flex-1 h-px bg-gray-200"></div>
         <span className="px-3">หรือ</span>
         <div className="flex-1 h-px bg-gray-200"></div>
       </div>
 
-      {/* Register */}
       <div className="text-center text-sm">
         ยังไม่มีบัญชี?{" "}
         <Link href="/register" className="text-cyan-500 hover:underline">

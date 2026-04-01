@@ -1,42 +1,50 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import { useState, useEffect } from "react";
 import CourseHeader from "../header/course-header";
-import CategoryButtons from "../category/category-btn";
-import CourseCard from "./course-card";
-import { coursesData } from "@/data/courses";
+import CourseList from "./course-list";
 
-const CourseListing: React.FC = () => {
+import { getCourses } from "@/lib/api/course/course.service";
+import { Course } from "@/types/conse/conse.type";
+
+interface CourseListingProps {
+  showHeader?: boolean;
+}
+
+const CourseListing = ({ showHeader }: CourseListingProps) => {
   const [selectedCategory, setSelectedCategory] = useState("คอร์สเรียนทั้งหมด");
+  const [courses, setCourses] = useState<Course[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const filteredCourses = useMemo(() => {
-    return coursesData.filter(
-      (course) =>
-        selectedCategory === "คอร์สเรียนทั้งหมด" ||
-        course.category === selectedCategory,
-    );
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        setLoading(true);
+        const data = await getCourses(selectedCategory);
+        setCourses(data);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCourses();
   }, [selectedCategory]);
 
   return (
-    <div className="min-h-screen bg-gray-50/50">
-      <CourseHeader title={selectedCategory} />
+    <div className="min-h-screen bg-gray-50">
+      {showHeader && <CourseHeader title={selectedCategory} />}
 
-      <main className="max-w-7xl mx-auto px-8 py-12">
-        <CategoryButtons
+      {loading ? (
+        <div className="text-center py-20">กำลังโหลด...</div>
+      ) : (
+        <CourseList
+          courses={courses}
           selectedCategory={selectedCategory}
-          onCategoryChange={setSelectedCategory}
+          onSelectedCategory={setSelectedCategory}
         />
-
-        <p className="text-gray-700 mb-8 font-bold text-lg">
-          พบ {filteredCourses.length} คอร์สเรียน
-        </p>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredCourses.map((course) => (
-            <CourseCard key={course.id} {...course} />
-          ))}
-        </div>
-      </main>
+      )}
     </div>
   );
 };

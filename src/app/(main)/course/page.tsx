@@ -8,7 +8,7 @@ export const metadata = {
 export default function CoursesPage() {
   return (
     <main>
-      <CourseListing />
+      <CourseListing showHeader />
     </main>
   );
 }
