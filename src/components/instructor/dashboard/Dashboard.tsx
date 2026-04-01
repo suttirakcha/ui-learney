@@ -5,6 +5,7 @@ import { DashboardData } from "@/types/instructor/instructor.type";
 import { getInstructorDashboard } from "@/lib/api/dashboard/dashboard.service";
 import StatsCards from "./StatsCards";
 import CoursesGrid from "./CoursesGrid";
+import Link from "next/link";
 
 export default function Dashboard() {
   const [data, setData] = useState<DashboardData | null>(null);
@@ -27,9 +28,11 @@ export default function Dashboard() {
             Manage courses and track your earnings{" "}
           </p>{" "}
         </div>
-        <button className="bg-cyan-500 text-black px-4 py-2 rounded shadow hover:bg-amber-100">
-          + Create Course
-        </button>
+        <Link href="/instructor/create">
+          <button className="bg-cyan-500 text-black px-4 py-2 rounded shadow hover:bg-amber-100">
+            + Create Course
+          </button>
+        </Link>
       </div>
       {/* Stats */}
       <StatsCards data={data} />
