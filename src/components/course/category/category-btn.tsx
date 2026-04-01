@@ -1,4 +1,5 @@
 "use client";
+import { useTranslations } from "next-intl";
 
 interface CategoryButtonsProps {
   selectedCategory: string;
@@ -9,12 +10,13 @@ const CategoryButtons: React.FC<CategoryButtonsProps> = ({
   selectedCategory,
   onCategoryChange,
 }) => {
+  const t = useTranslations("categories");
   const categories = [
-    "คอร์สเรียนทั้งหมด",
-    "คณิตศาสตร์",
-    "การพัฒนาซอฟต์แวร์",
-    "การออกแบบ",
-    "ภาษา",
+    "all",
+    "math",
+    "software",
+    "design",
+    "language",
   ];
 
   return (
@@ -29,7 +31,7 @@ const CategoryButtons: React.FC<CategoryButtonsProps> = ({
               : "bg-white text-gray-800 border-2 border-gray-200 hover:border-gray-400 hover:bg-cyan-50"
           }`}
         >
-          {category}
+          {t(category)}
         </button>
       ))}
     </div>

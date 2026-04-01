@@ -17,13 +17,13 @@ type Menu = {
 
 const instructorMenus: Menu[] = [
   {
-    label: "ภาพรวม",
+    label: "overview",
     icon: <User />,
     href: "/overview",
     component: <InstructorOverview />,
   },
   {
-    label: "การตั้งค่า",
+    label: "settings",
     icon: <Settings />,
     href: '/settings',
     component: <InstructorProfileSettings />,
@@ -32,13 +32,13 @@ const instructorMenus: Menu[] = [
 
 const adminMenus: Menu[] = [
   {
-    label: "ภาพรวม",
+    label: "overview",
     icon: <User />,
     href: "/overview",
     component: <AdminProfileOverview />,
   },
   {
-    label: "การตั้งค่า",
+    label: "settings",
     icon: <Settings />,
     href: "/settings",
     component: <AdminSettingsForm />,
@@ -47,19 +47,19 @@ const adminMenus: Menu[] = [
 
 const studentMenus: Menu[] = [
   {
-    label: "ภาพรวม",
+    label: "overview",
     icon: <User />,
     href: "/overview",
     component: <OverviewPage />,
   },
   {
-    label: "ประวัติคอร์สเรียน",
+    label: "history",
     icon: <BookOpen />,
     href: "/history",
     component: <HistoryPage />,
   },
   {
-    label: "การตั้งค่า",
+    label: "settings",
     icon: <Settings />,
     href: "/settings",
     component: <></>,

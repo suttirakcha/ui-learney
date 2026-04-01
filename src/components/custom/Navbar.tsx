@@ -22,12 +22,22 @@ import {
 
 import { useState } from "react";
 import { useAuth } from "@/app/lib/AuthContext";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
+import { useRouter } from "next/navigation";
 
 export default function Navbar() {
-  const [lang, setLang] = useState("ไทย");
+  const locale = useLocale();
+  const [lang, setLang] = useState(locale === "en" ? "EN" : "ไทย");
   const { user, logout } = useAuth();
-  const t = useTranslations();
+  const tNav = useTranslations("navbar");
+  const tCom = useTranslations("common");
+  const router = useRouter();
+
+  const changeLanguage = (newLocale: "th" | "en") => {
+    document.cookie = `NEXT_LOCALE=${newLocale}; path=/; max-age=31536000`;
+    setLang(newLocale === "th" ? "ไทย" : "EN");
+    router.refresh();
+  };
 
   return (
     <nav className="flex items-center justify-between px-8 py-4 border-b bg-white">
@@ -41,7 +51,7 @@ export default function Navbar() {
           className="flex items-center gap-1 hover:text-cyan-600"
         >
           <BookOpen className="w-4 h-4" />
-          คอร์สเรียน
+          {tNav("links.courses")}
         </Link>
 
         <Link
@@ -49,7 +59,7 @@ export default function Navbar() {
           className="flex items-center gap-1 hover:text-cyan-600"
         >
           <Newspaper className="w-4 h-4" />
-          บทความ
+          {tNav("links.blog")}
         </Link>
 
         <Link
@@ -57,7 +67,7 @@ export default function Navbar() {
           className="flex items-center gap-1 hover:text-cyan-600"
         >
           <LayoutGrid className="w-4 h-4" />
-          หมวดหมู่
+          {tNav("links.categories")}
         </Link>
       </div>
 
@@ -67,7 +77,7 @@ export default function Navbar() {
         <div className="flex items-center border rounded-full px-3 py-1 text-sm bg-gray-50">
           <Search className="w-4 h-4 mr-2 text-gray-500" />
           <input
-            placeholder={t("Search courses")}
+            placeholder={tCom("labels.searchPlaceholder")}
             className="bg-transparent outline-none"
           />
         </div>
@@ -82,11 +92,11 @@ export default function Navbar() {
           </DropdownMenuTrigger>
 
           <DropdownMenuContent align="end">
-            <DropdownMenuItem onClick={() => setLang("ไทย")}>
+            <DropdownMenuItem onClick={() => changeLanguage("th")}>
               ไทย {lang === "ไทย" && <Check className="w-4 h-4 ml-2" />}
             </DropdownMenuItem>
 
-            <DropdownMenuItem onClick={() => setLang("EN")}>
+            <DropdownMenuItem onClick={() => changeLanguage("en")}>
               EN {lang === "EN" && <Check className="w-4 h-4 ml-2" />}
             </DropdownMenuItem>
           </DropdownMenuContent>
@@ -96,11 +106,11 @@ export default function Navbar() {
         {!user ? (
           <>
             <Link href="/login">
-              <Button variant="ghost">Sign in</Button>
+              <Button variant="ghost">{tCom("buttons.signIn")}</Button>
             </Link>
 
             <Link href="/register">
-              <Button className="bg-cyan-500 hover:bg-cyan-600">Sign up</Button>
+              <Button className="bg-cyan-500 hover:bg-cyan-600">{tCom("buttons.signUp")}</Button>
             </Link>
           </>
         ) : (
@@ -119,15 +129,15 @@ export default function Navbar() {
 
             <DropdownMenuContent align="end" className="w-52">
               <DropdownMenuItem asChild>
-                <Link href="/profile">👤 โปรไฟล์</Link>
+                <Link href="/profile">👤 {tNav("userMenu.profile")}</Link>
               </DropdownMenuItem>
 
               <DropdownMenuItem asChild>
-                <Link href="/dashboard">📊 Dashboard</Link>
+                <Link href="/dashboard">📊 {tNav("userMenu.dashboard")}</Link>
               </DropdownMenuItem>
 
               <DropdownMenuItem asChild>
-                <Link href="/my-courses">🎓 คอร์สของฉัน</Link>
+                <Link href="/my-courses">🎓 {tNav("userMenu.myCourses")}</Link>
               </DropdownMenuItem>
 
               <div className="border-t my-2" />
@@ -136,7 +146,7 @@ export default function Navbar() {
                 onClick={logout}
                 className="text-red-500 cursor-pointer"
               >
-                🚪 ออกจากระบบ
+                🚪 {tCom("buttons.logout")}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

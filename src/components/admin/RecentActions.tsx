@@ -1,24 +1,28 @@
+import { useTranslations } from "next-intl";
+
 export default function RecentActions() {
+  const t = useTranslations("admin.recentActions");
+
   return (
     <div className="bg-white rounded-2xl p-6 shadow-sm space-y-4">
-      <h3 className="font-semibold">Recent Actions</h3>
+      <h3 className="font-semibold">{t("title")}</h3>
 
       <div className="space-y-3">
         <div className="border-b pb-2">
-          <p className="font-medium">อนุมัติคอร์ส</p>
+          <p className="font-medium">{t("action1")}</p>
           <p className="text-sm text-gray-500">
-            Python Bootcamp - 1 ชั่วโมงที่ผ่านมา
+            {t("desc1")}
           </p>
         </div>
 
         <div className="border-b pb-2">
-          <p className="font-medium">ผู้ใช้ถูกยืนยัน</p>
-          <p className="text-sm text-gray-500">Instructor: Jane Doe</p>
+          <p className="font-medium">{t("action2")}</p>
+          <p className="text-sm text-gray-500">{t("desc2")}</p>
         </div>
 
         <div>
-          <p className="font-medium">แก้ไขปัญหา</p>
-          <p className="text-sm text-gray-500">Payment timeout</p>
+          <p className="font-medium">{t("action3")}</p>
+          <p className="text-sm text-gray-500">{t("desc3")}</p>
         </div>
       </div>
     </div>

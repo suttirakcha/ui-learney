@@ -5,6 +5,7 @@ import { register as registerUser } from "@/lib/api/auth/auth.service";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { toast } from "react-hot-toast";
+import { useTranslations } from "next-intl";
 
 type FormData = {
   fullname: string;
@@ -17,6 +18,7 @@ type FormData = {
 
 export default function RegisterForm() {
   const router = useRouter();
+  const t = useTranslations("auth.register");
 
   const {
     register,
@@ -44,7 +46,7 @@ export default function RegisterForm() {
 
     try {
       await registerUser(payload);
-      toast.success("สมัครสมาชิกสำเร็จ 🎉");
+      toast.success(t("successMessage"));
       router.push("/login");
     } catch (err: unknown) {
       const error = err as {
@@ -59,16 +61,16 @@ export default function RegisterForm() {
       const errorData = error.response?.data;
 
       if (errorData?.code === "EMAIL_EXISTS") {
-        toast.error("อีเมลนี้ถูกใช้ไปแล้ว");
+        toast.error(t("emailExistsText"));
       } else {
-        toast.error(errorData?.message || "สมัครไม่สำเร็จ");
+        toast.error(errorData?.message || t("errorDefault"));
       }
     }
   };
 
   return (
     <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow">
-      <h2 className="text-xl font-semibold text-center mb-4">สร้างบัญชี</h2>
+      <h2 className="text-xl font-semibold text-center mb-4">{t("title")}</h2>
 
       {/* ROLE */}
       <div className="flex gap-3 mb-6">
@@ -81,7 +83,7 @@ export default function RegisterForm() {
               : "border-gray-300"
           }`}
         >
-          นักเรียน
+          {t("roleStudent")}
         </button>
 
         <button
@@ -93,19 +95,19 @@ export default function RegisterForm() {
               : "border-gray-300"
           }`}
         >
-          ผู้สอน
+          {t("roleTeacher")}
         </button>
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         {/* fullname */}
         <div>
-          <label className="block text-sm mb-1">ชื่อ-นามสกุล</label>
+          <label className="block text-sm mb-1">{t("fullnameLabel")}</label>
           <input
             {...register("fullname", {
-              required: "กรุณากรอกชื่อ",
+              required: t("fullnameRequired"),
             })}
-            placeholder="เช่น สมชาย ใจดี"
+            placeholder={t("fullnamePlaceholder")}
             className="input"
           />
           {errors.fullname && (
@@ -115,13 +117,13 @@ export default function RegisterForm() {
 
         {/* email */}
         <div>
-          <label className="block text-sm mb-1">อีเมล</label>
+          <label className="block text-sm mb-1">{t("emailLabel")}</label>
           <input
             {...register("email", {
-              required: "กรุณากรอกอีเมล",
+              required: t("emailRequired"),
             })}
             className="input"
-            placeholder="you@example.com"
+            placeholder={t("emailPlaceholder")}
           />
           {errors.email && (
             <p className="text-red-500 text-sm">{errors.email.message}</p>
@@ -130,17 +132,17 @@ export default function RegisterForm() {
 
         {/* password */}
         <div>
-          <label className="block text-sm mb-1">รหัสผ่าน</label>
+          <label className="block text-sm mb-1">{t("passwordLabel")}</label>
           <input
             type="password"
             {...register("password", {
-              required: "กรุณากรอกรหัสผ่าน",
+              required: t("passwordRequired"),
               minLength: {
                 value: 6,
-                message: "รหัสผ่านอย่างน้อย 6 ตัว",
+                message: t("passwordMinLength"),
               },
             })}
-            placeholder="สร้างรหัสผ่าน"
+            placeholder={t("passwordPlaceholder")}
             className="input"
           />
           {errors.password && (
@@ -150,15 +152,15 @@ export default function RegisterForm() {
 
         {/* confirm password */}
         <div>
-          <label className="block text-sm mb-1">ยืนยันรหัสผ่าน</label>
+          <label className="block text-sm mb-1">{t("confirmPasswordLabel")}</label>
           <input
             type="password"
             {...register("confirmPassword", {
-              required: "กรุณายืนยันรหัสผ่าน",
+              required: t("confirmPasswordRequired"),
               validate: (value) =>
-                value === watch("password") || "รหัสผ่านไม่ตรงกัน",
+                value === watch("password") || t("confirmPasswordMismatch"),
             })}
-            placeholder="ยืนยันรหัสผ่าน"
+            placeholder={t("confirmPasswordPlaceholder")}
             className="input"
           />
           {errors.confirmPassword && (
@@ -168,20 +170,20 @@ export default function RegisterForm() {
           )}
         </div>
 
-        {/* ✅ checkbox กลับมาแล้ว */}
+        {/* checkbox */}
         <div>
           <label className="flex items-start gap-2 text-sm">
             <input
               type="checkbox"
               {...register("accepted", {
-                required: "กรุณายอมรับข้อตกลง",
+                required: t("termsRequired"),
               })}
               className="mt-1"
             />
             <span>
-              ฉันยอมรับ{" "}
-              <span className="text-cyan-500">ข้อกำหนดการให้บริการ</span> และ{" "}
-              <span className="text-cyan-500">นโยบายความเป็นส่วนตัว</span>
+              {t("termsLabel1")}
+              <span className="text-cyan-500">{t("termsLink1")}</span> {t("termsLabel2")}
+              <span className="text-cyan-500">{t("termsLink2")}</span>
             </span>
           </label>
 
@@ -198,14 +200,14 @@ export default function RegisterForm() {
           disabled={isSubmitting}
           className="w-full bg-cyan-500 text-white py-3 rounded-xl hover:bg-cyan-600 disabled:bg-gray-400"
         >
-          {isSubmitting ? "กำลังสมัคร..." : "สมัครสมาชิก"}
+          {isSubmitting ? t("submittingText") : t("submitButton")}
         </button>
       </form>
 
       <div className="text-center mt-4 text-sm">
-        มีบัญชีแล้ว?{" "}
+        {t("hasAccountText")}{" "}
         <Link href="/login" className="text-cyan-500">
-          เข้าสู่ระบบ
+          {t("loginLink")}
         </Link>
       </div>
     </div>

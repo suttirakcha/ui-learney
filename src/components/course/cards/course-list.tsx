@@ -1,6 +1,7 @@
 import CategoryButtons from '../category/category-btn';
 import { Course } from '@/data/courses';
 import CourseCard from './course-card';
+import { useTranslations } from 'next-intl';
 
 interface CourseListProps {
   courses: Course[];
@@ -13,6 +14,9 @@ export default function CourseList({
   selectedCategory,
   onSelectedCategory,
 }: CourseListProps) {
+  const tList = useTranslations("courseList");
+  const tCat = useTranslations("categories");
+
   return (
     <div className='px-8 py-12'>
       <div className='max-w-7xl mx-auto'>
@@ -22,9 +26,9 @@ export default function CourseList({
         />
 
         <p className='text-gray-600 mb-6 font-medium'>
-          พบ {courses.length} คอร์สเรียน
-          {selectedCategory !== 'คอร์สเรียนทั้งหมด' &&
-            ` ในหมวด "${selectedCategory}"`}
+          {tList("found", { count: courses.length })}
+          {selectedCategory !== 'all' &&
+            tList("inCategory", { category: tCat(selectedCategory) })}
         </p>
 
         {courses.length > 0 ? (
@@ -36,7 +40,7 @@ export default function CourseList({
         ) : (
           <div className='text-center py-12 bg-white rounded-xl shadow-sm border border-gray-100'>
             <p className='text-gray-500 text-lg'>
-              ไม่พบคอร์สเรียนในหมวดหมู่นี้
+              {tList("noCourses")}
             </p>
           </div>
         )}

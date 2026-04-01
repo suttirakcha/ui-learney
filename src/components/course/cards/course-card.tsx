@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Star, Clock, Zap } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface CourseCardProps {
   id: string;
@@ -28,6 +29,7 @@ const CourseCard: React.FC<CourseCardProps> = ({
   level,
   image,
 }) => {
+  const t = useTranslations("courseCard");
   const numericPrice = parseInt(price.replace(/[^0-9]/g, "")) || 0;
   const originalPrice = numericPrice
     ? `฿${(numericPrice * 1.4).toFixed(0)}`
@@ -55,7 +57,7 @@ const CourseCard: React.FC<CourseCardProps> = ({
         <h3 className="text-xl font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-cyan-600 transition-colors">
           {title}
         </h3>
-        <p className="text-gray-500 text-sm mb-4">สอนโดย {instructor}</p>
+        <p className="text-gray-500 text-sm mb-4">{t("taughtBy")} {instructor}</p>
 
         <div className="space-y-3 mb-6">
           <div className="flex items-center gap-4 text-sm text-gray-600">
@@ -91,7 +93,7 @@ const CourseCard: React.FC<CourseCardProps> = ({
             </span>
           </div>
           <div className="bg-cyan-50 text-cyan-600 group-hover:bg-cyan-500 group-hover:text-white px-5 py-2.5 rounded-xl text-sm font-bold transition-colors duration-300 shadow-sm">
-            ดูรายละเอียด
+            {t("viewDetails")}
           </div>
         </div>
       </div>

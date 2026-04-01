@@ -3,8 +3,10 @@ import PendingStats from "@/components/admin/pending-courses/PendingStats";
 import PendingCourseCard from "@/components/admin/pending-courses/PendingCourseCard";
 import EmptyState from "@/components/admin/pending-courses/EmptyState";
 import { Course } from "@/types/course";
+import { useTranslations } from "next-intl";
 
 export default function PendingCoursesPage() {
+  const t = useTranslations("pages.adminPendingCourses");
   const courses: Course[] = [
     {
       id: 1,
@@ -21,19 +23,19 @@ export default function PendingCoursesPage() {
   return (
     <div className="p-8 space-y-6">
       <Link href="/admin/profile" className="text-sm text-muted-foreground">
-        ← กลับไปยังโปรไฟล์
+        {t("backToProfile")}
       </Link>
 
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-semibold">อนุมัติคอร์สที่รอตรวจสอบ</h1>
+          <h1 className="text-2xl font-semibold">{t("title")}</h1>
           <p className="text-sm text-muted-foreground">
-            ตรวจสอบและอนุมัติคอร์สจากผู้สอน
+            {t("subtitle")}
           </p>
         </div>
 
         <div className="text-right">
-          <p className="text-sm text-muted-foreground">คอร์สที่รออนุมัติ</p>
+          <p className="text-sm text-muted-foreground">{t("pendingCoursesTitle")}</p>
           <p className="text-2xl font-bold text-primary">{courses.length}</p>
         </div>
       </div>

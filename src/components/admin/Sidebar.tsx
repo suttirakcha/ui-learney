@@ -1,12 +1,15 @@
 'use client';
 
 import Link from 'next/link';
+import { useTranslations } from "next-intl";
 
 type Props = {
   active?: 'overview' | 'settings';
 };
 
 export default function Sidebar({ active = 'overview' }: Props) {
+  const t = useTranslations("admin.sidebar");
+
   return (
     <div className='w-64 space-y-4'>
       <div className='bg-white rounded-2xl p-4 shadow-sm space-y-2'>
@@ -19,7 +22,7 @@ export default function Sidebar({ active = 'overview' }: Props) {
               : 'hover:bg-gray-100'
           }`}
         >
-          ภาพรวม
+          {t("overview")}
         </Link>
 
         {/* SETTINGS */}
@@ -31,29 +34,29 @@ export default function Sidebar({ active = 'overview' }: Props) {
               : 'hover:bg-gray-100'
           }`}
         >
-          การตั้งค่า
+          {t("settings")}
         </Link>
 
         {/* LOGOUT */}
         <button className='w-full text-left px-3 py-2 rounded-xl text-red-500 hover:bg-red-50'>
-          Logout
+          {t("logout")}
         </button>
       </div>
 
       {/* Quick Actions */}
       <div className='bg-white rounded-2xl p-4 shadow-sm space-y-2'>
-        <p className='text-sm font-semibold text-gray-500'>Quick Actions</p>
+        <p className='text-sm font-semibold text-gray-500'>{t("quickActions")}</p>
 
         <button className='w-full text-left px-3 py-2 rounded-xl hover:bg-gray-100'>
-          อนุมัติคอร์ส
+          {t("approveCourses")}
         </button>
 
         <button className='w-full text-left px-3 py-2 rounded-xl hover:bg-gray-100'>
-          จัดการผู้ใช้
+          {t("manageUsers")}
         </button>
 
         <button className='w-full text-left px-3 py-2 rounded-xl hover:bg-gray-100'>
-          ดู Analytics
+          {t("viewAnalytics")}
         </button>
       </div>
     </div>

@@ -1,4 +1,210 @@
- {
-    "test": "สวัสดี",
-    "Search courses": "ค้นหาคอร์ส..."
- }
+{
+  "test": "สวัสดี",
+  "common": {
+    "buttons": {
+      "signIn": "เข้าสู่ระบบ",
+      "signUp": "สมัครสมาชิก",
+      "logout": "ออกจากระบบ"
+    },
+    "labels": {
+      "searchPlaceholder": "ค้นหาคอร์สเรียน..."
+    }
+  },
+  "navbar": {
+    "links": {
+      "courses": "คอร์สเรียน",
+      "blog": "บทความ",
+      "categories": "หมวดหมู่",
+      "brand": "Learney"
+    },
+    "userMenu": {
+      "profile": "โปรไฟล์",
+      "dashboard": "แดชบอร์ด",
+      "myCourses": "คอร์สของฉัน"
+    }
+  },
+  "admin": {
+    "recentActions": {
+      "title": "กิจกรรมล่าสุด",
+      "action1": "อนุมัติคอร์ส",
+      "desc1": "Python Bootcamp - 1 ชั่วโมงที่ผ่านมา",
+      "action2": "ผู้ใช้ถูกยืนยัน",
+      "desc2": "Instructor: Jane Doe",
+      "action3": "แก้ไขปัญหา",
+      "desc3": "Payment timeout"
+    },
+    "pendingCourses": {
+      "emptyList": "ไม่มีคอร์สรอตรวจสอบ",
+      "emptyStateTitle": "ไม่มีคอร์สที่รออนุมัติ",
+      "emptyStateDesc": "คอร์สทั้งหมดได้รับการตรวจสอบแล้ว",
+      "backToProfile": "กลับไปยังโปรไฟล์",
+      "newCourse": "คอร์สใหม่",
+      "price": "ราคา",
+      "details": "รายละเอียด",
+      "platformRevenue": "รายได้แพลตฟอร์ม (15%)",
+      "perSale": "ต่อการขาย",
+      "approve": "อนุมัติ",
+      "reject": "ปฏิเสธ",
+      "updatedCourse": "คอร์สที่แก้ไข",
+      "deletedCourse": "คอร์สที่ถูกลบ",
+      "waitingApproval": "รอการอนุมัติ"
+    }
+  },
+  "instructor": {
+    "overview": {
+      "myCourses": "คอร์สเรียนของฉัน",
+      "recentActivity": "กิจกรรมล่าสุด"
+    }
+  },
+  "profile": {
+    "sidebar": {
+      "overview": "ภาพรวม",
+      "settings": "การตั้งค่า",
+      "history": "ประวัติคอร์สเรียน",
+      "logout": "ออกจากระบบ",
+      "quickActions": "คำสั่งด่วน",
+      "approveCourses": "อนุมัติคอร์ส",
+      "manageUsers": "จัดการผู้ใช้",
+      "viewAnalytics": "ดู Analytics"
+    },
+    "accountSettings": "การตั้งค่าบัญชี",
+    "fullName": "ชื่อ-นามสกุล",
+    "email": "อีเมล",
+    "bio": "ประวัติส่วนตัว",
+    "bioPlaceholder": "เล่าเกี่ยวกับตัวคุณ...",
+    "saveChanges": "บันทึกการเปลี่ยนแปลง",
+    "instructorSettings": "การตั้งค่าผู้สอน",
+    "displayName": "ชื่อที่แสดง",
+    "professionalBio": "ประวัติการทำงาน",
+    "expertisePlaceholder": "Web Dev, React, Node.js"
+  },
+  "auth": {
+    "login": {
+      "title": "ยินดีต้อนรับกลับมา",
+      "subtitle": "เข้าสู่ระบบเพื่อเรียนต่อ",
+      "emailLabel": "ที่อยู่อีเมล",
+      "emailPlaceholder": "you@example.com",
+      "passwordLabel": "รหัสผ่าน",
+      "passwordPlaceholder": "ป้อนรหัสผ่าน",
+      "rememberMe": "จดจำฉัน",
+      "forgotPassword": "ลืมรหัสผ่าน?",
+      "submitButton": "เข้าสู่ระบบ",
+      "submittingText": "กำลังเข้าสู่ระบบ...",
+      "orText": "หรือ",
+      "noAccountText": "ยังไม่มีบัญชี?",
+      "registerLink": "สมัครสมาชิก",
+      "errorIncomplete": "กรุณากรอกข้อมูลให้ครบ",
+      "errorDefault": "เข้าสู่ระบบไม่สำเร็จ",
+      "successMessage": "เข้าสู่ระบบสำเร็จ 🎉"
+    },
+    "register": {
+      "title": "สร้างบัญชี",
+      "roleStudent": "นักเรียน",
+      "roleTeacher": "ผู้สอน",
+      "fullnameLabel": "ชื่อ-นามสกุล",
+      "fullnamePlaceholder": "เช่น สมชาย ใจดี",
+      "fullnameRequired": "กรุณากรอกชื่อ",
+      "emailLabel": "อีเมล",
+      "emailPlaceholder": "you@example.com",
+      "emailRequired": "กรุณากรอกอีเมล",
+      "passwordLabel": "รหัสผ่าน",
+      "passwordPlaceholder": "สร้างรหัสผ่าน",
+      "passwordRequired": "กรุณากรอกรหัสผ่าน",
+      "passwordMinLength": "รหัสผ่านอย่างน้อย 6 ตัว",
+      "confirmPasswordLabel": "ยืนยันรหัสผ่าน",
+      "confirmPasswordPlaceholder": "ยืนยันรหัสผ่าน",
+      "confirmPasswordRequired": "กรุณายืนยันรหัสผ่าน",
+      "confirmPasswordMismatch": "รหัสผ่านไม่ตรงกัน",
+      "termsLabel1": "ฉันยอมรับ ",
+      "termsLink1": "ข้อกำหนดการให้บริการ",
+      "termsLabel2": " และ ",
+      "termsLink2": "นโยบายความเป็นส่วนตัว",
+      "termsRequired": "กรุณายอมรับข้อตกลง",
+      "submitButton": "สมัครสมาชิก",
+      "submittingText": "กำลังสมัคร...",
+      "hasAccountText": "มีบัญชีแล้ว?",
+      "loginLink": "เข้าสู่ระบบ",
+      "emailExistsText": "อีเมลนี้ถูกใช้ไปแล้ว",
+      "errorDefault": "สมัครไม่สำเร็จ",
+      "successMessage": "สมัครสมาชิกสำเร็จ 🎉"
+    }
+  },
+  "home": {
+    "hero": {
+      "title": "เรียนรู้อะไรก็ได้ เมื่อไหร่ก็ได้",
+      "subtitle": "ค้นพบหลักสูตรออนไลน์หลากหลาย พัฒนาทักษะใหม่ๆ และบรรลุเป้าหมายของคุณกับผู้เชี่ยวชาญชั้นนำ",
+      "searchPlaceholder": "คุณอยากเรียนอะไร?",
+      "viewAllCourses": "ดูคอร์สทั้งหมด"
+    },
+    "cta": {
+      "title": "มาเป็นผู้สอน",
+      "subtitle": "แบ่งปันความรู้ของคุณให้กับผู้เรียนทั่วโลก",
+      "startTeaching": "เริ่มสอน"
+    },
+    "stats": {
+      "students": "นักเรียน",
+      "instructors": "ผู้เชี่ยวชาญ",
+      "courses": "คอร์สเรียน",
+      "rating": "คะแนนรีวิว"
+    },
+    "courseList": {
+      "trending": "คอร์สยอดนิยม"
+    }
+  },
+  "courseCard": {
+    "waitingForData": "(รอ backend ทำข้อมูลจริง)",
+    "taughtBy": "สอนโดย",
+    "viewDetails": "ดูรายละเอียด"
+  },
+  "footer": {
+    "description": "เสริมพลังการเรียนรู้ของคุณ ด้วยแพลตฟอร์มรวมวิดีโอการศึกษาคุณภาพ จากทั่วโลก เรียนได้ทุกที่ ทุกเวลา",
+    "explore": "สำรวจ",
+    "links": {
+      "about": "เกี่ยวกับเรา",
+      "contact": "ติดต่อเรา",
+      "privacy": "นโยบายความเป็นส่วนตัว"
+    },
+    "followUs": "ติดตามพวกเรา",
+    "copyright": "© 2026 Learney. สงวนลิขสิทธิ์ทั้งหมด"
+  },
+  "categories": {
+    "all": "คอร์สเรียนทั้งหมด",
+    "math": "คณิตศาสตร์",
+    "software": "การพัฒนาซอฟต์แวร์",
+    "design": "การออกแบบ",
+    "language": "ภาษา"
+  },
+  "courseList": {
+    "found": "พบ {count} คอร์สเรียน",
+    "inCategory": " ในหมวด \"{category}\"",
+    "noCourses": "ไม่พบคอร์สเรียนในหมวดหมู่นี้"
+  },
+  "pages": {
+    "adminPendingCourses": {
+      "backToProfile": "← กลับไปยังโปรไฟล์",
+      "title": "อนุมัติคอร์สที่รอตรวจสอบ",
+      "subtitle": "ตรวจสอบและอนุมัติคอร์สจากผู้สอน",
+      "pendingCoursesTitle": "คอร์สที่รออนุมัติ"
+    },
+    "metadata": {
+      "studentOverview": "ภาพรวมของฉัน",
+      "studentHistory": "ประวัติเรียนของฉัน",
+      "allCoursesTitle": "คอร์สเรียนทั้งหมด",
+      "allCoursesDesc": "ค้นพบคอร์สเรียนที่หลากหลาย และเริ่มต้นเรียนรู้ได้แล้ววันนี้"
+    },
+    "lesson": {
+      "backToHome": "กลับหน้าแรก",
+      "progress": "ความคืบหน้า",
+      "courseVideo": "วาง video คอร์ส",
+      "recommended": "แนะนำคอร์ส",
+      "content": "เนื้อหาบทเรียน",
+      "nextLesson": "บทถัดไป"
+    },
+    "checkout": {
+      "title": "ชำระเงิน"
+    },
+    "cart": {
+      "title": "ตะกร้าสินค้า"
+    }
+  }
+}

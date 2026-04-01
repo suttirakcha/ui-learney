@@ -15,7 +15,7 @@ export const coursesData: Course[] = [
   {
     id: "1",
     price: "฿1999",
-    category: "คณิตศาสตร์",
+    category: "math",
     title: "ปลดล็อกสกิลคณิต เข้าใจง่าย ไม่ปวดหัว",
     instructor: "อาจารย์ตุ๋น ต้มแซ่บ",
     rating: 4.8,
@@ -28,7 +28,7 @@ export const coursesData: Course[] = [
   {
     id: "2",
     price: "฿2345",
-    category: "การพัฒนาซอฟต์แวร์",
+    category: "software",
     title: "อัปสกิล Frontend ด้วย Advanced React & Redux",
     instructor: "อาจารย์ยู หัวหยิก",
     rating: 4.9,
@@ -41,7 +41,7 @@ export const coursesData: Course[] = [
   {
     id: "3",
     price: "฿3212",
-    category: "การออกแบบ",
+    category: "design",
     title: "เจาะลึกการออกแบบ UI/UX สู่มืออาชีพ (สอนใช้ Figma)",
     instructor: "อาจารย์บอส",
     rating: 4.7,
@@ -54,7 +54,7 @@ export const coursesData: Course[] = [
   {
     id: "4",
     price: "฿9999",
-    category: "ภาษา",
+    category: "language",
     title: "ภาษาอังกฤษเพื่อการเดินทางและท่องเที่ยว",
     instructor: "อาจารย์มาร์ค",
     rating: 4.6,

@@ -1,4 +1,5 @@
 import { CourseCard } from "./CourseCard";
+import { useTranslations } from "next-intl";
 
 const courses = [
   { title: "Complete Web Development Bootcamp 2024", price: "$89.99" },
@@ -10,9 +11,11 @@ const courses = [
 ];
 
 export default function CourseList() {
+  const t = useTranslations("home.courseList");
+  
   return (
     <section className="px-8 py-16">
-      <h3 className="text-2xl font-semibold mb-6">Trending Courses</h3>
+      <h3 className="text-2xl font-semibold mb-6">{t("trending")}</h3>
       <div className="grid md:grid-cols-3 gap-6">
         {courses.map((course, index) => (
           <CourseCard key={index} {...course} />

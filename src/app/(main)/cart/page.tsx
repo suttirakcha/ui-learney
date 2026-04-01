@@ -2,6 +2,7 @@ import EmptyCart from '@/components/cart/EmptyCart';
 import { Fragment } from 'react/jsx-runtime';
 import CartItemList from '@/components/cart/CartItemList';
 import OrderSummary from '@/components/cart/OrderSummary';
+import { useTranslations } from 'next-intl';
 
 /* TODO: Fetch the dynamic cart item */
 const carts = [
@@ -26,11 +27,13 @@ const carts = [
 ];
 
 export default function CartPage() {
+  const t = useTranslations("pages.cart");
+
   return (
     <Fragment>
       <div className='bg-primary px-8 py-12'>
         <h2 className='text-4xl font-medium text-white'>
-          ตะกร้าสินค้า ({carts.length ?? 0})
+          {t("title")} ({carts.length ?? 0})
         </h2>
       </div>
       <div className='p-8'>

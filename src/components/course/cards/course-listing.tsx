@@ -10,12 +10,12 @@ interface CourseListingProps {
 }
 
 const CourseListing = ({ showHeader }: CourseListingProps) => {
-  const [selectedCategory, setSelectedCategory] = useState('คอร์สเรียนทั้งหมด');
+  const [selectedCategory, setSelectedCategory] = useState('all');
 
   const filteredCourses = useMemo(() => {
     return coursesData.filter((course) => {
       const matchesCategory =
-        selectedCategory === 'คอร์สเรียนทั้งหมด' ||
+        selectedCategory === 'all' ||
         course.category === selectedCategory;
 
       return matchesCategory;

@@ -1,4 +1,204 @@
- {
-    "test": "Hello",
-    "Search courses": "Search courses..."
- }
+{
+  "test": "Hello",
+  "common": {
+    "buttons": {
+      "signIn": "Sign in",
+      "signUp": "Sign up",
+      "logout": "Logout"
+    },
+    "labels": {
+      "searchPlaceholder": "Search courses..."
+    }
+  },
+  "navbar": {
+    "links": {
+      "courses": "Courses",
+      "blog": "Blog",
+      "categories": "Categories",
+      "brand": "Learney"
+    },
+    "userMenu": {
+      "profile": "Profile",
+      "dashboard": "Dashboard",
+      "myCourses": "My Courses"
+    }
+  },
+  "admin": {
+    "recentActions": {
+      "title": "Recent Actions",
+      "action1": "Approve Course",
+      "desc1": "Python Bootcamp - 1 hour ago",
+      "action2": "User Verified",
+      "desc2": "Instructor: Jane Doe",
+      "action3": "Issue Resolved",
+      "desc3": "Payment timeout"
+    },
+    "pendingCourses": {
+      "emptyList": "No courses pending review",
+      "emptyStateTitle": "No courses waiting for approval",
+      "emptyStateDesc": "All courses have been reviewed",
+      "backToProfile": "Back to profile",
+      "newCourse": "New Course",
+      "price": "Price",
+      "details": "Details",
+      "platformRevenue": "Platform Revenue (15%)",
+      "perSale": "per sale",
+      "approve": "Approve",
+      "reject": "Reject",
+      "updatedCourse": "Updated Course",
+      "deletedCourse": "Deleted Course",
+      "waitingApproval": "Waiting for approval"
+    }
+  },
+  "instructor": {
+    "overview": {
+      "myCourses": "My Courses",
+      "recentActivity": "Recent Activity"
+    }
+  },
+  "profile": {
+    "sidebar": {
+      "overview": "Overview",
+      "settings": "Settings",
+      "history": "Course History",
+      "logout": "Logout",
+      "quickActions": "Quick Actions",
+      "approveCourses": "Approve courses",
+      "manageUsers": "Manage users",
+      "viewAnalytics": "View Analytics"
+    },
+    "accountSettings": "Account Settings",
+    "fullName": "Full Name",
+    "email": "Email",
+    "bio": "Bio",
+    "bioPlaceholder": "Tell us about yourself...",
+    "saveChanges": "Save Changes",
+    "instructorSettings": "Instructor Settings",
+    "displayName": "Display Name",
+    "professionalBio": "Professional Bio",
+    "expertisePlaceholder": "Web Dev, React, Node.js"
+  },
+  "auth": {
+    "login": {
+      "title": "Welcome Back",
+      "subtitle": "Sign in to continue learning",
+      "emailLabel": "Email Address",
+      "emailPlaceholder": "you@example.com",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "Enter password",
+      "rememberMe": "Remember me",
+      "forgotPassword": "Forgot password?",
+      "submitButton": "Sign in",
+      "submittingText": "Signing in...",
+      "orText": "or",
+      "noAccountText": "Don't have an account?",
+      "registerLink": "Sign up",
+      "errorIncomplete": "Please fill in all fields",
+      "errorDefault": "Login failed",
+      "successMessage": "Login successful 🎉"
+    },
+    "register": {
+      "title": "Create an Account",
+      "roleStudent": "Student",
+      "roleTeacher": "Instructor",
+      "fullnameLabel": "Full Name",
+      "fullnamePlaceholder": "e.g. John Doe",
+      "fullnameRequired": "Please enter your name",
+      "emailLabel": "Email",
+      "emailPlaceholder": "you@example.com",
+      "emailRequired": "Please enter your email",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "Create password",
+      "passwordRequired": "Please enter a password",
+      "passwordMinLength": "Password must be at least 6 characters",
+      "confirmPasswordLabel": "Confirm Password",
+      "confirmPasswordPlaceholder": "Confirm password",
+      "confirmPasswordRequired": "Please confirm your password",
+      "confirmPasswordMismatch": "Passwords do not match",
+      "termsLabel1": "I accept the ",
+      "termsLink1": "Terms of Service",
+      "termsLabel2": " and ",
+      "termsLink2": "Privacy Policy",
+      "termsRequired": "Please accept the terms",
+      "submitButton": "Sign up",
+      "submittingText": "Signing up...",
+      "hasAccountText": "Already have an account?",
+      "loginLink": "Sign in",
+      "emailExistsText": "This email is already in use",
+      "errorDefault": "Registration failed",
+      "successMessage": "Registration successful 🎉"
+    }
+  },
+  "home": {
+    "hero": {
+      "title": "Learn anything, anytime",
+      "subtitle": "Discover a variety of online courses. Learn new skills and achieve your goals with top experts.",
+      "searchPlaceholder": "What do you want to learn?",
+      "viewAllCourses": "View all courses"
+    },
+    "cta": {
+      "title": "Become an instructor",
+      "subtitle": "Share your knowledge with learners around the world",
+      "startTeaching": "Start teaching"
+    },
+    "stats": {
+      "students": "Students",
+      "instructors": "Expert instructors",
+      "courses": "Courses",
+      "rating": "Rating"
+    },
+    "courseList": {
+      "trending": "Trending Courses"
+    }
+  },
+  "courseCard": {
+    "waitingForData": "(Waiting for real data from backend)",
+    "taughtBy": "Taught by",
+    "viewDetails": "View details"
+  },
+  "footer": {
+    "description": "Empower your learning with a platform combining high-quality educational videos from around the world. Learn anywhere, anytime.",
+    "explore": "Explore",
+    "links": {
+      "about": "About",
+      "contact": "Contact",
+      "privacy": "Privacy Policy"
+    },
+    "followUs": "Follow us",
+    "copyright": "© 2026 Learney. All rights reserved."
+  },
+  "categories": {
+    "all": "All Courses",
+    "math": "Mathematics",
+    "software": "Software Development",
+    "design": "Design",
+    "language": "Language"
+  },
+  "courseList": {
+    "found": "Found {count} courses",
+    "inCategory": " in category \"{category}\"",
+    "noCourses": "No courses found in this category"
+  },
+  "pages": {
+    "adminPendingCourses": {
+      "backToProfile": "← Back to profile",
+      "title": "Approve Pending Courses",
+      "subtitle": "Review and approve courses from instructors",
+      "pendingCoursesTitle": "Courses pending approval"
+    },
+    "lesson": {
+      "backToHome": "Back to Home",
+      "progress": "Progress",
+      "courseVideo": "Place video course here",
+      "recommended": "Recommended Courses",
+      "content": "Lesson Content",
+      "nextLesson": "Next Lesson"
+    },
+    "checkout": {
+      "title": "Checkout"
+    },
+    "cart": {
+      "title": "Shopping Cart"
+    }
+  }
+}
