@@ -2,8 +2,8 @@ import AdminSettingsForm from "@/components/features/admin-settings-form";
 import AdminProfileOverview from "@/components/profile/admin/AdminProfileOverview";
 import InstructorOverview from "@/components/profile/instructor/InstructorOverview";
 import InstructorProfileSettings from '@/components/profile/instructor/InstructorProfileSettings';
-import HistoryPage from "@/components/student/history/HistoryPage";
-import OverviewPage from "@/components/student/profile/OverviewPage";
+import StudentHistory from '@/components/student/StudentHistory';
+import StudentOverview from '@/components/student/StudentOverview';
 import { Role } from "@/types/user";
 import { BookOpen, Settings, User } from "lucide-react";
 import { JSX, ReactNode } from "react";
@@ -49,14 +49,14 @@ const studentMenus: Menu[] = [
   {
     label: "ภาพรวม",
     icon: <User />,
-    href: "/overview",
-    component: <OverviewPage />,
+    href: '/overview',
+    component: <StudentOverview />,
   },
   {
     label: "ประวัติคอร์สเรียน",
     icon: <BookOpen />,
-    href: "/history",
-    component: <HistoryPage />,
+    href: '/history',
+    component: <StudentHistory />,
   },
   {
     label: "การตั้งค่า",
