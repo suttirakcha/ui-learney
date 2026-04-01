@@ -65,15 +65,19 @@ export default function CourseDetailsPage() {
         </div>
       </div>
 
-      <div className="border-2 rounded-lg h-65 m-2">
-        <h1 className="p-2">บทเรียนของคอร์สนี้</h1>
-        <CircleCheck className="text-green-400" />
-        <p>lesson 1</p>
-        <p>แนะนำรายละเอียดและเนื้อหาของวิชา</p>
+      <div className="grid-cols-2 border-2 rounded-lg h-75 m-4 p-2">
+        <h1 className="p-2 col-span-1">บทเรียนของคอร์สนี้</h1>
+        <div className="border rounded-md p-2 m-4">
+          <CircleCheck className="text-green-400" />
+          <p className="">lesson 1</p>
+          <p>แนะนำรายละเอียดและเนื้อหาของวิชา</p>
+        </div>
 
-        <CircleCheck className="text-green-400" />
-        <p>lesson 2</p>
-        <p>Lorem ipsum dolor sit amet, consectetur</p>
+        <div className="border rounded-md p-2 m-4">
+          <CircleCheck className="text-green-400" />
+          <p>lesson 2</p>
+          <p>Lorem ipsum dolor sit amet, consectetur</p>
+        </div>
       </div>
     </>
   );
