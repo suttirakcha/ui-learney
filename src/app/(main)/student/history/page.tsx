@@ -1,4 +1,4 @@
-import HistoryPage from '@/components/student/history/HistoryPage';
+import StudentHistory from '@/components/student/StudentHistory';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 export default function PageHistory() {
   return (
     <div>
-      <HistoryPage />
+      <StudentHistory />
     </div>
   );
 }
