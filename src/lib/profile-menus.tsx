@@ -1,10 +1,12 @@
-import InstructorOverview from '@/components/profile/instructor/InstructorOverview';
-import InstructorSettings from '@/components/profile/instructor/InstructorSettings';
+import AdminSettingsForm from "@/components/features/admin-settings-form";
+import AdminProfileOverview from "@/components/profile/admin/AdminProfileOverview";
+import InstructorOverview from "@/components/profile/instructor/InstructorOverview";
+import InstructorProfileSettings from '@/components/profile/instructor/InstructorProfileSettings';
 import StudentHistory from '@/components/student/StudentHistory';
 import StudentOverview from '@/components/student/StudentOverview';
-import { Role } from '@/types/user';
-import { BookOpen, Settings, User } from 'lucide-react';
-import { JSX, ReactNode } from 'react';
+import { Role } from "@/types/user";
+import { BookOpen, Settings, User } from "lucide-react";
+import { JSX, ReactNode } from "react";
 
 type Menu = {
   label: string;
@@ -15,42 +17,61 @@ type Menu = {
 
 const instructorMenus: Menu[] = [
   {
-    label: 'ภาพรวม',
+    label: "ภาพรวม",
     icon: <User />,
-    href: '/overview',
+    href: "/overview",
     component: <InstructorOverview />,
   },
   {
-    label: 'การตั้งค่า',
+    label: "การตั้งค่า",
     icon: <Settings />,
     href: '/settings',
-    component: <InstructorSettings />,
+    component: <InstructorProfileSettings />,
+  },
+];
+
+const adminMenus: Menu[] = [
+  {
+    label: "ภาพรวม",
+    icon: <User />,
+    href: "/overview",
+    component: <AdminProfileOverview />,
+  },
+  {
+    label: "การตั้งค่า",
+    icon: <Settings />,
+    href: "/settings",
+    component: <AdminSettingsForm />,
   },
 ];
 
 const studentMenus: Menu[] = [
   {
-    label: 'ภาพรวม',
+    label: "ภาพรวม",
     icon: <User />,
     href: '/overview',
     component: <StudentOverview />,
   },
   {
-    label: 'ประวัติคอร์สเรียน',
+    label: "ประวัติคอร์สเรียน",
     icon: <BookOpen />,
     href: '/history',
     component: <StudentHistory />,
   },
   {
-    label: 'การตั้งค่า',
+    label: "การตั้งค่า",
     icon: <Settings />,
-    href: '/settings',
+    href: "/settings",
     component: <></>,
   },
 ];
 
 const getMenusWithRole = (role: Role) => {
-  return role === 'INSTRUCTOR' ? instructorMenus : studentMenus;
+  return role === "INSTRUCTOR"
+    ? instructorMenus
+    : role === "ADMIN"
+      ? adminMenus
+      : studentMenus;
 };
 
 export { instructorMenus, studentMenus, getMenusWithRole };

@@ -1,5 +1,5 @@
-import { getMenusWithRole } from '@/lib/profile-menus';
-import { Fragment } from 'react';
+import { getMenusWithRole } from "@/lib/profile-menus";
+import { Fragment } from "react";
 
 interface InstructorProfilePageProps {
   params: { path: string };
@@ -7,7 +7,7 @@ interface InstructorProfilePageProps {
 
 export async function generateMetadata({ params }: InstructorProfilePageProps) {
   const { path } = await params;
-  const menus = getMenusWithRole('USER');
+  const menus = getMenusWithRole("INSTRUCTOR");
 
   const profileLabel = menus.find((menu) => menu.href === `/${path}`)?.label;
 
@@ -20,7 +20,7 @@ export default async function InstructorProfilePage({
   params,
 }: InstructorProfilePageProps) {
   const { path } = await params;
-  const menus = getMenusWithRole('USER');
+  const menus = getMenusWithRole("INSTRUCTOR");
 
   const profileComponent = menus.find(
     (menu) => menu.href === `/${path}`,

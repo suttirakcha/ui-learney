@@ -28,17 +28,17 @@ export default function InstructorCourseCard() {
       </div>
 
       <div className='grid grid-cols-3 gap-4'>
-        <div className='rounded-lg bg-cyan-200 p-4'>
+        <div className='rounded-lg bg-primary/30 p-4'>
           <h3 className='text-accent-foreground'>Revenue</h3>
           <p className='text-xl font-semibold'>฿8,830</p>
         </div>
-        <div className='rounded-lg bg-green-200 p-4'>
+        <div className='rounded-lg bg-success/10 p-4'>
           <h3 className='text-accent-foreground'>Revenue</h3>
-          <p className='text-xl font-semibold'>฿7,505.50</p>
+          <p className='text-xl font-semibold text-success'>฿7,505.50</p>
         </div>
-        <div className='rounded-lg bg-blue-200 p-4'>
+        <div className='rounded-lg bg-primary/10 p-4'>
           <h3 className='text-accent-foreground'>Enrollment Rate</h3>
-          <p className='text-xl font-semibold'>58%</p>
+          <p className='text-xl font-semibold text-primary'>58%</p>
         </div>
       </div>
     </div>
