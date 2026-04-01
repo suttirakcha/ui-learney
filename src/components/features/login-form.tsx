@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { toast } from "react-hot-toast";
 import { useAuth } from "@/app/lib/AuthContext"; // ✅ เพิ่ม
+import LearneyLogo from "../custom/LearneyLogo";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -66,8 +67,7 @@ export default function LoginForm() {
   return (
     <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow">
       <div className="flex items-center justify-center gap-2 mb-4">
-        <div className="w-10 h-10 bg-cyan-400 rounded-lg"></div>
-        <h1 className="text-xl font-bold">Learny</h1>
+        <LearneyLogo />
       </div>
 
       <h2 className="text-xl font-semibold text-center">ยินดีต้อนรับกลับมา</h2>
