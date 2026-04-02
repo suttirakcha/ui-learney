@@ -6,7 +6,7 @@ import SecurityCard from "@/components/profile/SecurityCard";
 export default function StudentPage() {
   return (
     <div className="bg-gray-100 min-h-screen">
-      <ProfileHeader />
+      {/* <ProfileHeader /> */}
 
       <div className="max-w-7xl mx-auto grid md:grid-cols-4 gap-6 p-6">
         {/* <Sidebar role="student" /> */}
