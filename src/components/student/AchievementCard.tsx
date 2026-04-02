@@ -1,4 +1,4 @@
-import { CheckCircle, Flame, GraduationCap, Trophy, Zap } from 'lucide-react';
+import { CheckCircle, Flame, GraduationCap, Trophy, Zap } from "lucide-react";
 
 export default function AchieveMentCard() {
   return (

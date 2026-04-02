@@ -1,6 +1,6 @@
-import AchieveMentCard from './AchievementCard';
-import StudentCourseCard from './StudentCourseCard';
-import StudentInfoCard from './StudentInfoCard';
+import AchieveMentCard from "./AchievementCard";
+import StudentCourseCard from "./StudentCourseCard";
+import StudentInfoCard from "./StudentInfoCard";
 
 export default function StudentOverview() {
   return (

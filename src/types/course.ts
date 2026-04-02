@@ -1,27 +1,21 @@
-// export type Course = {
-//   id: string;
-//   courseName: string;
-//   instructor: string;
-//   price: number;
-//   discount?: number;
-// };
-
-export type CourseStatus = 'new' | 'updated' | 'deleted';
+export type CourseStatus = "new" | "updated" | "deleted";
 
 export interface Course {
   id: string;
-  courseName: string;
-  instructor: string;
-  category?: string;
   price: number;
-  discount?: number;
+  category: string;
+  course_name: string;
+  instructor: string;
+  rating: number;
+  students: number;
+  duration: string;
+  level: string;
+  thumbnail: string;
   description?: string;
-  type?: CourseStatus;
-  date?: string;
 }
 
 export type Activity = {
-  type: 'review' | 'enrollment';
+  type: "review" | "enrollment";
   user: string;
   course: string;
 };

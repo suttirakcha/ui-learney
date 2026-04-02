@@ -3,11 +3,11 @@ import { Button } from "@/components/ui/button";
 import { CheckCircle, XCircle, Clock, Tag, User } from "lucide-react";
 import { Course } from "@/types/course";
 
-interface Props {
+interface PendingCourseCardProps {
   course: Course;
 }
 
-export default function PendingCourseCard({ course }: Props) {
+export default function PendingCourseCard({ course }: PendingCourseCardProps) {
   return (
     <Card>
       <CardContent className="p-6 space-y-4">
@@ -18,10 +18,10 @@ export default function PendingCourseCard({ course }: Props) {
               คอร์สใหม่
             </span>
 
-            <div className="flex items-center text-xs text-muted-foreground gap-1">
+            {/* <div className="flex items-center text-xs text-muted-foreground gap-1">
               <Clock size={14} />
               {course.date}
-            </div>
+            </div> */}
           </div>
 
           <div className="text-right">
@@ -33,7 +33,7 @@ export default function PendingCourseCard({ course }: Props) {
         </div>
 
         {/* Title */}
-        <h2 className="text-lg font-semibold">{course.courseName}</h2>
+        <h2 className="text-lg font-semibold">{course.course_name}</h2>
 
         {/* Meta */}
         <div className="flex gap-6 text-sm text-muted-foreground">

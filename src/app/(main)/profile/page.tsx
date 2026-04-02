@@ -1,8 +1,8 @@
-import { getMenusWithRole } from '@/lib/profile-menus';
-import { Role } from '@/types/user';
-import { redirect } from 'next/navigation';
+import { getMenusWithRole } from "@/lib/profile-menus";
+import { Role } from "@/types/user";
+import { redirect } from "next/navigation";
 
-const USER_ROLE: Role = 'ADMIN';
+const USER_ROLE: Role = "ADMIN";
 
 export default function ProfilePage() {
   const menus = getMenusWithRole(USER_ROLE);

@@ -1,8 +1,8 @@
-import StudentHistory from '@/components/student/StudentHistory';
-import { Metadata } from 'next';
+import StudentHistory from "@/components/student/StudentHistory";
+import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: 'ประวัติเรียนของฉัน',
+  title: "ประวัติเรียนของฉัน",
 };
 
 export default function PageHistory() {

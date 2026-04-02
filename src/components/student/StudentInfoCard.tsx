@@ -1,4 +1,4 @@
-import { BookOpen, CircleCheckBig, Clock2, Flame } from 'lucide-react';
+import { BookOpen, CircleCheckBig, Clock2, Flame } from "lucide-react";
 
 export default function StudentInfoCard() {
   return (

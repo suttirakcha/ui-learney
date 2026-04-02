@@ -1,20 +1,23 @@
-import Link from 'next/link';
-import PendingStats from '@/components/admin/pending-courses/PendingStats';
-import PendingCourseCard from '@/components/admin/pending-courses/PendingCourseCard';
-import EmptyState from '@/components/admin/pending-courses/EmptyState';
-import { Course } from '@/types/course';
+import Link from "next/link";
+// import PendingStats from "@/components/admin/pending-courses/PendingStats";
+import PendingCourseCard from "@/components/admin/pending-courses/PendingCourseCard";
+import EmptyState from "@/components/admin/pending-courses/EmptyState";
+import { Course } from "@/types/course";
 
 export default function PendingCoursesPage() {
   const courses: Course[] = [
     {
-      id: '1',
-      courseName: 'sdsdsd',
-      instructor: 'ครูสมหญิง',
-      category: 'marketing',
+      id: "1",
+      course_name: "sdsdsd",
+      instructor: "ครูสมหญิง",
+      category: "marketing",
       price: 544545,
-      description: 'dsdsd',
-      type: 'new',
-      date: '26 มี.ค. 2026, 12:07',
+      description: "dsdsd",
+      rating: 0,
+      students: 0,
+      level: "Beginner",
+      duration: "900",
+      thumbnail: "",
     },
   ];
 
@@ -38,7 +41,7 @@ export default function PendingCoursesPage() {
         </div>
       </div>
 
-      <PendingStats courses={courses} />
+      {/* <PendingStats courses={courses} /> */}
 
       {courses.length === 0 ? (
         <EmptyState />

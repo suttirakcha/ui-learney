@@ -1,6 +1,6 @@
-@import 'tailwindcss';
-@import 'tw-animate-css';
-@import 'shadcn/tailwind.css';
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -132,7 +132,7 @@
     @apply font-sans;
   }
   button:not(:disabled),
-  input[type='submit']:not(:disabled) {
+  input[type="submit"]:not(:disabled) {
     @apply cursor-pointer;
   }
 

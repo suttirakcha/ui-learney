@@ -1,9 +1,9 @@
-import ProfileSidebar from '@/components/profile/ProfileSidebar';
-import StudentCourseCard from '@/components/student/StudentCourseCard';
-import { Metadata } from 'next';
+import ProfileSidebar from "@/components/profile/ProfileSidebar";
+import StudentCourseCard from "@/components/student/StudentCourseCard";
+import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: 'ภาพรวมของฉัน',
+  title: "ภาพรวมของฉัน",
 };
 
 export default function page() {

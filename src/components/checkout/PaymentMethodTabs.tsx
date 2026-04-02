@@ -1,16 +1,16 @@
-import LnTabs from '../custom/LnTabs';
-import BankTransfer from './BankTransfer';
+import LnTabs from "../custom/LnTabs";
+import BankTransfer from "./BankTransfer";
 
 export default function PaymentMethodTabs() {
   const paymentMethodMenus = [
     {
-      label: 'QR Code',
-      value: 'qrcode',
+      label: "QR Code",
+      value: "qrcode",
       content: <>TEST QR CODE</>,
     },
     {
-      label: 'Bank Transfer',
-      value: 'bank-transfer',
+      label: "Bank Transfer",
+      value: "bank-transfer",
       content: <BankTransfer />,
     },
   ];
