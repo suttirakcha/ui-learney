@@ -1,11 +1,14 @@
 "use client";
 
+import { Role } from "@/types/user";
 import { createContext, useContext, useEffect, useState } from "react";
 
-type User = {
+export type User = {
   id?: string;
-  name: string;
+  fullname: string;
+  image?: string;
   email?: string;
+  role: Role;
 };
 
 type AuthContextType = {

@@ -101,11 +101,11 @@ export default function Navbar() {
               <button className="flex items-center gap-2 text-sm hover:text-cyan-600">
                 {/* Avatar */}
                 <div className="w-8 h-8 rounded-full bg-cyan-500 text-white flex items-center justify-center text-sm font-semibold">
-                  {user.name?.charAt(0)}
+                  {user.fullname?.charAt(0)}
                 </div>
 
                 {/* Name */}
-                {user.name}
+                {user.fullname}
               </button>
             </DropdownMenuTrigger>
 
