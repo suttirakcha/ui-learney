@@ -12,7 +12,7 @@ const CourseCard = ({ course }: CourseCardProps) => {
     id,
     price,
     category,
-    course_name,
+    courseName,
     instructor,
     thumbnail,
     rating,
@@ -20,6 +20,8 @@ const CourseCard = ({ course }: CourseCardProps) => {
     level,
     duration,
   } = course;
+
+  console.log(course);
 
   const originalPrice = price ? `฿${(price * 1.4).toFixed(0)}` : 0;
 
@@ -32,7 +34,7 @@ const CourseCard = ({ course }: CourseCardProps) => {
         {thumbnail ? (
           <Image
             src={thumbnail}
-            alt={course_name ?? "course-image"}
+            alt={courseName ?? "course-image"}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className="object-cover group-hover:scale-110 transition-transform duration-500"
@@ -47,7 +49,7 @@ const CourseCard = ({ course }: CourseCardProps) => {
 
       <div className="p-6 flex flex-col grow">
         <h3 className="text-xl font-bold text-gray-900 mb-2 line-clamp-2 group-hover:text-cyan-600 transition-colors">
-          {course_name}
+          {courseName}
         </h3>
         <p className="text-gray-500 text-sm mb-4">สอนโดย {instructor}</p>
 

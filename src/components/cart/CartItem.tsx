@@ -8,7 +8,7 @@ interface CartItemProps {
 }
 
 export default function CartItem({ course }: CartItemProps) {
-  const { course_name, price, instructor } = course;
+  const { courseName, price, instructor } = course;
 
   const priceAmount =
     typeof price === "number" ? price?.toLocaleString() : price;
@@ -28,7 +28,7 @@ export default function CartItem({ course }: CartItemProps) {
           {/* Course detail */}
           <div className="space-y-2">
             <div className="space-y-1">
-              <h1 className="text-2xl font-bold">{course_name}</h1>
+              <h1 className="text-2xl font-bold">{courseName}</h1>
               <p className="text-muted-foreground">โดย {instructor}</p>
             </div>
             <h2 className="text-primary font-bold text-xl">฿{priceAmount}</h2>
