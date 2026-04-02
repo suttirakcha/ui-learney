@@ -8,7 +8,7 @@ export default function PendingCoursesPage() {
   const courses: Course[] = [
     {
       id: "1",
-      course_name: "sdsdsd",
+      courseName: "sdsdsd",
       instructor: "ครูสมหญิง",
       category: "marketing",
       price: 544545,

@@ -17,7 +17,7 @@ export default function CourseCard({ course }: CourseCardProps) {
             คอร์สใหม่
           </span>
 
-          <h2 className="text-xl font-semibold">{course.course_name}</h2>
+          <h2 className="text-xl font-semibold">{course.courseName}</h2>
 
           <p className="text-sm text-gray-500">
             {course.instructor} • {course.category}

@@ -4,7 +4,7 @@ export interface Course {
   id: string;
   price: number;
   category: string;
-  course_name: string;
+  courseName: string;
   instructor: string;
   rating: number;
   students: number;
