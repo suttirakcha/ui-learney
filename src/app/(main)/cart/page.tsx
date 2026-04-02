@@ -49,7 +49,7 @@ export default function CartPage() {
           {carts.length ? (
             <main className="grid grid-cols-3 gap-6">
               <section className="col-span-2">
-                <CartItemList courses={carts} />
+                <CartItemList courses={[]} />
               </section>
               <section>
                 <OrderSummary onSubmit={handleCreateCheckout} />

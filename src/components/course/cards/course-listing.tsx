@@ -3,7 +3,7 @@
 import CourseHeader from "../header/course-header";
 import CourseList from "./course-list";
 
-import { Course } from "@/types/conse/conse.type";
+import { Course } from "@/types/course";
 import { categories } from "@/lib/categories";
 
 interface CourseListingProps {

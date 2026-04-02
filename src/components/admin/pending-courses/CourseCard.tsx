@@ -3,11 +3,11 @@
 import { Course } from "@/types/course";
 import { Button } from "@/components/ui/button";
 
-type Props = {
+type CourseCardProps = {
   course: Course;
 };
 
-export default function CourseCard({ course }: Props) {
+export default function CourseCard({ course }: CourseCardProps) {
   return (
     <div className="bg-white border rounded-2xl p-6 shadow-sm hover:shadow-md transition space-y-4">
       {/* HEADER */}
@@ -17,7 +17,7 @@ export default function CourseCard({ course }: Props) {
             คอร์สใหม่
           </span>
 
-          <h2 className="text-xl font-semibold">{course.courseName}</h2>
+          <h2 className="text-xl font-semibold">{course.course_name}</h2>
 
           <p className="text-sm text-gray-500">
             {course.instructor} • {course.category}

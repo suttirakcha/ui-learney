@@ -1,5 +1,5 @@
 import { fetchWithAuth } from "@/lib/api/fetchWithAuth";
-import { Course } from "@/types/conse/conse.type";
+import { Course } from "@/types/course";
 import { CourseDetail } from "@/types/conse/type-course-detail";
 import { CreateCoursePayload } from "@/types/conse/create-course.type";
 
@@ -12,7 +12,7 @@ export async function getCourses(category?: string): Promise<Course[]> {
       ? `?category=${encodeURIComponent(category)}`
       : "";
 
-  const res = await fetchWithAuth(`/courses${query}`);
+  const res = await fetchWithAuth(query ? `/courses${query}` : `/courses`);
 
   if (!res.ok) {
     throw new Error("Failed to fetch courses");
