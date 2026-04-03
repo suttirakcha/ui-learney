@@ -4,6 +4,8 @@ import CartItemList from "@/components/cart/CartItemList";
 import OrderSummary from "@/components/cart/OrderSummary";
 import { getCurrentCart } from "@/lib/api/cart/cart.service";
 
+export const dynamic = "force-dynamic";
+
 export default async function CartPage() {
   const currentCart = await getCurrentCart();
   const { cart, courses } = currentCart;

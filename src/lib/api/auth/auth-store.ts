@@ -14,17 +14,12 @@ export const setAccessToken = (token: string) => {
 
 export const getAccessToken = async () => {
   if (typeof window !== "undefined") {
-    return Cookies.get(ACCESS_TOKEN_KEY);
+    return Cookies.get(ACCESS_TOKEN_KEY) ?? null;
   }
 
-  try {
-    const { cookies } = await import("next/headers");
-    const cookieStore = await cookies();
-    return cookieStore.get(ACCESS_TOKEN_KEY)?.value || null;
-  } catch (error) {
-    console.error(error);
-    return null;
-  }
+  const { cookies } = await import("next/headers");
+  const cookieStore = await cookies();
+  return cookieStore.get(ACCESS_TOKEN_KEY)?.value ?? null;
 };
 
 export const clearAccessToken = () => {
