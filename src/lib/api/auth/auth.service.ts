@@ -1,8 +1,8 @@
 const API_URL = process.env.NEXT_PUBLIC_API!;
 
 import { ApiError } from "@/types/api/type-api";
+import { getAccessToken } from "./auth-store";
 // import { LoginResponse } from "@/types/auth/type-auth";
-import { setAccessToken } from "./auth-store";
 
 async function handleResponse<T>(res: Response): Promise<T> {
   const text = await res.text();
@@ -65,7 +65,7 @@ export async function login(data: { email: string; password: string }) {
     headers: {
       "Content-Type": "application/json",
     },
-    credentials: "include",
+    credentials: "include", // 🔥 สำคัญ
   });
 
   if (!res.ok) throw new Error("Login failed");
@@ -100,4 +100,48 @@ export async function logout() {
   if (!res.ok) throw new Error("Logout failed");
 
   return res;
+}
+
+export async function requestForgotPassword(email: string) {
+  const token = await getAccessToken();
+
+  const res = await fetch(`http://localhost:8000/auth/forgot-password`, {
+    method: "POST", // ✅ สำคัญ
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+    body: JSON.stringify({ email }), // ✅ ส่ง email
+  });
+
+  if (!res.ok) {
+    const error = await res.json();
+    throw new Error(error.message || "Forgot password failed");
+  }
+
+  return res.json(); // ✅ return ให้ frontend ใช้
+}
+export async function requestResetPassword(token: string, password: string) {
+  const accessToken = await getAccessToken();
+
+  const res = await fetch(`http://localhost:8000/auth/reset-password`, {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
+    },
+    body: JSON.stringify({
+      token,
+      password,
+    }),
+  });
+
+  if (!res.ok) {
+    // const error = await res.json();
+    throw new Error("Reset password failed");
+  }
+
+  // return res.json();
 }
