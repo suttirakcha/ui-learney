@@ -2,20 +2,28 @@ import { Course } from "@/types/course";
 import { Trash2 } from "lucide-react";
 import LnButton from "../custom/LnButton";
 import toast from "react-hot-toast";
+import { deleteItemFromCart } from "@/lib/api/cart/cart.service";
+import { revalidateCart } from "@/lib/revalidate";
+import Image from "next/image";
 
 interface CartItemProps {
   course: Course;
 }
 
 export default function CartItem({ course }: CartItemProps) {
-  const { course_name, price, instructor } = course;
+  const { courseName, price, instructor, thumbnail } = course;
 
   const priceAmount =
     typeof price === "number" ? price?.toLocaleString() : price;
 
-  /* TODO: Remove course from cart dynamically */
-  const handleRemoveCourseFromCart = () => {
-    toast.success("ลบคอร์สออกจากตะกร้าแล้ว");
+  const handleRemoveCourseFromCart = async (courseId: string) => {
+    try {
+      const res = await deleteItemFromCart(courseId);
+      toast.success(res.message);
+      revalidateCart();
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -23,12 +31,23 @@ export default function CartItem({ course }: CartItemProps) {
       <div className="flex justify-between">
         <div className="flex gap-4">
           {/* Image */}
-          <div className="bg-gray-300 rounded-md w-30 h-20"></div>
+          <div className="rounded-md overflow-hidden">
+            {thumbnail ? (
+              <Image
+                src={thumbnail}
+                alt={courseName ?? "course-image"}
+                width={120}
+                height={80}
+              />
+            ) : (
+              <div className="bg-gray-300 w-30 h-20"></div>
+            )}
+          </div>
 
           {/* Course detail */}
           <div className="space-y-2">
             <div className="space-y-1">
-              <h1 className="text-2xl font-bold">{course_name}</h1>
+              <h1 className="text-2xl font-bold">{courseName}</h1>
               <p className="text-muted-foreground">โดย {instructor}</p>
             </div>
             <h2 className="text-primary font-bold text-xl">฿{priceAmount}</h2>
@@ -39,7 +58,7 @@ export default function CartItem({ course }: CartItemProps) {
         <LnButton
           variant="ghost"
           className="flex items-center gap-2 text-destructive"
-          onClick={handleRemoveCourseFromCart}
+          onClick={() => handleRemoveCourseFromCart(course.id)}
         >
           <Trash2 />
           ลบ

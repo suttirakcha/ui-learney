@@ -33,7 +33,7 @@ export default function PendingCourseCard({ course }: PendingCourseCardProps) {
         </div>
 
         {/* Title */}
-        <h2 className="text-lg font-semibold">{course.course_name}</h2>
+        <h2 className="text-lg font-semibold">{course.courseName}</h2>
 
         {/* Meta */}
         <div className="flex gap-6 text-sm text-muted-foreground">

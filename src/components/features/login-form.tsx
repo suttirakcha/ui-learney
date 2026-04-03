@@ -7,6 +7,7 @@ import Link from "next/link";
 import { toast } from "react-hot-toast";
 import { useAuth } from "@/app/lib/AuthContext"; // ✅ เพิ่ม
 import LearneyLogo from "../custom/LearneyLogo";
+import { setAccessToken } from "@/lib/api/auth/auth-store";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -34,9 +35,7 @@ export default function LoginForm() {
 
       const res = await login({ email, password });
 
-      if (!res?.accessToken) {
-        throw new Error("Login failed");
-      }
+      setAccessToken(res.accessToken);
 
       // ✅ เก็บ user + set context
       localStorage.setItem("user", JSON.stringify(res.user));
@@ -56,7 +55,6 @@ export default function LoginForm() {
 
       const message = error.message || "เข้าสู่ระบบไม่สำเร็จ";
 
-      setErrorMessage(message);
       setErrorMessage(message);
       toast.error(message);
     } finally {
