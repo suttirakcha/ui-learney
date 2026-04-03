@@ -1,20 +1,34 @@
+import Cookies from "js-cookie";
+
 const ACCESS_TOKEN_KEY = "accessToken";
 
 export const setAccessToken = (token: string) => {
   if (typeof window !== "undefined") {
-    localStorage.setItem(ACCESS_TOKEN_KEY, token);
+    Cookies.set(ACCESS_TOKEN_KEY, token, {
+      expires: 10000,
+      secure: true,
+      sameSite: "strict",
+    });
   }
 };
 
-export const getAccessToken = () => {
+export const getAccessToken = async () => {
   if (typeof window !== "undefined") {
-    return localStorage.getItem(ACCESS_TOKEN_KEY);
+    return Cookies.get(ACCESS_TOKEN_KEY);
   }
-  return null;
+
+  try {
+    const { cookies } = await import("next/headers");
+    const cookieStore = await cookies();
+    return cookieStore.get(ACCESS_TOKEN_KEY)?.value || null;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
 };
 
 export const clearAccessToken = () => {
   if (typeof window !== "undefined") {
-    localStorage.removeItem(ACCESS_TOKEN_KEY);
+    return Cookies.remove(ACCESS_TOKEN_KEY);
   }
 };
