@@ -2,7 +2,6 @@ const API_URL = process.env.NEXT_PUBLIC_API!;
 
 import { ApiError } from "@/types/api/type-api";
 // import { LoginResponse } from "@/types/auth/type-auth";
-import { setAccessToken } from "./auth-store";
 
 async function handleResponse<T>(res: Response): Promise<T> {
   const text = await res.text();
@@ -65,7 +64,7 @@ export async function login(data: { email: string; password: string }) {
     headers: {
       "Content-Type": "application/json",
     },
-    credentials: "include",
+    credentials: "include", // 🔥 สำคัญ
   });
 
   if (!res.ok) throw new Error("Login failed");
