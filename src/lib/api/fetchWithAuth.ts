@@ -1,4 +1,5 @@
 import { getAccessToken, setAccessToken } from "./auth/auth-store";
+import { refreshToken } from "./auth/auth.service";
 
 const API_URL = process.env.NEXT_PUBLIC_API!;
 
@@ -6,9 +7,9 @@ export async function fetchWithAuth(
   endpoint: string,
   options: RequestInit = {},
 ) {
-  const token = getAccessToken();
+  const token = await getAccessToken();
 
-  let res = await fetch(`${API_URL}${endpoint}`, {
+  const res = await fetch(`${API_URL}${endpoint}`, {
     ...options,
     headers: {
       ...(options.headers || {}),
@@ -19,22 +20,14 @@ export async function fetchWithAuth(
   });
 
   // 🔥 refresh token ถ้า access token หมด
+
   if (res.status === 401) {
-    const refreshRes = await fetch(`${API_URL}/auth/refresh`, {
-      method: "POST",
-      credentials: "include",
-    });
-
-    if (!refreshRes.ok) {
-      throw new Error("Session expired");
-    }
-
-    const data = await refreshRes.json();
+    const data = await refreshToken();
 
     setAccessToken(data.accessToken);
 
     // 🔁 ยิงใหม่
-    res = await fetch(`${API_URL}${endpoint}`, {
+    return await fetch(`${API_URL}${endpoint}`, {
       ...options,
       headers: {
         ...(options.headers || {}),

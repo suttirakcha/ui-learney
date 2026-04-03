@@ -1,5 +1,6 @@
 "use client";
 
+import { clearAccessToken } from "@/lib/api/auth/auth-store";
 import { Role } from "@/types/user";
 import { createContext, useContext, useEffect, useState } from "react";
 
@@ -36,9 +37,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const logout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    sessionStorage.removeItem("token");
+    clearAccessToken();
+    // localStorage.removeItem("token");
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("user");
+    }
+    // sessionStorage.removeItem("token");
     setUser(null);
 
     // redirect ไป login
