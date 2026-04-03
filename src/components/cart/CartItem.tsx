@@ -18,7 +18,7 @@ export default function CartItem({ course }: CartItemProps) {
 
   const handleRemoveCourseFromCart = async (courseId: string) => {
     try {
-      const res = await deleteItemFromCart("1234");
+      const res = await deleteItemFromCart(courseId);
       toast.success(res.message);
       revalidateCart();
     } catch (error) {
