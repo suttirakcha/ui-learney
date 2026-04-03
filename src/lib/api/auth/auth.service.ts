@@ -72,8 +72,6 @@ export async function login(data: { email: string; password: string }) {
 
   const result = await res.json();
 
-  setAccessToken(result.accessToken);
-
   return result;
 }
 
@@ -83,10 +81,23 @@ export async function refreshToken() {
     credentials: "include",
   });
 
+  if (!res.ok) throw new Error("Session expired");
+
   const data = await handleResponse<{ accessToken: string }>(res);
 
-  // 🔥 update token ใหม่ใน memory
-  setAccessToken(data.accessToken);
-
   return data;
+}
+
+export async function logout() {
+  const res = await fetch(`${API_URL}/auth/logout`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  });
+
+  if (!res.ok) throw new Error("Logout failed");
+
+  return res;
 }

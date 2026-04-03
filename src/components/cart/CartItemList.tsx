@@ -1,3 +1,5 @@
+"use client";
+
 import { Course } from "@/types/course";
 import CartItem from "./CartItem";
 
