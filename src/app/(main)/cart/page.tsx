@@ -24,10 +24,10 @@ export default async function CartPage() {
           {courses.length ? (
             <main className="grid grid-cols-3 gap-6">
               <section className="col-span-2">
-                <CartItemList courses={courses} />
+                <CartItemList courses={courses ?? []} />
               </section>
               <section>
-                <OrderSummary cart={cart} />
+                <OrderSummary cart={cart ?? null} />
               </section>
             </main>
           ) : (

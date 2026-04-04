@@ -1,11 +1,20 @@
 import CourseDetailsPage from "@/components/course/coursedetails/DetailPage";
+import { getCourseById } from "@/lib/api/course/course.service";
+import { notFound } from "next/navigation";
 
-export default async function DetailCourse({
-  params,
-}: {
+interface DetailCourseProps {
   params: Promise<{ courseId: string }>;
-}) {
-  const { courseId } = await params;
+}
 
-  return <CourseDetailsPage courseId={courseId} />;
+export default async function DetailCourse({ params }: DetailCourseProps) {
+  const { courseId } = await params;
+  const course = await getCourseById(courseId);
+
+  console.log(course);
+
+  if (!course) {
+    return notFound();
+  }
+
+  return <CourseDetailsPage course={course} />;
 }
