@@ -27,7 +27,7 @@ export default async function CartPage() {
                 <CartItemList courses={courses ?? []} />
               </section>
               <section>
-                <OrderSummary cart={cart ?? null} />
+                <OrderSummary cart={cart ?? null} courses={courses ?? []} />
               </section>
             </main>
           ) : (

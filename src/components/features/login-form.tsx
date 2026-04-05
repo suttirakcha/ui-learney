@@ -35,7 +35,7 @@ export default function LoginForm() {
 
       const res = await login({ email, password });
 
-      setAccessToken(res.accessToken);
+      setAccessToken(res.accessToken ?? null);
 
       // ✅ เก็บ user + set context
       localStorage.setItem("user", JSON.stringify(res.user));
