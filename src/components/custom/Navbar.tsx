@@ -20,9 +20,11 @@ import {
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useAuth } from "@/app/lib/AuthContext";
 import SearchDialog from "../dialogs/SearchDialog";
+import CartLink from "../cart/CartLink";
+import { Skeleton } from "../ui/skeleton";
 
 export default function Navbar() {
   const [lang, setLang] = useState("ไทย");
@@ -30,41 +32,38 @@ export default function Navbar() {
 
   return (
     <nav className="flex items-center justify-between px-8 border-b bg-white fixed inset-x-0 z-10 h-18">
-      {/* Logo */}
-      <LearneyLogo />
+      <div className="flex items-center gap-8">
+        <LearneyLogo />
+        <div className="flex items-center gap-6 text-sm">
+          <Link
+            href="/course"
+            className="flex items-center gap-1 hover:text-cyan-600"
+          >
+            <BookOpen className="w-4 h-4" />
+            คอร์สเรียน
+          </Link>
 
-      {/* Menu */}
-      <div className="flex items-center gap-6 text-sm">
-        <Link
-          href="/course"
-          className="flex items-center gap-1 hover:text-cyan-600"
-        >
-          <BookOpen className="w-4 h-4" />
-          คอร์สเรียน
-        </Link>
+          <Link
+            href="/blog"
+            className="flex items-center gap-1 hover:text-cyan-600"
+          >
+            <Newspaper className="w-4 h-4" />
+            บทความ
+          </Link>
 
-        <Link
-          href="/blog"
-          className="flex items-center gap-1 hover:text-cyan-600"
-        >
-          <Newspaper className="w-4 h-4" />
-          บทความ
-        </Link>
-
-        <Link
-          href="/categories"
-          className="flex items-center gap-1 hover:text-cyan-600"
-        >
-          <LayoutGrid className="w-4 h-4" />
-          หมวดหมู่
-        </Link>
+          <Link
+            href="/categories"
+            className="flex items-center gap-1 hover:text-cyan-600"
+          >
+            <LayoutGrid className="w-4 h-4" />
+            หมวดหมู่
+          </Link>
+        </div>
       </div>
-
-      {/* Right side */}
-      <div className="flex items-center gap-4">
-        {/* Search */}
+      <div className="flex items-center gap-6">
         <SearchDialog />
-        {/* Language */}
+        <CartLink />
+
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <button className="flex items-center gap-1 text-sm hover:text-cyan-600">
@@ -84,55 +83,58 @@ export default function Navbar() {
           </DropdownMenuContent>
         </DropdownMenu>
 
-        {/* ✅ Auth */}
-        {!user ? (
-          <>
-            <Link href="/login">
-              <Button variant="ghost">Sign in</Button>
-            </Link>
+        <Suspense fallback={<Skeleton className="w-20 h-8" />}>
+          {!user ? (
+            <>
+              <Link href="/login">
+                <Button variant="ghost">Sign in</Button>
+              </Link>
 
-            <Link href="/register">
-              <Button className="bg-cyan-500 hover:bg-cyan-600">Sign up</Button>
-            </Link>
-          </>
-        ) : (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <button className="flex items-center gap-2 text-sm hover:text-cyan-600">
-                {/* Avatar */}
-                <div className="w-8 h-8 rounded-full bg-cyan-500 text-white flex items-center justify-center text-sm font-semibold">
-                  {user.fullname?.charAt(0)}
-                </div>
+              <Link href="/register">
+                <Button className="bg-cyan-500 hover:bg-cyan-600">
+                  Sign up
+                </Button>
+              </Link>
+            </>
+          ) : (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="flex items-center gap-2 text-sm hover:text-cyan-600">
+                  {/* Avatar */}
+                  <div className="w-8 h-8 rounded-full bg-cyan-500 text-white flex items-center justify-center text-sm font-semibold">
+                    {user.fullname?.charAt(0)}
+                  </div>
 
-                {/* Name */}
-                {user.fullname}
-              </button>
-            </DropdownMenuTrigger>
+                  {/* Name */}
+                  {user.fullname}
+                </button>
+              </DropdownMenuTrigger>
 
-            <DropdownMenuContent align="end" className="w-52">
-              <DropdownMenuItem asChild>
-                <Link href="/profile">👤 โปรไฟล์</Link>
-              </DropdownMenuItem>
+              <DropdownMenuContent align="end" className="w-52">
+                <DropdownMenuItem asChild>
+                  <Link href="/profile">👤 โปรไฟล์</Link>
+                </DropdownMenuItem>
 
-              <DropdownMenuItem asChild>
-                <Link href="/dashboard">📊 Dashboard</Link>
-              </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/dashboard">📊 Dashboard</Link>
+                </DropdownMenuItem>
 
-              <DropdownMenuItem asChild>
-                <Link href="/my-courses">🎓 คอร์สของฉัน</Link>
-              </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/my-courses">🎓 คอร์สของฉัน</Link>
+                </DropdownMenuItem>
 
-              <div className="border-t my-2" />
+                <div className="border-t my-2" />
 
-              <DropdownMenuItem
-                onClick={logout}
-                className="text-red-500 cursor-pointer"
-              >
-                🚪 ออกจากระบบ
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        )}
+                <DropdownMenuItem
+                  onClick={logout}
+                  className="text-red-500 cursor-pointer"
+                >
+                  🚪 ออกจากระบบ
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          )}
+        </Suspense>
       </div>
     </nav>
   );

@@ -15,6 +15,7 @@ export const addItemToCart = async (courseId: string) => {
     method: "POST",
     body: JSON.stringify({ courseId }),
   });
+
   return res.json();
 };
 
@@ -23,5 +24,6 @@ export const deleteItemFromCart = async (courseId: string) => {
     method: "DELETE",
     body: JSON.stringify({ courseId }),
   });
+
   return res.json();
 };
