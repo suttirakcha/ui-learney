@@ -4,6 +4,8 @@ import CartItemList from "@/components/cart/CartItemList";
 import OrderSummary from "@/components/cart/OrderSummary";
 import { getCurrentCart } from "@/lib/api/cart/cart.service";
 
+export const dynamic = "force-dynamic";
+
 export default async function CartPage() {
   const currentCart = await getCurrentCart();
   const { cart, courses } = currentCart;
@@ -22,10 +24,10 @@ export default async function CartPage() {
           {courses.length ? (
             <main className="grid grid-cols-3 gap-6">
               <section className="col-span-2">
-                <CartItemList courses={courses} />
+                <CartItemList courses={courses ?? []} />
               </section>
               <section>
-                <OrderSummary cart={cart} />
+                <OrderSummary cart={cart ?? null} />
               </section>
             </main>
           ) : (

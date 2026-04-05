@@ -11,12 +11,12 @@ export async function fetchWithAuth(
 
   const res = await fetch(`${API_URL}${endpoint}`, {
     ...options,
+    credentials: "include", // 🔥 สำคัญสุด
     headers: {
       ...(options.headers || {}),
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
       "Content-Type": "application/json",
     },
-    credentials: "include",
   });
 
   // 🔥 refresh token ถ้า access token หมด
@@ -29,12 +29,12 @@ export async function fetchWithAuth(
     // 🔁 ยิงใหม่
     return await fetch(`${API_URL}${endpoint}`, {
       ...options,
-      headers: {
-        ...(options.headers || {}),
-        Authorization: `Bearer ${data.accessToken}`,
-        "Content-Type": "application/json",
-      },
       credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        ...(options.headers || {}),
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
     });
   }
 

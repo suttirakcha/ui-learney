@@ -8,6 +8,7 @@ export async function getInstructorDashboard(): Promise<DashboardData> {
   const res = await fetchWithAuth("/instructor/dashboard");
 
   if (!res.ok) {
+    console.log("------", await res.json());
     throw new Error("Failed to fetch dashboard");
   }
 
