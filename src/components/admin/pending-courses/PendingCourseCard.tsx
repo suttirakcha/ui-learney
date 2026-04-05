@@ -1,6 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { CheckCircle, XCircle, Clock, Tag, User } from "lucide-react";
+import { CheckCircle, XCircle, Tag, User } from "lucide-react";
 import { Course } from "@/types/course";
 
 interface PendingCourseCardProps {

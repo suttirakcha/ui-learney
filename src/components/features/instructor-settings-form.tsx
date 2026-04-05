@@ -17,8 +17,8 @@ export default function InstructorSettingsForm() {
     defaultValues: initialValues,
   });
 
-  const onSubmit = (values: unknown) => {
-    console.log(onSubmit);
+  const onSubmit = (values: typeof initialValues) => {
+    console.log(values);
   };
 
   return (

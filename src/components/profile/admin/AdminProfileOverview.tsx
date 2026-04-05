@@ -1,6 +1,3 @@
-import ProfileHeader from "@/components/profile/ProfileHeader";
-
-import Sidebar from "@/components/admin/Sidebar";
 import Alerts from "@/components/admin/Alerts";
 import RecentActions from "@/components/admin/RecentActions";
 import StatsCard from "@/components/admin/StatsCard";

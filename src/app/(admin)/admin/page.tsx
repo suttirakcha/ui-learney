@@ -56,7 +56,7 @@ export default function AdminPage() {
     }
 
     load();
-  }, []);
+  }, [router]);
 
   if (loading || !dashboard) return <p className="p-10">Loading...</p>;
 

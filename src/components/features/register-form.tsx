@@ -1,11 +1,11 @@
 "use client";
 
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { register as registerUser } from "@/lib/api/auth/auth.service";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { toast } from "react-hot-toast";
-import { isApiError } from "@/utils/isApiError"; // ✅ เพิ่ม
+import { isApiError } from "@/utils/isApiError";
 import LearneyLogo from "../custom/LearneyLogo";
 
 type FormData = {
@@ -23,7 +23,7 @@ export default function RegisterForm() {
   const {
     register,
     handleSubmit,
-    watch,
+    control,
     setValue,
     formState: { errors, isSubmitting },
   } = useForm<FormData>({
@@ -32,15 +32,22 @@ export default function RegisterForm() {
     },
   });
 
-  const role = watch("role");
+  const role = useWatch({
+    control,
+    name: "role",
+  });
+  const password = useWatch({
+    control,
+    name: "password",
+  });
 
   const onSubmit = async (data: FormData) => {
-    const { accepted, role, ...rest } = data;
-
     const mappedRole = role === "STUDENT" ? "USER" : "INSTRUCTOR";
-
     const payload = {
-      ...rest,
+      fullname: data.fullname,
+      email: data.email,
+      password: data.password,
+      confirmPassword: data.confirmPassword,
       role: mappedRole,
     };
 
@@ -49,9 +56,6 @@ export default function RegisterForm() {
       toast.success("สมัครสมาชิกสำเร็จ 🎉");
       router.push("/login");
     } catch (err: unknown) {
-      console.log("❌ ERROR:", err);
-
-      // ✅ ใช้ type guard แทน any
       if (isApiError(err)) {
         if (err.code === "EMAIL_EXISTS") {
           toast.error("อีเมลนี้ถูกใช้ไปแล้ว");
@@ -151,7 +155,7 @@ export default function RegisterForm() {
               {...register("confirmPassword", {
                 required: "กรุณายืนยันรหัสผ่าน",
                 validate: (value) =>
-                  value === watch("password") || "รหัสผ่านไม่ตรงกัน",
+                  value === password || "รหัสผ่านไม่ตรงกัน",
               })}
               className="input"
               placeholder="กรุณายืนยันรหัสผ่าน"

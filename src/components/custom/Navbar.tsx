@@ -8,7 +8,6 @@ import {
   BookOpen,
   Newspaper,
   LayoutGrid,
-  Search,
   Globe,
   Check,
 } from "lucide-react";

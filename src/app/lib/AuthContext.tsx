@@ -1,9 +1,13 @@
 "use client";
 
 import { clearAccessToken } from "@/lib/api/auth/auth-store";
-import { logout as logoutRequest } from "@/lib/api/auth/auth.service";
+import {
+  logout as logoutRequest,
+  refreshToken,
+} from "@/lib/api/auth/auth.service";
 import { Role } from "@/types/user";
 import { createContext, useContext, useEffect, useState } from "react";
+import { setAccessToken } from "@/lib/api/auth/auth-store";
 
 export type User = {
   id?: string;
@@ -21,19 +25,50 @@ type AuthContextType = {
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
+function getStoredUser(): User | null {
+  if (typeof window === "undefined") {
+    return null;
+  }
+
+  const storedUser = localStorage.getItem("user");
+
+  if (!storedUser) {
+    return null;
+  }
+
+  try {
+    return JSON.parse(storedUser) as User;
+  } catch {
+    localStorage.removeItem("user");
+    return null;
+  }
+}
+
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null>(getStoredUser);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
+    let isMounted = true;
 
-    if (storedUser) {
+    async function syncSession() {
       try {
-        setUser(JSON.parse(storedUser));
+        const data = await refreshToken();
+        setAccessToken(data.accessToken ?? null);
       } catch {
+        clearAccessToken();
         localStorage.removeItem("user");
+
+        if (isMounted) {
+          setUser(null);
+        }
       }
     }
+
+    void syncSession();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const logout = async () => {

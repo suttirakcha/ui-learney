@@ -25,6 +25,18 @@ type MessageResponse = {
   message: string;
 };
 
+async function getServerCookieHeader() {
+  if (typeof window !== "undefined") {
+    return undefined;
+  }
+
+  const { cookies } = await import("next/headers");
+  const cookieStore = await cookies();
+  const cookieHeader = cookieStore.toString();
+
+  return cookieHeader || undefined;
+}
+
 async function handleResponse<T>(res: Response): Promise<T> {
   const text = await res.text();
 
@@ -90,9 +102,15 @@ export async function login(data: {
 }
 
 export async function refreshToken(): Promise<TokenResponse> {
+  const cookieHeader = await getServerCookieHeader();
   const res = await fetch(`${API_URL}/auth/refresh`, {
     method: "POST",
     credentials: "include",
+    headers: cookieHeader
+      ? {
+          Cookie: cookieHeader,
+        }
+      : undefined,
   });
 
   if (!res.ok) throw new Error("Session expired");

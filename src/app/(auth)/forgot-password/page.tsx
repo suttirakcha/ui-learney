@@ -1,19 +1,14 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
-import z from "zod";
-
 import { useState } from "react";
 
 import { requestForgotPassword } from "@/lib/api/auth/auth.service";
 
-const forgotPasswordSchema = z.object({
-  email: z.string().email("Please enter a valid email"),
-});
-
-type ForgotPasswordInput = z.infer<typeof forgotPasswordSchema>;
+type ForgotPasswordInput = {
+  email: string;
+};
 
 export default function ForgotPasswordPage() {
   const [done, setDone] = useState(false);
@@ -25,13 +20,12 @@ export default function ForgotPasswordPage() {
     formState: { errors, isSubmitting },
   } = useForm<ForgotPasswordInput>({
     defaultValues: { email: "" },
-    // resolver: zodResolver(forgotPasswordSchema),
   });
 
   const onSubmit = async (input: ForgotPasswordInput) => {
     setApiError(null);
+
     try {
-      console.log(input, "---------------------");
       await requestForgotPassword(input.email);
       setDone(true);
     } catch (error) {
@@ -74,7 +68,13 @@ export default function ForgotPasswordPage() {
                 <input
                   type="email"
                   placeholder="you@example.com"
-                  {...register("email")}
+                  {...register("email", {
+                    required: "Please enter your email",
+                    pattern: {
+                      value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                      message: "Please enter a valid email",
+                    },
+                  })}
                   className={`w-full rounded-xl border bg-white px-4 py-3 text-slate-900 outline-none transition ${
                     errors.email
                       ? "border-rose-400 focus:ring-2 focus:ring-rose-300"

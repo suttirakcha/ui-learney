@@ -19,7 +19,6 @@ const CourseCard = ({ course }: CourseCardProps) => {
     instructor,
     thumbnail,
     rating,
-    students,
     level,
     duration,
   } = course;
