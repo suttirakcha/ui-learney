@@ -36,6 +36,9 @@ interface PaymentDialogProps {
   courses: Course[];
 }
 
+const confirmButtonClassName =
+  "h-12 w-full rounded-[14px] bg-primary text-primary-foreground hover:bg-primary/90";
+
 const getErrorMessage = (error: unknown) => {
   if (error instanceof Error && error.message) {
     return error.message;
@@ -61,9 +64,23 @@ export default function PaymentDialog({
   const [isCreatingSession, setIsCreatingSession] = useState(false);
   const [isConfirming, setIsConfirming] = useState(false);
   const [hasTriedAutoCreate, setHasTriedAutoCreate] = useState(false);
-
   const amount = toPaymentNumber(cart.total) || toPaymentNumber(cart.subtotal);
   const hasCourses = courses.length > 0;
+  const tone = errorMessage
+    ? "error"
+    : paymentDetail?.sessionStatus === "SUCCESS"
+      ? "success"
+      : "info";
+  const message =
+    errorMessage ??
+    getSessionStatusMessage(paymentDetail?.sessionStatus ?? "EMPTY");
+
+  const resetDialogState = () => {
+    setSession(null);
+    setPaymentDetail(null);
+    setErrorMessage(null);
+    setHasTriedAutoCreate(false);
+  };
 
   const updateDialogState = (nextOpen: boolean) => {
     const nextSearchParams = new URLSearchParams(searchParams.toString());
@@ -72,10 +89,7 @@ export default function PaymentDialog({
       nextSearchParams.set("payment", "open");
     } else {
       nextSearchParams.delete("payment");
-      setSession(null);
-      setPaymentDetail(null);
-      setErrorMessage(null);
-      setHasTriedAutoCreate(false);
+      resetDialogState();
     }
 
     const nextUrl = nextSearchParams.toString()
@@ -147,21 +161,12 @@ export default function PaymentDialog({
       try {
         await syncPaymentDetail(session.paymentId);
       } catch {
-        // Ignore sync failures here and keep the visible error message.
+        // Keep the latest visible error message when the sync request fails.
       }
     } finally {
       setIsConfirming(false);
     }
   };
-
-  const tone = errorMessage
-    ? "error"
-    : paymentDetail?.sessionStatus === "SUCCESS"
-      ? "success"
-      : "info";
-  const message =
-    errorMessage ??
-    getSessionStatusMessage(paymentDetail?.sessionStatus ?? "EMPTY");
 
   return (
     <>
@@ -208,16 +213,19 @@ export default function PaymentDialog({
               </button>
             )}
 
-            <LnButton
-              className="h-12 w-full rounded-[14px] border-0 bg-[#69d8f4] text-[17px] font-semibold text-slate-900 hover:bg-[#58d1ef]"
+            <Button
+              type="button"
+              variant="default"
+              className={confirmButtonClassName}
               disabled={!session || isCreatingSession || isConfirming}
               onClick={handleConfirmPayment}
             >
               {isConfirming ? "กำลังบันทึกข้อมูล..." : "ยืนยันการชำระเงิน"}
-            </LnButton>
+            </Button>
 
-            <p className="text-center text-xs text-gray-400">
-              การชำระเงินนี้เป็นโหมดจำลองสำหรับเดโม และจะบันทึกข้อมูลเข้า dashboard เท่านั้น
+            <p className="text-muted-foreground text-center text-xs">
+              การชำระเงินนี้เป็นโหมดจำลองสำหรับเดโม และจะบันทึกข้อมูลเข้า
+              dashboard เท่านั้น
             </p>
           </div>
         </DialogContent>

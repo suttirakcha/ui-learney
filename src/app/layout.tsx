@@ -3,7 +3,7 @@ import { Kanit, Geist } from "next/font/google";
 import { cn } from "@/lib/utils";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
-import { AuthProvider } from "@/app/lib/AuthContext"; // ✅ เพิ่ม
+import { AuthProvider } from "@/app/lib/AuthContext";
 import MainContainer from "@/components/custom/MainContainer";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
@@ -38,8 +38,6 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <AuthProvider>
-          {" "}
-          {/* ✅ ครอบตรงนี้ */}
           <MainContainer>{children}</MainContainer>
           <Toaster position="top-center" />
         </AuthProvider>

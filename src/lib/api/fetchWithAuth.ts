@@ -3,12 +3,11 @@ import { refreshToken } from "./auth/auth.service";
 
 const API_URL = process.env.NEXT_PUBLIC_API!;
 
-export async function fetchWithAuth(
-  endpoint: string,
-  options: RequestInit = {},
-) {
-  const token = await getAccessToken();
-  const requestHeaders = new Headers(options.headers);
+function buildRequestHeaders(
+  token: string | null,
+  headers?: HeadersInit,
+): Headers {
+  const requestHeaders = new Headers(headers);
 
   if (token) {
     requestHeaders.set("Authorization", `Bearer ${token}`);
@@ -20,13 +19,21 @@ export async function fetchWithAuth(
     requestHeaders.set("Content-Type", "application/json");
   }
 
+  return requestHeaders;
+}
+
+export async function fetchWithAuth(
+  endpoint: string,
+  options: RequestInit = {},
+) {
+  const token = await getAccessToken();
+  const requestHeaders = buildRequestHeaders(token, options.headers);
+
   const res = await fetch(`${API_URL}${endpoint}`, {
     ...options,
-    credentials: "include", // 🔥 สำคัญสุด
+    credentials: "include",
     headers: requestHeaders,
   });
-
-  // 🔥 refresh token ถ้า access token หมด
 
   if (res.status === 401) {
     const data = await refreshToken().catch(() => {
@@ -35,20 +42,12 @@ export async function fetchWithAuth(
     });
 
     setAccessToken(data.accessToken ?? null);
-    const refreshedRequestHeaders = new Headers(options.headers);
+    const refreshedRequestHeaders = buildRequestHeaders(
+      data.accessToken ?? null,
+      options.headers,
+    );
 
-    if (data.accessToken) {
-      refreshedRequestHeaders.set("Authorization", `Bearer ${data.accessToken}`);
-    } else {
-      refreshedRequestHeaders.delete("Authorization");
-    }
-
-    if (!refreshedRequestHeaders.has("Content-Type")) {
-      refreshedRequestHeaders.set("Content-Type", "application/json");
-    }
-
-    // 🔁 ยิงใหม่
-    return await fetch(`${API_URL}${endpoint}`, {
+    return fetch(`${API_URL}${endpoint}`, {
       ...options,
       credentials: "include",
       headers: refreshedRequestHeaders,

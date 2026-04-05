@@ -1,8 +1,29 @@
+import type { ApiError } from "@/types/api/type-api";
+import type { Role } from "@/types/user";
+import { getAccessToken } from "./auth-store";
+
 const API_URL = process.env.NEXT_PUBLIC_API!;
 
-import { ApiError } from "@/types/api/type-api";
-import { getAccessToken } from "./auth-store";
-// import { LoginResponse } from "@/types/auth/type-auth";
+type AuthUser = {
+  id?: string;
+  fullname: string;
+  image?: string;
+  email?: string;
+  role: Role;
+};
+
+type AuthResponse = {
+  user: AuthUser;
+  accessToken?: string;
+};
+
+type TokenResponse = {
+  accessToken: string;
+};
+
+type MessageResponse = {
+  message: string;
+};
 
 async function handleResponse<T>(res: Response): Promise<T> {
   const text = await res.text();
@@ -12,7 +33,6 @@ async function handleResponse<T>(res: Response): Promise<T> {
   try {
     data = text ? JSON.parse(text) : {};
   } catch {
-    console.error("❌ NOT JSON:", text);
     throw new Error("API response is not JSON");
   }
 
@@ -35,17 +55,15 @@ async function handleResponse<T>(res: Response): Promise<T> {
   return data as T;
 }
 
-// ===============================
-// ✅ REGISTER
-// ===============================
 export async function register(data: {
   fullname: string;
   email: string;
   password: string;
   confirmPassword: string;
-}) {
+}): Promise<AuthResponse> {
   const res = await fetch(`${API_URL}/auth/register`, {
     method: "POST",
+    credentials: "include",
     headers: {
       "Content-Type": "application/json",
     },
@@ -55,27 +73,23 @@ export async function register(data: {
   return handleResponse(res);
 }
 
-// ===============================
-// ✅ LOGIN
-// ===============================
-export async function login(data: { email: string; password: string }) {
+export async function login(data: {
+  email: string;
+  password: string;
+}): Promise<AuthResponse> {
   const res = await fetch(`${API_URL}/auth/login`, {
     method: "POST",
-    body: JSON.stringify(data),
+    credentials: "include",
     headers: {
       "Content-Type": "application/json",
     },
-    credentials: "include", // 🔥 สำคัญ
+    body: JSON.stringify(data),
   });
 
-  if (!res.ok) throw new Error("Login failed");
-
-  const result = await res.json();
-
-  return result;
+  return handleResponse<AuthResponse>(res);
 }
 
-export async function refreshToken() {
+export async function refreshToken(): Promise<TokenResponse> {
   const res = await fetch(`${API_URL}/auth/refresh`, {
     method: "POST",
     credentials: "include",
@@ -83,12 +97,10 @@ export async function refreshToken() {
 
   if (!res.ok) throw new Error("Session expired");
 
-  const data = await handleResponse<{ accessToken: string }>(res);
-
-  return data;
+  return handleResponse<TokenResponse>(res);
 }
 
-export async function logout() {
+export async function logout(): Promise<MessageResponse> {
   const res = await fetch(`${API_URL}/auth/logout`, {
     method: "POST",
     headers: {
@@ -99,29 +111,27 @@ export async function logout() {
 
   if (!res.ok) throw new Error("Logout failed");
 
-  return res;
+  return handleResponse<MessageResponse>(res);
 }
 
-export async function requestForgotPassword(email: string) {
+export async function requestForgotPassword(
+  email: string,
+): Promise<MessageResponse> {
   const token = await getAccessToken();
 
   const res = await fetch(`${API_URL}/auth/forgot-password`, {
-    method: "POST", // ✅ สำคัญ
+    method: "POST",
     credentials: "include",
     headers: {
       "Content-Type": "application/json",
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
     },
-    body: JSON.stringify({ email }), // ✅ ส่ง email
+    body: JSON.stringify({ email }),
   });
 
-  if (!res.ok) {
-    const error = await res.json();
-    throw new Error(error.message || "Forgot password failed");
-  }
-
-  return res.json(); // ✅ return ให้ frontend ใช้
+  return handleResponse<MessageResponse>(res);
 }
+
 export async function requestResetPassword(token: string, password: string) {
   const accessToken = await getAccessToken();
 
@@ -138,10 +148,5 @@ export async function requestResetPassword(token: string, password: string) {
     }),
   });
 
-  if (!res.ok) {
-    // const error = await res.json();
-    throw new Error("Reset password failed");
-  }
-
-  // return res.json();
+  return handleResponse<MessageResponse>(res);
 }

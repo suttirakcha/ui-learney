@@ -14,12 +14,13 @@ interface OrderSummaryProps {
 
 export default function OrderSummary({ cart, courses }: OrderSummaryProps) {
   const { subtotal, total, discount } = cart;
+
   return (
-    <div className="border rounded-xl p-6 space-y-6">
-      <h2 className="font-bold text-2xl">สรุปรายการ</h2>
+    <div className="space-y-6 rounded-xl border p-6">
+      <h2 className="text-2xl font-bold">สรุปรายการ</h2>
       <div className="flex flex-col gap-4">
         <div className="space-y-1">
-          <h2 className="font-semibold">รหัสคูปอง</h2>
+          <h3 className="font-semibold">รหัสคูปอง</h3>
           <form className="flex gap-2">
             <Input type="text" placeholder="ใส่รหัสคูปอง" />
             <Button type="button" variant="outline">
@@ -28,16 +29,16 @@ export default function OrderSummary({ cart, courses }: OrderSummaryProps) {
           </form>
         </div>
         <div className="flex items-center justify-between">
-          <h1>ราคารวม:</h1>
+          <span>ราคารวม:</span>
           <p className="font-medium">{formatPaymentCurrency(subtotal)}</p>
         </div>
         <div className="flex items-center justify-between">
-          <h1>ส่วนลด:</h1>
+          <span>ส่วนลด:</span>
           <p className="font-medium">-{formatPaymentCurrency(discount)}</p>
         </div>
         <div className="flex items-center justify-between">
-          <h1 className="font-bold text-xl">ยอดรวมทั้งหมด:</h1>
-          <p className="text-primary font-bold text-xl">
+          <span className="text-xl font-bold">ยอดรวมทั้งหมด:</span>
+          <p className="text-primary text-xl font-bold">
             {formatPaymentCurrency(total)}
           </p>
         </div>

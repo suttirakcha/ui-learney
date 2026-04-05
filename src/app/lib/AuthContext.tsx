@@ -1,6 +1,7 @@
 "use client";
 
 import { clearAccessToken } from "@/lib/api/auth/auth-store";
+import { logout as logoutRequest } from "@/lib/api/auth/auth.service";
 import { Role } from "@/types/user";
 import { createContext, useContext, useEffect, useState } from "react";
 
@@ -14,8 +15,8 @@ export type User = {
 
 type AuthContextType = {
   user: User | null;
-  setUser: (user: User | null) => void; // ✅ เพิ่ม
-  logout: () => void;
+  setUser: (user: User | null) => void;
+  logout: () => Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -23,7 +24,6 @@ const AuthContext = createContext<AuthContextType | null>(null);
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
 
-  // ✅ โหลด user จาก localStorage ตอนเปิดเว็บ
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
 
@@ -36,17 +36,21 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
-  const logout = () => {
+  const logout = async () => {
+    try {
+      await logoutRequest();
+    } catch {
+      // Ignore logout request failures and clear the local session anyway.
+    }
+
     clearAccessToken();
-    // localStorage.removeItem("token");
+
     if (typeof window !== "undefined") {
       localStorage.removeItem("user");
     }
-    // sessionStorage.removeItem("token");
-    setUser(null);
 
-    // redirect ไป login
-    window.location.href = "/login";
+    setUser(null);
+    window.location.assign("/login");
   };
 
   return (
