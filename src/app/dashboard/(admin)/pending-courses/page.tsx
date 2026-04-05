@@ -18,6 +18,8 @@ export default function PendingCoursesPage() {
       level: "Beginner",
       duration: "900",
       thumbnail: "",
+      willLearnMessages: [],
+      requirements: [],
     },
   ];
 

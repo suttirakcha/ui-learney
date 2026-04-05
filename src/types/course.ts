@@ -12,6 +12,8 @@ export interface Course {
   level: string;
   thumbnail: string;
   description?: string;
+  willLearnMessages: string[];
+  requirements: string[];
 }
 
 export type Activity = {

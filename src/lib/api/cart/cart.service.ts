@@ -1,10 +1,12 @@
+import { redirect } from "next/navigation";
 import { fetchWithAuth } from "../fetchWithAuth";
 
 export const getCurrentCart = async () => {
   const res = await fetchWithAuth("/cart");
 
   if (!res.ok) {
-    throw new Error("Failed to fetch cart");
+    return redirect("/");
+    // throw new Error("Failed to fetch cart")
   }
 
   return res.json();
@@ -15,6 +17,7 @@ export const addItemToCart = async (courseId: string) => {
     method: "POST",
     body: JSON.stringify({ courseId }),
   });
+
   return res.json();
 };
 
@@ -23,5 +26,6 @@ export const deleteItemFromCart = async (courseId: string) => {
     method: "DELETE",
     body: JSON.stringify({ courseId }),
   });
+
   return res.json();
 };
