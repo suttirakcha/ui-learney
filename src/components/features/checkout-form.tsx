@@ -2,10 +2,8 @@
 
 import { useForm } from "react-hook-form";
 import LnInput from "../custom/LnInput";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { CheckoutValues } from "@/schemas/checkout.schema";
 import LnButton from "../custom/LnButton";
-import LnTabs from "../custom/LnTabs";
 import PaymentMethodTabs from "../checkout/PaymentMethodTabs";
 
 const initialValues = {

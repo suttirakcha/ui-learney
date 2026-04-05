@@ -10,8 +10,6 @@ export default async function DetailCourse({ params }: DetailCourseProps) {
   const { courseId } = await params;
   const course = await getCourseById(courseId);
 
-  console.log(course);
-
   if (!course) {
     return notFound();
   }
