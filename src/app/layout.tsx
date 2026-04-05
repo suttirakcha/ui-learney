@@ -7,7 +7,6 @@ import { AuthProvider } from "@/app/lib/AuthContext"; // ✅ เพิ่ม
 import MainContainer from "@/components/custom/MainContainer";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
-
 const kanit = Kanit({
   subsets: ["latin", "thai"],
   weight: ["400", "500", "600"],

@@ -105,7 +105,7 @@ export async function logout() {
 export async function requestForgotPassword(email: string) {
   const token = await getAccessToken();
 
-  const res = await fetch(`http://localhost:8000/auth/forgot-password`, {
+  const res = await fetch(`${API_URL}/auth/forgot-password`, {
     method: "POST", // ✅ สำคัญ
     credentials: "include",
     headers: {
@@ -125,7 +125,7 @@ export async function requestForgotPassword(email: string) {
 export async function requestResetPassword(token: string, password: string) {
   const accessToken = await getAccessToken();
 
-  const res = await fetch(`http://localhost:8000/auth/reset-password`, {
+  const res = await fetch(`${API_URL}/auth/reset-password`, {
     method: "POST",
     credentials: "include",
     headers: {

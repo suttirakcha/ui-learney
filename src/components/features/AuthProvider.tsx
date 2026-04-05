@@ -17,7 +17,7 @@ export default function AuthProvider({
         const data = await refreshToken();
 
         // 🔥 สำคัญมาก
-        setAccessToken(data.accessToken);
+        setAccessToken(data.accessToken ?? null);
       } catch {
         // ไม่มี session → ไม่ต้องทำอะไร
       } finally {
