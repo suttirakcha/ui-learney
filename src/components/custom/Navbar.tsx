@@ -62,7 +62,7 @@ export default function Navbar() {
       </div>
       <div className="flex items-center gap-6">
         <SearchDialog />
-        <CartLink />
+        {user && <CartLink />}
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
