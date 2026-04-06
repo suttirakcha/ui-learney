@@ -7,4 +7,7 @@ export type AuthenticatedUser = {
   email?: string;
   phone?: string;
   role: Role;
+  enrolledCourses?: {
+    courseId: string;
+  }[];
 };

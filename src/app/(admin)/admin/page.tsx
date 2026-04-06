@@ -66,6 +66,14 @@ export default function AdminPage() {
     <div className="min-h-screen bg-gray-100 p-8">
       {/* HEADER */} <h1 className="text-3xl font-bold">Admin Dashboard</h1>{" "}
       <p className="text-gray-500 mb-6">Platform overview and management </p>
+      <div className="mb-6">
+        <button
+          onClick={() => router.push("/admin/profile")}
+          className="bg-cyan-500 text-white px-4 py-2 rounded hover:bg-cyan-600"
+        >
+          Approve Courses
+        </button>
+      </div>
       {/* ================= TOP CARDS ================= */}
       <div className="grid grid-cols-4 gap-6 mb-8">
         <Card

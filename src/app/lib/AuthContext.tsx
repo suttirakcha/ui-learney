@@ -39,15 +39,19 @@ function getStoredUser(): User | null {
 }
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(getStoredUser);
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
     let isMounted = true;
 
     async function syncSession() {
+      const storedUser = getStoredUser();
       try {
         const data = await refreshToken();
         setAccessToken(data.accessToken ?? null);
+        if (isMounted) {
+          setUser(storedUser);
+        }
       } catch {
         clearAccessToken();
         localStorage.removeItem("user");
