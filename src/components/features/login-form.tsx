@@ -46,7 +46,7 @@ export default function LoginForm() {
       } else if (res.user.role === "INSTRUCTOR") {
         router.push("/instructor/dashboard");
       } else {
-        router.push("/dashboard");
+        router.push("/profile");
       }
     } catch (err: unknown) {
       const error = err as { message?: string };

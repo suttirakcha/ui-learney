@@ -6,20 +6,24 @@ import {
   InputGroupInput,
 } from "@/components/ui/input-group";
 import { Search, X } from "lucide-react";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 
 interface SearchFormProps {
   placeholder?: string;
 }
 
 export default function SearchForm({ placeholder }: SearchFormProps) {
-  const { register, handleSubmit, setValue, getValues } = useForm({
+  const { control, register, handleSubmit, setValue } = useForm({
     defaultValues: {
       search: "",
     },
   });
+  const search = useWatch({
+    control,
+    name: "search",
+  });
 
-  const onSubmit = (values: { search: string }) => {
+  const onSubmit = () => {
     // router
   };
 
@@ -33,7 +37,7 @@ export default function SearchForm({ placeholder }: SearchFormProps) {
         <InputGroupAddon>
           <Search />
         </InputGroupAddon>
-        {getValues("search") && (
+        {search && (
           <InputGroupAddon
             align="inline-end"
             className="cursor-pointer"

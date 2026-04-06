@@ -1,19 +1,11 @@
 import type { ApiError } from "@/types/api/type-api";
-import type { Role } from "@/types/user";
+import type { AuthenticatedUser } from "@/types/user";
 import { getAccessToken } from "./auth-store";
 
 const API_URL = process.env.NEXT_PUBLIC_API!;
 
-type AuthUser = {
-  id?: string;
-  fullname: string;
-  image?: string;
-  email?: string;
-  role: Role;
-};
-
 type AuthResponse = {
-  user: AuthUser;
+  user: AuthenticatedUser;
   accessToken?: string;
 };
 

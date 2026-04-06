@@ -5,21 +5,22 @@ import {
   logout as logoutRequest,
   refreshToken,
 } from "@/lib/api/auth/auth.service";
-import { Role } from "@/types/user";
-import { createContext, useContext, useEffect, useState } from "react";
+import type { AuthenticatedUser } from "@/types/user";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  type Dispatch,
+  type SetStateAction,
+} from "react";
 import { setAccessToken } from "@/lib/api/auth/auth-store";
 
-export type User = {
-  id?: string;
-  fullname: string;
-  image?: string;
-  email?: string;
-  role: Role;
-};
+export type User = AuthenticatedUser;
 
 type AuthContextType = {
   user: User | null;
-  setUser: (user: User | null) => void;
+  setUser: Dispatch<SetStateAction<User | null>>;
   logout: () => Promise<void>;
 };
 
@@ -45,15 +46,19 @@ function getStoredUser(): User | null {
 }
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(getStoredUser);
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
     let isMounted = true;
 
     async function syncSession() {
+      const storedUser = getStoredUser();
       try {
         const data = await refreshToken();
         setAccessToken(data.accessToken ?? null);
+        if (isMounted) {
+          setUser(storedUser);
+        }
       } catch {
         clearAccessToken();
         localStorage.removeItem("user");
