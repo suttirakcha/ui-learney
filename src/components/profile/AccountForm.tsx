@@ -2,25 +2,35 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 
-export default function AccountForm() {
+interface AccountFormProps {
+  defaultFullname?: string;
+  defaultEmail?: string;
+  title?: string;
+}
+
+export default function AccountForm({
+  defaultFullname = "สมชาย นักเรียน",
+  defaultEmail = "student@learney.com",
+  title = "การตั้งค่าบัญชี",
+}: AccountFormProps) {
   return (
     <div className="bg-white p-6 rounded-xl shadow-sm">
-      <h2 className="text-lg font-semibold mb-4">Account Settings</h2>
+      <h2 className="text-lg font-semibold mb-4">{title}</h2>
 
       <div className="space-y-4">
         <div>
-          <label className="text-sm">Full Name</label>
-          <Input defaultValue="สมชาย นักเรียน" />
+          <label className="text-sm">ชื่อ - นามสกุล</label>
+          <Input defaultValue={defaultFullname} />
         </div>
 
         <div>
-          <label className="text-sm">Email</label>
-          <Input defaultValue="student@learney.com" />
+          <label className="text-sm">อีเมล</label>
+          <Input defaultValue={defaultEmail} />
         </div>
 
         <div>
-          <label className="text-sm">Bio</label>
-          <Textarea placeholder="Tell us about yourself..." />
+          <label className="text-sm">แนะนำตัว</label>
+          <Textarea placeholder="บอกเราสักนิดเกี่ยวกับตัวคุณ" />
         </div>
 
         <Button className="bg-cyan-500 hover:bg-cyan-600">

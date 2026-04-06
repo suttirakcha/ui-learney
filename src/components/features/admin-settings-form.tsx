@@ -1,9 +1,8 @@
 export default function AdminSettingsForm() {
   return (
     <div className="space-y-4">
-      {/* Name */}
       <div>
-        <label className="text-sm text-gray-500">Admin Name</label>
+        <label className="text-sm text-gray-500">ชื่อผู้ดูแลระบบ</label>
         <input
           className="w-full mt-1 p-3 rounded-xl bg-gray-100 outline-none"
           value="แอดมิน ระบบ"
@@ -11,9 +10,8 @@ export default function AdminSettingsForm() {
         />
       </div>
 
-      {/* Email */}
       <div>
-        <label className="text-sm text-gray-500">Email</label>
+        <label className="text-sm text-gray-500">อีเมล</label>
         <input
           className="w-full mt-1 p-3 rounded-xl bg-gray-100 outline-none"
           value="admin@learny.com"
@@ -21,9 +19,10 @@ export default function AdminSettingsForm() {
         />
       </div>
 
-      {/* Commission */}
       <div>
-        <label className="text-sm text-gray-500">Platform Commission (%)</label>
+        <label className="text-sm text-gray-500">
+          ค่าคอมมิชชันแพลตฟอร์ม (%)
+        </label>
         <input
           className="w-full mt-1 p-3 rounded-xl bg-gray-100 outline-none"
           defaultValue="15"

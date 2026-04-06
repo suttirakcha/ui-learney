@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 export default function SecurityCard() {
   return (
     <div className="space-y-6 p-6 rounded-xl border border-accent">
-      <h2 className="text-2xl font-semibold">Security</h2>
+      <h2 className="text-2xl font-semibold">ความปลอดภัย</h2>
       <div className="p-6 rounded-xl border border-accent flex justify-between items-center">
         <div className="flex gap-3 items-center">
           <div className="bg-primary/10 p-3 rounded-full">
@@ -14,7 +14,7 @@ export default function SecurityCard() {
           <div>
             <p className="font-medium">เปลี่ยนรหัสผ่าน</p>
             <p className="text-sm text-gray-500">
-              Update your password to keep your account secure
+              อัปเดตรหัสผ่านเพื่อให้บัญชีของคุณปลอดภัยอยู่เสมอ
             </p>
           </div>
         </div>
