@@ -6,14 +6,21 @@ import {
   refreshToken,
 } from "@/lib/api/auth/auth.service";
 import type { AuthenticatedUser } from "@/types/user";
-import { createContext, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  type Dispatch,
+  type SetStateAction,
+} from "react";
 import { setAccessToken } from "@/lib/api/auth/auth-store";
 
 export type User = AuthenticatedUser;
 
 type AuthContextType = {
   user: User | null;
-  setUser: (user: User | null) => void;
+  setUser: Dispatch<SetStateAction<User | null>>;
   logout: () => Promise<void>;
 };
 

@@ -1,16 +1,8 @@
 import type { Metadata } from "next";
-import { Kanit, Geist } from "next/font/google";
-import { cn } from "@/lib/utils";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "@/app/lib/AuthContext";
 import MainContainer from "@/components/custom/MainContainer";
-
-const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
-const kanit = Kanit({
-  subsets: ["latin", "thai"],
-  weight: ["400", "500", "600"],
-});
 
 export const metadata: Metadata = {
   title: {
@@ -26,16 +18,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html
-      lang="en"
-      className={cn(
-        "h-full",
-        "antialiased",
-        kanit.className,
-        "font-sans",
-        geist.variable,
-      )}
-    >
+    <html lang="en" className="h-full antialiased font-sans">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600&display=swap"
+        />
+      </head>
       <body className="min-h-full flex flex-col">
         <AuthProvider>
           <MainContainer>{children}</MainContainer>

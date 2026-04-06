@@ -69,8 +69,14 @@ export default function AccountForm({
         image: form.image.trim(),
       });
 
-      setUser(updatedUser);
-      localStorage.setItem("user", JSON.stringify(updatedUser));
+      const nextUser = {
+        ...user,
+        ...updatedUser,
+        enrolledCourses: updatedUser.enrolledCourses ?? user?.enrolledCourses,
+      };
+
+      setUser(nextUser);
+      localStorage.setItem("user", JSON.stringify(nextUser));
       toast.success("บันทึกข้อมูลโปรไฟล์เรียบร้อยแล้ว");
     } catch (error) {
       toast.error(

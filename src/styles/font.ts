@@ -1,7 +1,3 @@
-import { Kanit } from "next/font/google";
-
-export const kanit = Kanit({
-  weight: ["300", "400", "500", "600", "700"],
-  subsets: ["thai", "latin"],
-  display: "swap",
-});
+export const kanit = {
+  className: "font-sans",
+} as const;
