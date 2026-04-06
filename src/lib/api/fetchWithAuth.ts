@@ -3,38 +3,54 @@ import { refreshToken } from "./auth/auth.service";
 
 const API_URL = process.env.NEXT_PUBLIC_API!;
 
+function buildRequestHeaders(
+  token: string | null,
+  headers?: HeadersInit,
+): Headers {
+  const requestHeaders = new Headers(headers);
+
+  if (token) {
+    requestHeaders.set("Authorization", `Bearer ${token}`);
+  } else {
+    requestHeaders.delete("Authorization");
+  }
+
+  if (!requestHeaders.has("Content-Type")) {
+    requestHeaders.set("Content-Type", "application/json");
+  }
+
+  return requestHeaders;
+}
+
 export async function fetchWithAuth(
   endpoint: string,
   options: RequestInit = {},
 ) {
   const token = await getAccessToken();
+  const requestHeaders = buildRequestHeaders(token, options.headers);
 
   const res = await fetch(`${API_URL}${endpoint}`, {
     ...options,
-    credentials: "include", // 🔥 สำคัญสุด
-    headers: {
-      ...(options.headers || {}),
-      ...(token ? { Authorization: `Bearer ${token}` } : {}),
-      "Content-Type": "application/json",
-    },
+    credentials: "include",
+    headers: requestHeaders,
   });
 
-  // 🔥 refresh token ถ้า access token หมด
-
   if (res.status === 401) {
-    const data = await refreshToken();
+    const data = await refreshToken().catch(() => {
+      setAccessToken(null);
+      throw new Error("Session expired");
+    });
 
-    setAccessToken(data.accessToken);
+    setAccessToken(data.accessToken ?? null);
+    const refreshedRequestHeaders = buildRequestHeaders(
+      data.accessToken ?? null,
+      options.headers,
+    );
 
-    // 🔁 ยิงใหม่
-    return await fetch(`${API_URL}${endpoint}`, {
+    return fetch(`${API_URL}${endpoint}`, {
       ...options,
       credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-        ...(options.headers || {}),
-        ...(token ? { Authorization: `Bearer ${token}` } : {}),
-      },
+      headers: refreshedRequestHeaders,
     });
   }
 

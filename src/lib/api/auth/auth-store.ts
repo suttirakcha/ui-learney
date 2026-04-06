@@ -2,12 +2,17 @@ import Cookies from "js-cookie";
 
 const ACCESS_TOKEN_KEY = "accessToken";
 
-export const setAccessToken = (token: string) => {
+export const setAccessToken = (token: string | null | undefined) => {
   if (typeof window !== "undefined") {
+    if (!token) {
+      Cookies.remove(ACCESS_TOKEN_KEY);
+      return;
+    }
+
     Cookies.set(ACCESS_TOKEN_KEY, token, {
       expires: 10000,
-      secure: true,
-      sameSite: "strict",
+      secure: window.location.protocol === "https:",
+      sameSite: "lax",
     });
   }
 };

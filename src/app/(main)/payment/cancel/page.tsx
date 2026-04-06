@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
 
-export default function CheckoutPage() {
+export default function PaymentCancelPage() {
   redirect("/cart?payment=open");
 }

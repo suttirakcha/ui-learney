@@ -5,13 +5,13 @@ import { login } from "@/lib/api/auth/auth.service";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { toast } from "react-hot-toast";
-import { useAuth } from "@/app/lib/AuthContext"; // ✅ เพิ่ม
+import { useAuth } from "@/app/lib/AuthContext";
 import LearneyLogo from "../custom/LearneyLogo";
 import { setAccessToken } from "@/lib/api/auth/auth-store";
 
 export default function LoginForm() {
   const router = useRouter();
-  const { setUser } = useAuth(); // ✅ เพิ่ม
+  const { setUser } = useAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -35,9 +35,7 @@ export default function LoginForm() {
 
       const res = await login({ email, password });
 
-      setAccessToken(res.accessToken);
-
-      // ✅ เก็บ user + set context
+      setAccessToken(res.accessToken ?? null);
       localStorage.setItem("user", JSON.stringify(res.user));
       setUser(res.user);
 
@@ -82,7 +80,6 @@ export default function LoginForm() {
           onChange={(e) => {
             setEmail(e.target.value);
             setErrorMessage("");
-            setErrorMessage("");
           }}
         />
       </div>
@@ -96,7 +93,6 @@ export default function LoginForm() {
           value={password}
           onChange={(e) => {
             setPassword(e.target.value);
-            setErrorMessage("");
             setErrorMessage("");
           }}
         />

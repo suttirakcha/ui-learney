@@ -5,8 +5,11 @@ export const getCurrentCart = async () => {
   const res = await fetchWithAuth("/cart");
 
   if (!res.ok) {
-    return redirect("/");
-    // throw new Error("Failed to fetch cart")
+    if (typeof window === "undefined") {
+      return redirect("/");
+    }
+
+    throw new Error("Failed to fetch cart");
   }
 
   return res.json();

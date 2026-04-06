@@ -4,10 +4,7 @@ import {
   Clock2,
   Flame,
   GraduationCap,
-  LogOut,
-  Settings,
   Trophy,
-  User,
   Zap,
 } from "lucide-react";
 

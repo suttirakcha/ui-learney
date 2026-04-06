@@ -1,5 +1,3 @@
-import ProfileHeader from "@/components/profile/ProfileHeader";
-// import Sidebar from "@/components/profile/Sidebar";
 import AccountForm from "@/components/profile/AccountForm";
 import SecurityCard from "@/components/profile/SecurityCard";
 

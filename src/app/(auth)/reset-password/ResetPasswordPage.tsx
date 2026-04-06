@@ -1,29 +1,15 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
-import z from "zod";
-// import { requestResetPassword } from "@/libs/api/password";
 import { useMemo, useState } from "react";
-import { signOut } from "next-auth/react";
 import { requestResetPassword } from "@/lib/api/auth/auth.service";
 
-const resetPasswordSchema = z
-  .object({
-    password: z
-      .string()
-      .min(6, "Password must be at least 6 characters")
-      .regex(/^[a-zA-Z0-9]+$/, "Use only English letters and numbers"),
-    confirmPassword: z.string().min(1, "Please confirm your password"),
-  })
-  .refine((value) => value.password === value.confirmPassword, {
-    path: ["confirmPassword"],
-    message: "Passwords do not match",
-  });
-
-type ResetPasswordInput = z.infer<typeof resetPasswordSchema>;
+type ResetPasswordInput = {
+  password: string;
+  confirmPassword: string;
+};
 
 export default function ResetPasswordPage() {
   const searchParams = useSearchParams();
@@ -38,14 +24,13 @@ export default function ResetPasswordPage() {
     formState: { errors, isSubmitting },
   } = useForm<ResetPasswordInput>({
     defaultValues: { password: "", confirmPassword: "" },
-    // resolver: zodResolver(resetPasswordSchema),
   });
 
   const onSubmit = async (input: ResetPasswordInput) => {
     setApiError(null);
+
     try {
       await requestResetPassword(token, input.password);
-      // await signOut({ redirect: false });
       router.push("/login");
       setDone(true);
     } catch (error) {
@@ -96,7 +81,17 @@ export default function ResetPasswordPage() {
                 <input
                   type="password"
                   placeholder="At least 6 letters/numbers"
-                  {...register("password")}
+                  {...register("password", {
+                    required: "Password must be at least 6 characters",
+                    minLength: {
+                      value: 6,
+                      message: "Password must be at least 6 characters",
+                    },
+                    pattern: {
+                      value: /^[a-zA-Z0-9]+$/,
+                      message: "Use only English letters and numbers",
+                    },
+                  })}
                   className={`w-full rounded-xl border bg-white px-4 py-3 text-slate-900 outline-none transition ${
                     errors.password
                       ? "border-rose-400 focus:ring-2 focus:ring-rose-300"
@@ -117,7 +112,11 @@ export default function ResetPasswordPage() {
                 <input
                   type="password"
                   placeholder="Repeat your new password"
-                  {...register("confirmPassword")}
+                  {...register("confirmPassword", {
+                    required: "Please confirm your password",
+                    validate: (value, values) =>
+                      value === values.password || "Passwords do not match",
+                  })}
                   className={`w-full rounded-xl border bg-white px-4 py-3 text-slate-900 outline-none transition ${
                     errors.confirmPassword
                       ? "border-rose-400 focus:ring-2 focus:ring-rose-300"
