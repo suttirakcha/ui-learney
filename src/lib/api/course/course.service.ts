@@ -12,13 +12,19 @@ export async function getCourses(category?: string): Promise<Course[]> {
       ? `?category=${encodeURIComponent(category)}`
       : "";
 
-  const res = await fetchApi(query ? `/courses${query}` : `/courses`);
+  try {
+    const res = await fetchApi(query ? `/courses${query}` : `/courses`);
 
-  if (!res.ok) {
-    throw new Error("Failed to fetch courses");
+    if (!res.ok) {
+      console.error("Failed to fetch courses:", res.status, res.statusText);
+      return [];
+    }
+
+    return res.json();
+  } catch (error) {
+    console.error("Failed to fetch courses:", error);
+    return [];
   }
-
-  return res.json();
 }
 
 // ===============================
