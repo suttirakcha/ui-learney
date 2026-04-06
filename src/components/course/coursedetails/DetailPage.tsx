@@ -4,6 +4,11 @@ import { CheckCircle, CirclePlay, Clock, Dot, Star } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { Course } from "@/types/course";
+import { useAuth } from "@/app/lib/AuthContext";
+import { useRouter } from "next/navigation";
+import { addItemToCart } from "@/lib/api/cart/cart.service";
+import toast from "react-hot-toast";
+import { MouseEvent } from "react";
 
 interface CourseDetailsPageProps {
   course: Course;
@@ -11,6 +16,7 @@ interface CourseDetailsPageProps {
 
 export default function CourseDetailsPage({ course }: CourseDetailsPageProps) {
   const {
+    id,
     courseName,
     description,
     rating,
@@ -20,6 +26,31 @@ export default function CourseDetailsPage({ course }: CourseDetailsPageProps) {
     price,
     requirements,
   } = course;
+
+  const { user } = useAuth();
+  const router = useRouter();
+
+  const isEnrolled = user?.enrolledCourses?.find(
+    (course) => course.courseId === id,
+  );
+
+  const handleAddToCart = async (courseId: string) => {
+    try {
+      const res = await addItemToCart(courseId);
+      toast.success(res.message);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleClickEnroll = (courseId: string) => {
+    if (isEnrolled) {
+      router.push(`/course/${course.id}/lesson`);
+    } else {
+      handleAddToCart(courseId);
+    }
+  };
+
   return (
     <div className="space-y-4">
       {/* HERO */}
@@ -69,13 +100,16 @@ export default function CourseDetailsPage({ course }: CourseDetailsPageProps) {
             <div className="p-4 space-y-4">
               <div className="text-2xl font-bold">฿{price}</div>
 
-              <button className="w-full bg-cyan-500 text-white py-2 rounded-lg font-semibold hover:bg-cyan-600">
-                Enroll Now
+              <button
+                onClick={() => handleClickEnroll(course.id)}
+                className="w-full bg-cyan-500 text-white py-2 rounded-lg font-semibold hover:bg-cyan-600"
+              >
+                {isEnrolled ? "เข้าเรียน" : "เพิ่มใส่ตะกร้า"}
               </button>
-
+              {/* 
               <button className="w-full border py-2 rounded-lg text-gray-600">
                 Add to Wishlist
-              </button>
+              </button> */}
 
               <div className="text-sm text-gray-500 space-y-1 pt-2">
                 <p>✔ Certificate of completion</p>

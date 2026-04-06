@@ -5,7 +5,7 @@ import { login } from "@/lib/api/auth/auth.service";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { toast } from "react-hot-toast";
-import { useAuth } from "@/app/lib/AuthContext";
+import { useAuth, User } from "@/app/lib/AuthContext";
 import LearneyLogo from "../custom/LearneyLogo";
 import { setAccessToken } from "@/lib/api/auth/auth-store";
 
@@ -37,7 +37,7 @@ export default function LoginForm() {
 
       setAccessToken(res.accessToken ?? null);
       localStorage.setItem("user", JSON.stringify(res.user));
-      setUser(res.user);
+      setUser(res.user as User);
 
       toast.success("เข้าสู่ระบบสำเร็จ 🎉");
 

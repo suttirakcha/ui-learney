@@ -7,7 +7,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function CartLink() {
-  const [carts, setCarts] = useState<Cart[]>([]);
+  const [carts, setCarts] = useState<Cart[] | null>(null);
 
   useEffect(() => {
     const run = async () => {
@@ -23,9 +23,12 @@ export default function CartLink() {
 
   return (
     <Link href="/cart" className="relative">
-      <p className="absolute -top-2 -right-2 w-4 h-4 bg-primary rounded-full flex items-center justify-center text-xs text-muted">
-        {carts.length ?? 0}
-      </p>
+      <span
+        className="absolute -top-2 -right-2 w-4 h-4 bg-primary rounded-full items-center justify-center text-xs text-muted"
+        style={{ display: carts?.length ? "flex" : "none" }}
+      >
+        {carts?.length ?? 0}
+      </span>
       <ShoppingCart className="w-5 h-5" />
     </Link>
   );
