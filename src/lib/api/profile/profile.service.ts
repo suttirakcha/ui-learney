@@ -5,6 +5,7 @@ import type {
   InstructorCourseView,
   StudentOverviewData,
 } from "@/types/profile";
+import type { AuthenticatedUser } from "@/types/user";
 
 type InstructorCourseApi = {
   id: string;
@@ -112,4 +113,33 @@ export async function getAdminPendingPreview(
 export async function getAdminDashboard(): Promise<DashboardData> {
   const res = await fetchWithAuth("/admin/dashboard");
   return safeJson<DashboardData>(res, "ไม่สามารถโหลดข้อมูลผู้ดูแลระบบได้");
+}
+
+export async function updateMyProfile(payload: {
+  fullname: string;
+  email: string;
+  phone?: string;
+  image?: string;
+}): Promise<AuthenticatedUser> {
+  const res = await fetchWithAuth("/users/me", {
+    method: "PATCH",
+    body: JSON.stringify(payload),
+  });
+
+  return safeJson<AuthenticatedUser>(res, "ไม่สามารถบันทึกข้อมูลโปรไฟล์ได้");
+}
+
+export async function changeMyPassword(payload: {
+  currentPassword: string;
+  newPassword: string;
+}) {
+  const res = await fetchWithAuth("/users/me/password", {
+    method: "PATCH",
+    body: JSON.stringify(payload),
+  });
+
+  return safeJson<{ message: string }>(
+    res,
+    "ไม่สามารถเปลี่ยนรหัสผ่านได้",
+  );
 }

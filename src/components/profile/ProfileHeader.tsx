@@ -17,9 +17,18 @@ export default function ProfileHeader({ user }: ProfileHeaderProps) {
   return (
     <div className="bg-primary text-white">
       <div className="mx-auto flex max-w-7xl w-full flex-col gap-6 p-8 sm:flex-row sm:items-center">
-        <div className="w-32 h-32 rounded-full border-4 border-accent/30 flex items-center justify-center text-5xl font-bold hover:border-accent transition cursor-pointer">
-          {avatarInitial}
-        </div>
+        {user?.image ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={user.image}
+            alt={displayName}
+            className="h-32 w-32 rounded-full border-4 border-accent/30 object-cover"
+          />
+        ) : (
+          <div className="w-32 h-32 rounded-full border-4 border-accent/30 flex items-center justify-center text-5xl font-bold hover:border-accent transition cursor-pointer">
+            {avatarInitial}
+          </div>
+        )}
         <div className="space-y-3">
           <div className="space-y-1">
             <p className="text-sm font-medium text-white/70">{description}</p>

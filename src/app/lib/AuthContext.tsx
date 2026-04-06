@@ -5,17 +5,11 @@ import {
   logout as logoutRequest,
   refreshToken,
 } from "@/lib/api/auth/auth.service";
-import { Role } from "@/types/user";
+import type { AuthenticatedUser } from "@/types/user";
 import { createContext, useContext, useEffect, useState } from "react";
 import { setAccessToken } from "@/lib/api/auth/auth-store";
 
-export type User = {
-  id?: string;
-  fullname: string;
-  image?: string;
-  email?: string;
-  role: Role;
-};
+export type User = AuthenticatedUser;
 
 type AuthContextType = {
   user: User | null;
