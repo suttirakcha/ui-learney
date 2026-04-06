@@ -1,4 +1,4 @@
-import { Course } from "@/types/admin/type-admin";
+import { Course } from "@/types/admin/course";
 import PendingActions from "./pending-actions";
 
 type Props = {
@@ -7,9 +7,11 @@ type Props = {
 
 export default function CourseCard({ course }: Props) {
   return (
-    <div style={{ border: "1px solid", margin: 10, padding: 10 }}>
-      <h3>{course.courseName}</h3>
-      <p>{course.instructor.fullname}</p>
+    <div className="border rounded-lg p-4 mb-4 flex justify-between items-center">
+      <div>
+        <h3 className="font-semibold">{course.courseName}</h3>
+        <p className="text-sm text-gray-500">{course.instructor.fullname}</p>
+      </div>
 
       <PendingActions id={course.id} />
     </div>
