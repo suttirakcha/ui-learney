@@ -6,26 +6,38 @@ import {
   InputGroupInput,
 } from "@/components/ui/input-group";
 import { Search, X } from "lucide-react";
-import { useState } from "react";
+import { useForm } from "react-hook-form";
 
-export default function SearchForm() {
-  const [searchValue, setSearchValue] = useState("");
+interface SearchFormProps {
+  placeholder?: string;
+}
+
+export default function SearchForm({ placeholder }: SearchFormProps) {
+  const { register, handleSubmit, setValue, getValues } = useForm({
+    defaultValues: {
+      search: "",
+    },
+  });
+
+  const onSubmit = (values: { search: string }) => {
+    // router
+  };
+
   return (
-    <form>
-      <InputGroup>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <InputGroup className="p-2 h-10 bg-accent text-muted-foreground">
         <InputGroupInput
-          placeholder="Search..."
-          value={searchValue}
-          onChange={(e) => setSearchValue(e.target.value)}
+          placeholder={placeholder || "Search courses..."}
+          {...register("search")}
         />
         <InputGroupAddon>
           <Search />
         </InputGroupAddon>
-        {searchValue && (
+        {getValues("search") && (
           <InputGroupAddon
             align="inline-end"
             className="cursor-pointer"
-            onClick={() => setSearchValue("")}
+            onClick={() => setValue("search", "")}
           >
             <X />
           </InputGroupAddon>

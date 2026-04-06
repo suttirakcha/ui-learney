@@ -9,7 +9,7 @@ const CategoryButtons = () => {
   const getCategory = searchParams.get("category");
 
   return (
-    <div className="flex gap-3 flex-wrap mb-8">
+    <div className="flex gap-3 flex-wrap">
       {categories.map((category) => (
         <Link
           href={`/course?category=${category}`}

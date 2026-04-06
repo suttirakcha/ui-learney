@@ -6,6 +6,7 @@ import {
 } from "@/components/ui/input-group";
 import { Search } from "lucide-react";
 import LnButton from "./LnButton";
+import SearchForm from "../forms/SearchForm";
 
 export default function Hero() {
   return (
@@ -18,17 +19,7 @@ export default function Hero() {
         </p>
       </div>
       <div className="max-w-xl mx-auto mb-4">
-        <InputGroup className="bg-accent text-accent-foreground p-2 h-10">
-          <InputGroupInput
-            placeholder="What do you want to learn?"
-
-            // value={searchValue}
-            // onChange={(e) => setSearchValue(e.target.value)}
-          />
-          <InputGroupAddon>
-            <Search />
-          </InputGroupAddon>
-        </InputGroup>
+        <SearchForm placeholder="What do you want to learn?" />
       </div>
       <Link href="/course">
         <LnButton variant="secondary">ดูคอร์สทั้งหมด</LnButton>
