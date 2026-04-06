@@ -20,6 +20,7 @@ export default function PendingCoursesPage() {
       thumbnail: "",
       willLearnMessages: [],
       requirements: [],
+      courseDetails: [],
     },
   ];
 

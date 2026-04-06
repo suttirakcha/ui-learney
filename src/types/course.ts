@@ -1,3 +1,5 @@
+import { Lesson } from "./lesson/lesson.type";
+
 export type CourseStatus = "new" | "updated" | "deleted";
 
 export interface Course {
@@ -14,6 +16,7 @@ export interface Course {
   description?: string;
   willLearnMessages: string[];
   requirements: string[];
+  courseDetails: Lesson[];
 }
 
 export type Activity = {
