@@ -19,7 +19,7 @@ export default function ProfileSection({ path }: ProfileSectionProps) {
   )?.component;
   return (
     <div>
-      <ProfileHeader user={user!} />
+      <ProfileHeader user={user} />
       <div className="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-4 gap-10 p-8">
         <div>
           <ProfileSidebar role={USER_ROLE} />
