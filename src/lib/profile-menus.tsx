@@ -4,6 +4,7 @@ import InstructorOverview from "@/components/profile/instructor/InstructorOvervi
 import InstructorProfileSettings from "@/components/profile/instructor/InstructorProfileSettings";
 import StudentHistory from "@/components/student/StudentHistory";
 import StudentOverview from "@/components/student/StudentOverview";
+import StudentProfileSettings from "@/components/student/StudentProfileSettings";
 import { Role } from "@/types/user";
 import { BookOpen, Settings, User } from "lucide-react";
 import { JSX, ReactNode } from "react";
@@ -62,7 +63,7 @@ const studentMenus: Menu[] = [
     label: "การตั้งค่า",
     icon: <Settings />,
     href: "/settings",
-    component: <></>,
+    component: <StudentProfileSettings />,
   },
 ];
 

@@ -1,21 +1,24 @@
 import ProfileSection from "@/components/profile/ProfileSection";
-import { getMenusWithRole } from "@/lib/profile-menus";
-import { Role } from "@/types/user";
+import type { Metadata } from "next";
 
-const USER_ROLE: Role = "ADMIN";
+const PROFILE_PAGE_LABELS: Record<string, string> = {
+  overview: "ภาพรวม",
+  settings: "การตั้งค่า",
+  history: "ประวัติคอร์สเรียน",
+};
 
 interface InstructorProfilePageProps {
-  params: { path: string };
+  params: Promise<{ path: string }>;
 }
 
-export async function generateMetadata({ params }: InstructorProfilePageProps) {
+export async function generateMetadata({
+  params,
+}: InstructorProfilePageProps): Promise<Metadata> {
   const { path } = await params;
-  const menus = getMenusWithRole(USER_ROLE);
-
-  const profileLabel = menus.find((menu) => menu.href === `/${path}`)?.label;
+  const profileLabel = PROFILE_PAGE_LABELS[path];
 
   return {
-    title: profileLabel,
+    title: profileLabel ? `โปรไฟล์ - ${profileLabel}` : "โปรไฟล์",
   };
 }
 

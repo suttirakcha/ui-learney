@@ -1,10 +1,4 @@
 import Link from "next/link";
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupInput,
-} from "@/components/ui/input-group";
-import { Search } from "lucide-react";
 import LnButton from "./LnButton";
 import SearchForm from "../forms/SearchForm";
 

@@ -1,44 +1,87 @@
-import { Button } from "@/components/ui/button";
-import { Edit, Star, Users } from "lucide-react";
+import type { InstructorCourseView } from "@/types/profile";
+import { CalendarDays, Star, Users } from "lucide-react";
 
-export default function InstructorCourseCard() {
+interface InstructorCourseCardProps {
+  course: InstructorCourseView;
+}
+
+const STATUS_LABELS: Record<InstructorCourseView["status"], string> = {
+  PENDING: "รอตรวจสอบ",
+  ACTIVE: "เปิดสอน",
+  DRAFT: "ฉบับร่าง",
+  CANCELLED: "ยกเลิก",
+};
+
+const STATUS_CLASSES: Record<InstructorCourseView["status"], string> = {
+  PENDING: "border-amber-200 bg-amber-50 text-amber-700",
+  ACTIVE: "border-emerald-200 bg-emerald-50 text-emerald-700",
+  DRAFT: "border-slate-200 bg-slate-50 text-slate-700",
+  CANCELLED: "border-rose-200 bg-rose-50 text-rose-700",
+};
+
+function formatCurrency(amount: number) {
+  return new Intl.NumberFormat("th-TH", {
+    style: "currency",
+    currency: "THB",
+    maximumFractionDigits: 0,
+  }).format(amount);
+}
+
+function formatDate(date: string) {
+  return new Intl.DateTimeFormat("th-TH", {
+    dateStyle: "medium",
+  }).format(new Date(date));
+}
+
+export default function InstructorCourseCard({
+  course,
+}: InstructorCourseCardProps) {
   return (
-    <div className="p-6 border border-accent rounded-lg space-y-8">
-      <div className="flex justify-between">
+    <div className="p-6 border border-accent rounded-lg space-y-6">
+      <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
         <div className="space-y-2">
-          <h2 className="text-lg font-medium">
-            Complete Web Development Bootcamp
-          </h2>
-          <div className="flex items-center gap-4">
+          <div className="flex flex-wrap items-center gap-2">
+            <p className="text-sm font-medium text-primary">{course.category}</p>
+            <span
+              className={`rounded-full border px-3 py-1 text-xs font-medium ${STATUS_CLASSES[course.status]}`}
+            >
+              {STATUS_LABELS[course.status]}
+            </span>
+          </div>
+          <h2 className="text-lg font-medium">{course.courseName}</h2>
+          <div className="flex flex-wrap items-center gap-4">
             <div className="flex items-center gap-2 text-muted-foreground text-sm">
               <Users className="w-4 h-4" />
-              1,543 students
+              {course.students} ผู้เรียน
             </div>
             <div className="flex items-center gap-2 text-muted-foreground text-sm">
               <Star className="w-4 h-4" />
-              4.8 (328 reviews)
+              {course.rating.toFixed(1)} คะแนนรีวิว
+            </div>
+            <div className="flex items-center gap-2 text-muted-foreground text-sm">
+              <CalendarDays className="w-4 h-4" />
+              สร้างเมื่อ {formatDate(course.createdAt)}
             </div>
           </div>
         </div>
-
-        <Button className="flex items-center gap-2" variant="outline">
-          <Edit />
-          Edit
-        </Button>
       </div>
 
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid gap-4 md:grid-cols-3">
         <div className="rounded-lg bg-primary/30 p-4">
-          <h3 className="text-accent-foreground">Revenue</h3>
-          <p className="text-xl font-semibold">฿8,830</p>
+          <h3 className="text-accent-foreground">ผู้เรียนทั้งหมด</h3>
+          <p className="text-xl font-semibold">{course.students}</p>
         </div>
         <div className="rounded-lg bg-success/10 p-4">
-          <h3 className="text-accent-foreground">Revenue</h3>
-          <p className="text-xl font-semibold text-success">฿7,505.50</p>
+          <h3 className="text-accent-foreground">คะแนนรีวิวเฉลี่ย</h3>
+          <p className="text-xl font-semibold text-success">
+            {course.rating.toFixed(1)}
+          </p>
         </div>
         <div className="rounded-lg bg-primary/10 p-4">
-          <h3 className="text-accent-foreground">Enrollment Rate</h3>
-          <p className="text-xl font-semibold text-primary">58%</p>
+          <h3 className="text-accent-foreground">รายได้รวม</h3>
+          <p className="text-xl font-semibold text-primary">
+            {formatCurrency(course.revenue)}
+          </p>
         </div>
       </div>
     </div>

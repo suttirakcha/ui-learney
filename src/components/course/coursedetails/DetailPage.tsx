@@ -8,7 +8,6 @@ import { useAuth } from "@/app/lib/AuthContext";
 import { useRouter } from "next/navigation";
 import { addItemToCart } from "@/lib/api/cart/cart.service";
 import toast from "react-hot-toast";
-import { MouseEvent } from "react";
 
 interface CourseDetailsPageProps {
   course: Course;

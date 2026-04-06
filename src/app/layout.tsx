@@ -1,16 +1,9 @@
 import type { Metadata } from "next";
-import { Kanit, Geist } from "next/font/google";
-import { cn } from "@/lib/utils";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "@/app/lib/AuthContext";
 import MainContainer from "@/components/custom/MainContainer";
-
-const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
-const kanit = Kanit({
-  subsets: ["latin", "thai"],
-  weight: ["400", "500", "600"],
-});
+import { kanit } from "@/styles/font";
 
 export const metadata: Metadata = {
   title: {
@@ -26,17 +19,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html
-      lang="en"
-      className={cn(
-        "h-full",
-        "antialiased",
-        kanit.className,
-        "font-sans",
-        geist.variable,
-      )}
-    >
-      <body className="min-h-full flex flex-col">
+    <html lang="en" className={`${kanit.variable} h-full antialiased font-sans`}>
+      <body className={`${kanit.className} min-h-full flex flex-col`}>
         <AuthProvider>
           <MainContainer>{children}</MainContainer>
           <Toaster position="top-center" />

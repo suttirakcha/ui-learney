@@ -5,7 +5,7 @@ import { login } from "@/lib/api/auth/auth.service";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { toast } from "react-hot-toast";
-import { useAuth, User } from "@/app/lib/AuthContext";
+import { useAuth } from "@/app/lib/AuthContext";
 import LearneyLogo from "../custom/LearneyLogo";
 import { setAccessToken } from "@/lib/api/auth/auth-store";
 
@@ -37,7 +37,7 @@ export default function LoginForm() {
 
       setAccessToken(res.accessToken ?? null);
       localStorage.setItem("user", JSON.stringify(res.user));
-      setUser(res.user as User);
+      setUser(res.user);
 
       toast.success("เข้าสู่ระบบสำเร็จ 🎉");
 
@@ -46,7 +46,7 @@ export default function LoginForm() {
       } else if (res.user.role === "INSTRUCTOR") {
         router.push("/instructor/dashboard");
       } else {
-        router.push("/dashboard");
+        router.push("/profile");
       }
     } catch (err: unknown) {
       const error = err as { message?: string };
