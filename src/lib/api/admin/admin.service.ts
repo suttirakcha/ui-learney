@@ -23,7 +23,7 @@ async function safeJson(res: Response) {
 
 export async function getDashboardServer() {
   const cookieStore = await cookies(); // ✅ ต้อง await
-  const token = cookieStore.get("token")?.value;
+  const token = cookieStore.get("accessToken")?.value;
 
   if (!token) throw new Error("Unauthorized");
 
@@ -39,7 +39,8 @@ export async function getDashboardServer() {
 
 export async function getPendingServer() {
   const cookieStore = await cookies(); // ✅ ต้อง await
-  const token = cookieStore.get("token")?.value;
+
+  const token = cookieStore.get("accessToken")?.value;
 
   if (!token) throw new Error("Unauthorized");
 
@@ -56,7 +57,8 @@ export async function getPendingServer() {
 // client side (ไม่ต้องแก้)
 export async function getDashboard() {
   const token =
-    localStorage.getItem("token") || sessionStorage.getItem("token");
+    localStorage.getItem("accessToken") ||
+    sessionStorage.getItem("accessToken");
 
   const res = await fetch(`${API_URL}/admin/dashboard`, {
     headers: {
@@ -73,7 +75,7 @@ export async function getDashboard() {
 // 📊 course performance
 export async function getCoursePerformanceServer() {
   const cookieStore = await cookies();
-  const token = cookieStore.get("token")?.value;
+  const token = cookieStore.get("accessToken")?.value;
 
   if (!token) throw new Error("Unauthorized");
 
@@ -90,7 +92,7 @@ export async function getCoursePerformanceServer() {
 // 📊 category stats
 export async function getCategoriesServer() {
   const cookieStore = await cookies();
-  const token = cookieStore.get("token")?.value;
+  const token = cookieStore.get("accessToken")?.value;
 
   if (!token) throw new Error("Unauthorized");
 
