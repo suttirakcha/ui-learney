@@ -16,18 +16,18 @@ interface LessonPageProps {
 export default async function LessonPage({ params }: LessonPageProps) {
   const { courseId } = await params;
   const course = await getCourseById(courseId);
+
+  console.log(course);
   return (
     <>
       <div className="max-w-full border-b p-4 sticky top-0 bg-muted flex items-center">
         <div className="flex justify-between items-center max-w-7xl mx-auto w-full">
-          <div className="flex items-center gap-4">
-            <Link href={`/course/${courseId}`} className="font-semibold">
-              กลับหน้าแรก
-            </Link>
-            <div>
-              <h2 className="text-2xl font-semibold">บทเรียนภาษาอังกฤษ</h2>
-              <p>โดย อาจารย์ดุ๋น</p>
-            </div>
+          <Link href={`/course/${courseId}`} className="font-semibold">
+            กลับหน้าแรก
+          </Link>
+          <div>
+            <h2 className="text-2xl font-semibold">บทเรียนภาษาอังกฤษ</h2>
+            <p>โดย อาจารย์ดุ๋น</p>
           </div>
           <div>
             <div className="font-semibold justify-end">ความคืบหน้า</div>
