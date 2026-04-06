@@ -7,6 +7,7 @@ import {
 import { coursesData } from "@/data/courses";
 import { Search } from "lucide-react";
 import Image from "next/image";
+import SearchForm from "../forms/SearchForm";
 
 export default function SearchDialog() {
   return (
@@ -19,6 +20,7 @@ export default function SearchDialog() {
       </DialogTrigger>
       <DialogContent className="max-w-xl! w-full p-6">
         <DialogTitle className="text-2xl font-bold">Search courses</DialogTitle>
+        <SearchForm />
         <div className="flex flex-col gap-4 mt-4">
           {coursesData.map((course) => (
             <div key={course.id} className="flex gap-4">

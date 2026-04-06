@@ -20,7 +20,6 @@ const CourseListing = ({
   return (
     <div className="min-h-screen bg-gray-50">
       {showHeader && <CourseHeader title={category} />}
-
       <CourseList courses={courses} selectedCategory={category} />
     </div>
   );

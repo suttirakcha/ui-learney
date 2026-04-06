@@ -1,23 +1,26 @@
 import { Course } from "@/types/course";
 import CategoryButtons from "../category/category-btn";
-
 import CourseCard from "./course-card";
+import SearchForm from "@/components/forms/SearchForm";
 
 interface CourseListProps {
   courses: Course[];
   selectedCategory: string;
+  showForm?: boolean;
 }
 
 export default function CourseList({
   courses,
   selectedCategory,
+  showForm,
 }: CourseListProps) {
   return (
     <div className="px-8 py-12">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto space-y-6">
+        {showForm && <SearchForm />}
         <CategoryButtons />
 
-        <p className="text-gray-600 mb-6 font-medium">
+        <p className="text-gray-600 font-medium">
           พบ {courses.length} คอร์สเรียน
           {selectedCategory !== "คอร์สเรียนทั้งหมด" &&
             ` ในหมวด "${selectedCategory}"`}

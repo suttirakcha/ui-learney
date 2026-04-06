@@ -67,7 +67,7 @@ export default function CourseDetailsPage({ course }: CourseDetailsPageProps) {
             />
 
             <div className="p-4 space-y-4">
-              <div className="text-2xl font-bold">{price}</div>
+              <div className="text-2xl font-bold">฿{price}</div>
 
               <button className="w-full bg-cyan-500 text-white py-2 rounded-lg font-semibold hover:bg-cyan-600">
                 Enroll Now
@@ -87,26 +87,12 @@ export default function CourseDetailsPage({ course }: CourseDetailsPageProps) {
         </div>
       </div>
 
-      {/* LESSONS */}
-      <div className="py-10 max-w-7xl mx-auto w-full">
-        <div className="max-w-5xl mx-auto px-6">
-          <h2 className="text-xl font-bold mb-4">Course Content</h2>
-
-          {/* {course.lessons?.map((lesson) => (
-            <div key={lesson.id} className="border-b py-3 flex justify-between">
-              <span>{lesson.title}</span>
-              <span className="text-gray-400 text-sm">{lesson.content}</span>
-            </div>
-          ))} */}
-        </div>
-      </div>
-
       <div className="border p-6 rounded-xl max-w-7xl mx-auto w-full space-y-4">
-        <h2 className="text-2xl">What you&apos;ll learn</h2>
+        <h2 className="text-2xl font-semibold">What you&apos;ll learn</h2>
         <div className="flex flex-col gap-2">
           {willLearnMessages?.map((message, index) => (
             <div key={index} className="flex items-center gap-2">
-              <CheckCircle />
+              <CheckCircle className="text-green-500" />
               <p>{message}</p>
             </div>
           ))}
@@ -114,7 +100,7 @@ export default function CourseDetailsPage({ course }: CourseDetailsPageProps) {
       </div>
 
       <div className="border p-6 rounded-xl max-w-7xl mx-auto w-full space-y-4">
-        <h2 className="text-2xl">Requirements</h2>
+        <h2 className="text-2xl font-semibold">Requirements</h2>
         <div className="flex flex-col gap-2">
           {requirements.length ? (
             <>
@@ -131,6 +117,17 @@ export default function CourseDetailsPage({ course }: CourseDetailsPageProps) {
             </p>
           )}
         </div>
+      </div>
+
+      <div className="border p-6 rounded-xl max-w-7xl mx-auto w-full space-y-4">
+        <h2 className="text-2xl font-semibold">Course curriculum</h2>
+
+        {/* {course.lessons?.map((lesson) => (
+            <div key={lesson.id} className="border-b py-3 flex justify-between">
+              <span>{lesson.title}</span>
+              <span className="text-gray-400 text-sm">{lesson.content}</span>
+            </div>
+          ))} */}
       </div>
     </div>
   );
