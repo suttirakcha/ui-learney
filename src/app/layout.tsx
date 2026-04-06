@@ -3,6 +3,7 @@ import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "@/app/lib/AuthContext";
 import MainContainer from "@/components/custom/MainContainer";
+import { kanit } from "@/styles/font";
 
 export const metadata: Metadata = {
   title: {
@@ -18,17 +19,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="h-full antialiased font-sans">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600&display=swap"
-        />
-      </head>
-      <body className="min-h-full flex flex-col">
+    <html lang="en" className={`${kanit.variable} h-full antialiased font-sans`}>
+      <body className={`${kanit.className} min-h-full flex flex-col`}>
         <AuthProvider>
           <MainContainer>{children}</MainContainer>
           <Toaster position="top-center" />
