@@ -1,5 +1,3 @@
-import Link from "next/link";
-import LnButton from "./LnButton";
 import SearchBar from "@/components/search-bar";
 
 export default function Hero() {
@@ -14,12 +12,11 @@ export default function Hero() {
       </div>
 
       <div className="max-w-xl mx-auto">
-        <SearchBar placeholder="ค้นหาคอร์สที่ต้องการ เช่น React, Python, Design..." />
+        <SearchBar
+          placeholder="ค้นหาคอร์สที่ต้องการ เช่น React, Python, Design..."
+          emptyLabel="ดูคอร์สทั้งหมด"
+        />
       </div>
-
-      <Link href="/course">
-        <LnButton variant="secondary">ดูคอร์สทั้งหมด</LnButton>
-      </Link>
     </section>
   );
 }

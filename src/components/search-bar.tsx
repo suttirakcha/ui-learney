@@ -10,11 +10,14 @@ interface SearchBarProps {
   /** Pre-fills input from URL searchParam — syncs when URL changes */
   defaultValue?: string;
   placeholder?: string;
+  /** Label shown on button when input is empty */
+  emptyLabel?: string;
 }
 
 export default function SearchBar({
   defaultValue = "",
   placeholder = "ค้นหาคอร์สที่ต้องการ...",
+  emptyLabel,
 }: SearchBarProps) {
   const router = useRouter();
   const [query, setQuery] = useState(defaultValue);
@@ -55,9 +58,9 @@ export default function SearchBar({
       </div>
       <Button
         type="submit"
-        className="h-12 px-6 rounded-xl bg-[#4fd6f0] hover:bg-[#38c5e0] text-white font-semibold transition-colors"
+        className="h-12 px-6 rounded-xl bg-[#4fd6f0] hover:bg-[#38c5e0] text-white font-semibold transition-colors whitespace-nowrap"
       >
-        ค้นหา
+        {emptyLabel && !query.trim() ? emptyLabel : "ค้นหา"}
       </Button>
     </form>
   );
