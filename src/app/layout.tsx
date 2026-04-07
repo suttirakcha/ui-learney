@@ -4,6 +4,7 @@ import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "@/app/lib/AuthContext";
 import MainContainer from "@/components/custom/MainContainer";
 import { kanit } from "@/styles/font";
+import ChatWidget from "@/components/ai-chat/ChatWidget";
 
 export const metadata: Metadata = {
   title: {
@@ -23,6 +24,7 @@ export default function RootLayout({
       <body className={`${kanit.className} min-h-full flex flex-col`}>
         <AuthProvider>
           <MainContainer>{children}</MainContainer>
+          <ChatWidget />
           <Toaster position="top-center" />
         </AuthProvider>
       </body>
