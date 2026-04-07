@@ -1,5 +1,5 @@
 import Hero from "@/components/custom/Hero";
-import Stats from "@/components/custom/Stats";
+import Stats from "@/components/stats";
 
 import CTA from "@/components/custom/CTA";
 

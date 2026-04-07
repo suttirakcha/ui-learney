@@ -7,13 +7,15 @@ import {
 } from "@/components/ui/input-group";
 import { Search, X } from "lucide-react";
 import { useForm, useWatch } from "react-hook-form";
+import { useRouter } from "next/navigation";
 
 interface SearchFormProps {
   placeholder?: string;
 }
 
 export default function SearchForm({ placeholder }: SearchFormProps) {
-  const { control, register, handleSubmit, setValue } = useForm({
+  const router = useRouter();
+  const { control, register, handleSubmit, setValue, getValues } = useForm({
     defaultValues: {
       search: "",
     },
@@ -24,7 +26,12 @@ export default function SearchForm({ placeholder }: SearchFormProps) {
   });
 
   const onSubmit = () => {
-    // router
+    const query = getValues("search").trim();
+    if (query) {
+      router.push(`/courses?search=${encodeURIComponent(query)}`);
+    } else {
+      router.push("/courses");
+    }
   };
 
   return (
