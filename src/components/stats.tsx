@@ -1,44 +1,54 @@
-import { coursesData } from "@/data/courses";
+import { Users, GraduationCap, BookOpen, Star } from "lucide-react";
 import StatsGrid, { type StatItem } from "./stats-grid";
 
-function computeStats(): StatItem[] {
-  const totalStudents = coursesData.reduce((sum, c) => sum + c.students, 0);
-  const uniqueInstructors = new Set(coursesData.map((c) => c.instructor)).size;
-  const totalCourses = coursesData.length;
-  const avgRating =
-    coursesData.reduce((sum, c) => sum + c.rating, 0) / coursesData.length;
+async function fetchStats() {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API}/stats`,
+      { next: { revalidate: 60 } } // re-fetch at most every 60s
+    );
+    if (!res.ok) return null;
+    return res.json() as Promise<{
+      totalUsers: number;
+      totalInstructors: number;
+      totalCourses: number;
+      avgRating: number | null;
+    }>;
+  } catch {
+    return null;
+  }
+}
 
-  return [
+export default async function Stats() {
+  const data = await fetchStats();
+
+  const stats: StatItem[] = [
     {
-      value: Math.round(totalStudents / 1000),
-      suffix: "K+",
-      label: "นักเรียนทั้งหมด",
+      value: data ? data.totalUsers : 0,
+      suffix: "+",
+      label: "นักเรียนที่ลงทะเบียน",
       icon: "Users",
     },
     {
-      value: uniqueInstructors,
+      value: data ? data.totalInstructors : 0,
       suffix: "+",
       label: "ผู้สอนผู้เชี่ยวชาญ",
       icon: "GraduationCap",
     },
     {
-      value: totalCourses,
+      value: data ? data.totalCourses : 0,
       suffix: "+",
       label: "คอร์สเรียน",
       icon: "BookOpen",
     },
     {
-      value: avgRating,
+      value: data?.avgRating ?? 0,
       suffix: "/5",
       label: "คะแนนเฉลี่ย",
       icon: "Star",
       decimals: 1,
     },
   ];
-}
-
-export default function Stats() {
-  const stats = computeStats();
 
   return (
     <section className="py-14 bg-gray-50 border-y border-gray-100">
