@@ -1,21 +1,49 @@
-import { statsConfig } from "@/lib/mock-data";
+import { coursesData } from "@/data/courses";
+import StatsGrid, { type StatItem } from "./stats-grid";
+
+function computeStats(): StatItem[] {
+  const totalStudents = coursesData.reduce((sum, c) => sum + c.students, 0);
+  const uniqueInstructors = new Set(coursesData.map((c) => c.instructor)).size;
+  const totalCourses = coursesData.length;
+  const avgRating =
+    coursesData.reduce((sum, c) => sum + c.rating, 0) / coursesData.length;
+
+  return [
+    {
+      value: Math.round(totalStudents / 1000),
+      suffix: "K+",
+      label: "นักเรียนทั้งหมด",
+      icon: "Users",
+    },
+    {
+      value: uniqueInstructors,
+      suffix: "+",
+      label: "ผู้สอนผู้เชี่ยวชาญ",
+      icon: "GraduationCap",
+    },
+    {
+      value: totalCourses,
+      suffix: "+",
+      label: "คอร์สเรียน",
+      icon: "BookOpen",
+    },
+    {
+      value: avgRating,
+      suffix: "/5",
+      label: "คะแนนเฉลี่ย",
+      icon: "Star",
+      decimals: 1,
+    },
+  ];
+}
 
 export default function Stats() {
+  const stats = computeStats();
+
   return (
-    <section className="py-12 bg-gray-50 border-y border-gray-100">
-      <div className="max-w-5xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-        {statsConfig.map(({ value, label, Icon }) => (
-          <div
-            key={label}
-            className="flex flex-col items-center gap-2 group"
-          >
-            <div className="w-12 h-12 rounded-2xl bg-[#4fd6f0]/10 flex items-center justify-center mb-1 group-hover:bg-[#4fd6f0]/20 transition-colors">
-              <Icon className="h-6 w-6 text-[#4fd6f0]" />
-            </div>
-            <span className="text-3xl font-bold text-gray-900">{value}</span>
-            <span className="text-sm text-gray-500">{label}</span>
-          </div>
-        ))}
+    <section className="py-14 bg-gray-50 border-y border-gray-100">
+      <div className="max-w-5xl mx-auto px-4">
+        <StatsGrid stats={stats} />
       </div>
     </section>
   );
