@@ -8,6 +8,8 @@ import { getCourses } from "@/lib/api/course/course.service";
 import { Suspense } from "react";
 import LoadingDots from "@/components/custom/LoadingDots";
 
+export const dynamic = "force-dynamic";
+
 export default async function HomePage() {
   const courses = await getCourses();
   return (
