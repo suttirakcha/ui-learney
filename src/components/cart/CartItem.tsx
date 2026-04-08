@@ -1,3 +1,4 @@
+import { useCart } from "@/app/lib/CartContext";
 import { Course } from "@/types/course";
 import { Trash2 } from "lucide-react";
 import LnButton from "../custom/LnButton";
@@ -12,6 +13,7 @@ interface CartItemProps {
 
 export default function CartItem({ course }: CartItemProps) {
   const { courseName, price, instructor, thumbnail } = course;
+  const { refetchCart } = useCart();
 
   const priceAmount =
     typeof price === "number" ? price?.toLocaleString() : price;
@@ -21,6 +23,7 @@ export default function CartItem({ course }: CartItemProps) {
       const res = await deleteItemFromCart(courseId);
       toast.success(res.message);
       revalidateCart();
+      await refetchCart();
     } catch (error) {
       console.error(error);
     }

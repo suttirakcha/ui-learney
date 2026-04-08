@@ -1,3 +1,4 @@
+import { useCart } from "@/app/lib/CartContext";
 import Image from "next/image";
 import Link from "next/link";
 import { Star, Clock, Zap } from "lucide-react";
@@ -11,6 +12,7 @@ interface CourseCardProps {
 }
 
 const CourseCard = ({ course }: CourseCardProps) => {
+  const { refetchCart } = useCart();
   const {
     id,
     price,
@@ -33,6 +35,7 @@ const CourseCard = ({ course }: CourseCardProps) => {
     try {
       const res = await addItemToCart(courseId);
       toast.success(res.message);
+      await refetchCart();
     } catch (error) {
       console.error(error);
     }
