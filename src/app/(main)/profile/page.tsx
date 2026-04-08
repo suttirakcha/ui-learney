@@ -6,16 +6,28 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export default function ProfilePage() {
-  const { user } = useAuth();
+  const { user, isLoading } = useAuth();
   const router = useRouter();
-
-  const menus = getMenusWithRole(user?.role ?? "USER");
+  const menus = user ? getMenusWithRole(user.role) : [];
 
   useEffect(() => {
+    if (isLoading) {
+      return;
+    }
+
+    if (!user) {
+      router.replace("/login");
+      return;
+    }
+
     if (menus.length > 0) {
       router.replace(`/profile${menus[0].href}`);
     }
-  }, [menus, router]);
+  }, [isLoading, menus, router, user]);
 
-  return <div className="p-8 text-muted-foreground">กำลังเปิดหน้าโปรไฟล์...</div>;
+  return (
+    <div className="p-8 text-muted-foreground">
+      กำลังเปิดหน้าโปรไฟล์...
+    </div>
+  );
 }

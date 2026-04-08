@@ -12,30 +12,53 @@ interface ProfileSectionProps {
 }
 
 export default function ProfileSection({ path }: ProfileSectionProps) {
-  const { user } = useAuth();
+  const { user, isLoading } = useAuth();
   const router = useRouter();
-  const USER_ROLE = user?.role ?? "USER";
-  const menus = getMenusWithRole(USER_ROLE);
+  const menus = user ? getMenusWithRole(user.role) : [];
 
   const profileComponent = menus.find(
     (menu) => menu.href === `/${path}`,
   )?.component;
 
   useEffect(() => {
+    if (isLoading) {
+      return;
+    }
+
+    if (!user) {
+      router.replace("/login");
+      return;
+    }
+
     if (!profileComponent && menus.length > 0) {
       router.replace(`/profile${menus[0].href}`);
     }
-  }, [menus, profileComponent, router]);
+  }, [isLoading, menus, profileComponent, router, user]);
+
+  if (isLoading) {
+    return (
+      <div>
+        <ProfileHeader user={user} />
+        <div className="mx-auto max-w-7xl w-full p-8 text-muted-foreground">
+          กำลังโหลดข้อมูลโปรไฟล์...
+        </div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return null;
+  }
 
   if (!profileComponent) {
     return (
       <div>
         <ProfileHeader user={user} />
-        <div className="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-4 gap-10 p-8">
+        <div className="mx-auto grid max-w-7xl w-full grid-cols-1 gap-10 p-8 lg:grid-cols-4">
           <div>
-            <ProfileSidebar role={USER_ROLE} />
+            <ProfileSidebar role={user.role} />
           </div>
-          <div className="lg:col-span-3 rounded-xl border border-accent p-6 text-muted-foreground">
+          <div className="rounded-xl border border-accent p-6 text-muted-foreground lg:col-span-3">
             กำลังพาคุณไปยังหน้าที่ใช้งานได้...
           </div>
         </div>
@@ -46,9 +69,9 @@ export default function ProfileSection({ path }: ProfileSectionProps) {
   return (
     <div>
       <ProfileHeader user={user} />
-      <div className="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-4 gap-10 p-8">
+      <div className="mx-auto grid max-w-7xl w-full grid-cols-1 gap-10 p-8 lg:grid-cols-4">
         <div>
-          <ProfileSidebar role={USER_ROLE} />
+          <ProfileSidebar role={user.role} />
         </div>
         <div className="lg:col-span-3">{profileComponent}</div>
       </div>

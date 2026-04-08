@@ -5,6 +5,7 @@ import {
   logout as logoutRequest,
   refreshToken,
 } from "@/lib/api/auth/auth.service";
+import { setAccessToken } from "@/lib/api/auth/auth-store";
 import type { AuthenticatedUser } from "@/types/user";
 import {
   createContext,
@@ -14,12 +15,12 @@ import {
   type Dispatch,
   type SetStateAction,
 } from "react";
-import { setAccessToken } from "@/lib/api/auth/auth-store";
 
 export type User = AuthenticatedUser;
 
 type AuthContextType = {
   user: User | null;
+  isLoading: boolean;
   setUser: Dispatch<SetStateAction<User | null>>;
   logout: () => Promise<void>;
 };
@@ -47,24 +48,34 @@ function getStoredUser(): User | null {
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     let isMounted = true;
 
     async function syncSession() {
       const storedUser = getStoredUser();
+
+      if (isMounted) {
+        setUser(storedUser);
+      }
+
       try {
         const data = await refreshToken();
         setAccessToken(data.accessToken ?? null);
-        if (isMounted) {
-          setUser(storedUser);
-        }
       } catch {
         clearAccessToken();
-        localStorage.removeItem("user");
+
+        if (typeof window !== "undefined") {
+          localStorage.removeItem("user");
+        }
 
         if (isMounted) {
           setUser(null);
+        }
+      } finally {
+        if (isMounted) {
+          setIsLoading(false);
         }
       }
     }
@@ -94,7 +105,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, setUser, logout }}>
+    <AuthContext.Provider value={{ user, isLoading, setUser, logout }}>
       {children}
     </AuthContext.Provider>
   );

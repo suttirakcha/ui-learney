@@ -1,14 +1,10 @@
-import StudentHistory from "@/components/student/StudentHistory";
 import { Metadata } from "next";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "ประวัติเรียนของฉัน",
 };
 
 export default function PageHistory() {
-  return (
-    <div>
-      <StudentHistory />
-    </div>
-  );
+  redirect("/profile/history");
 }
