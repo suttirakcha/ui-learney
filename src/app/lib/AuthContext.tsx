@@ -6,9 +6,11 @@ import {
   refreshToken,
 } from "@/lib/api/auth/auth.service";
 import { setAccessToken } from "@/lib/api/auth/auth-store";
+import { fetchWithAuth } from "@/lib/api/fetchWithAuth";
 import type { AuthenticatedUser } from "@/types/user";
 import {
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useState,
@@ -23,6 +25,7 @@ type AuthContextType = {
   isLoading: boolean;
   setUser: Dispatch<SetStateAction<User | null>>;
   logout: () => Promise<void>;
+  refetchUser: () => Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -87,6 +90,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     };
   }, []);
 
+  const refetchUser = useCallback(async () => {
+    const res = await fetchWithAuth("/users/me");
+    const updatedUser = (await res.json()) as User;
+    localStorage.setItem("user", JSON.stringify(updatedUser));
+    setUser(updatedUser);
+  }, []);
+
   const logout = async () => {
     try {
       await logoutRequest();
@@ -105,7 +115,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, isLoading, setUser, logout }}>
+    <AuthContext.Provider
+      value={{ user, isLoading, setUser, logout, refetchUser }}
+    >
       {children}
     </AuthContext.Provider>
   );
