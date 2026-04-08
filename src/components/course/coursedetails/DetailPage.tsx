@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Course } from "@/types/course";
 import { useAuth } from "@/app/lib/AuthContext";
+import { useCart } from "@/app/lib/CartContext";
 import { useRouter } from "next/navigation";
 import { addItemToCart } from "@/lib/api/cart/cart.service";
 import toast from "react-hot-toast";
@@ -27,6 +28,7 @@ export default function CourseDetailsPage({ course }: CourseDetailsPageProps) {
   } = course;
 
   const { user } = useAuth();
+  const { refetchCart } = useCart();
   const router = useRouter();
 
   const isEnrolled = user?.enrolledCourses?.find(
@@ -37,6 +39,7 @@ export default function CourseDetailsPage({ course }: CourseDetailsPageProps) {
     try {
       const res = await addItemToCart(courseId);
       toast.success(res.message);
+      await refetchCart();
     } catch (error) {
       console.error(error);
     }

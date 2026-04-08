@@ -1,3 +1,4 @@
+import { useCart } from "@/app/lib/CartContext";
 import Image from "next/image";
 import Link from "next/link";
 import { Star, Clock, Zap } from "lucide-react";
@@ -5,12 +6,15 @@ import { Course } from "@/types/course";
 import { addItemToCart } from "@/lib/api/cart/cart.service";
 import { MouseEvent } from "react";
 import toast from "react-hot-toast";
+import { useAuth } from "@/app/lib/AuthContext";
 
 interface CourseCardProps {
   course: Course;
 }
 
 const CourseCard = ({ course }: CourseCardProps) => {
+  const { user } = useAuth();
+  const { refetchCart } = useCart();
   const {
     id,
     price,
@@ -24,6 +28,9 @@ const CourseCard = ({ course }: CourseCardProps) => {
   } = course;
 
   const originalPrice = price ? `฿${(price * 1.4).toFixed(0)}` : 0;
+  const isEnrolled = user?.enrolledCourses?.find(
+    (course) => course.courseId === id,
+  );
 
   const handleAddToCart = async (
     e: MouseEvent<HTMLButtonElement>,
@@ -33,6 +40,7 @@ const CourseCard = ({ course }: CourseCardProps) => {
     try {
       const res = await addItemToCart(courseId);
       toast.success(res.message);
+      await refetchCart();
     } catch (error) {
       console.error(error);
     }
@@ -97,17 +105,26 @@ const CourseCard = ({ course }: CourseCardProps) => {
                 {price}
               </span>
             </div>
-            <div className="flex items-center gap-2">
-              <button className="bg-cyan-50 text-cyan-600 hover:bg-cyan-500 hover:text-white px-5 py-2.5 rounded-xl text-sm font-bold transition-colors duration-300 shadow-sm">
-                ดูรายละเอียด
-              </button>
-              <button
+            {isEnrolled ? (
+              <Link
+                href={`/course/${id}/lesson`}
                 className="bg-cyan-50 text-cyan-600 hover:bg-cyan-500 hover:text-white px-5 py-2.5 rounded-xl text-sm font-bold transition-colors duration-300 shadow-sm"
-                onClick={(e) => handleAddToCart(e, id)}
               >
-                เพิ่มใส่ตะกร้า
-              </button>
-            </div>
+                เข้าเรียน
+              </Link>
+            ) : (
+              <div className="flex items-center gap-2">
+                <button className="bg-cyan-50 text-cyan-600 hover:bg-cyan-500 hover:text-white px-5 py-2.5 rounded-xl text-sm font-bold transition-colors duration-300 shadow-sm">
+                  ดูรายละเอียด
+                </button>
+                <button
+                  className="bg-cyan-50 text-cyan-600 hover:bg-cyan-500 hover:text-white px-5 py-2.5 rounded-xl text-sm font-bold transition-colors duration-300 shadow-sm"
+                  onClick={(e) => handleAddToCart(e, id)}
+                >
+                  เพิ่มใส่ตะกร้า
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </Link>
