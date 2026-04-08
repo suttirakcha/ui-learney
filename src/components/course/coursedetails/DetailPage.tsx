@@ -87,14 +87,18 @@ export default function CourseDetailsPage({ course }: CourseDetailsPageProps) {
 
           {/* RIGHT (CARD) */}
           <div className="bg-white text-black rounded-xl shadow-lg overflow-hidden">
-            <Image
-              src={thumbnail}
-              alt={courseName ?? "course-image"}
-              width={600}
-              height={350}
-              className="w-full h-48 object-cover"
-              priority
-            />
+            {thumbnail ? (
+              <Image
+                src={thumbnail}
+                alt={courseName ?? "course-image"}
+                width={600}
+                height={350}
+                className="w-full h-48 object-cover"
+                priority
+              />
+            ) : (
+              <div className="h-60 w-full bg-accent" />
+            )}
 
             <div className="p-4 space-y-4">
               <div className="text-2xl font-bold">฿{price}</div>
