@@ -4,13 +4,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import LearneyLogo from "./LearneyLogo";
 
-import {
-  BookOpen,
-  Newspaper,
-  LayoutGrid,
-  Globe,
-  Check,
-} from "lucide-react";
+import { BookOpen, Newspaper, LayoutGrid, Globe, Check } from "lucide-react";
 
 import {
   DropdownMenu,
@@ -21,7 +15,7 @@ import {
 
 import { Suspense, useState } from "react";
 import { useAuth } from "@/app/lib/AuthContext";
-import SearchDialog from "../dialogs/SearchDialog";
+import SearchCourseDialog from "../dialogs/courses/SearchCourseDialog";
 import CartLink from "../cart/CartLink";
 import { Skeleton } from "../ui/skeleton";
 
@@ -60,7 +54,7 @@ export default function Navbar() {
         </div>
       </div>
       <div className="flex items-center gap-6">
-        <SearchDialog />
+        <SearchCourseDialog />
         {user && <CartLink />}
 
         <DropdownMenu>

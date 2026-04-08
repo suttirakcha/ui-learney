@@ -6,14 +6,16 @@ import {
   InputGroupInput,
 } from "@/components/ui/input-group";
 import { Search, X } from "lucide-react";
+import { useEffect } from "react";
 import { useForm, useWatch } from "react-hook-form";
 
 interface SearchFormProps {
   placeholder?: string;
+  onSearch?: (value: string) => void;
 }
 
-export default function SearchForm({ placeholder }: SearchFormProps) {
-  const { control, register, handleSubmit, setValue } = useForm({
+export default function SearchForm({ placeholder, onSearch }: SearchFormProps) {
+  const { control, register, handleSubmit, setValue, watch } = useForm({
     defaultValues: {
       search: "",
     },
@@ -22,6 +24,13 @@ export default function SearchForm({ placeholder }: SearchFormProps) {
     control,
     name: "search",
   });
+
+  useEffect(() => {
+    const subscription = watch((values) => {
+      onSearch?.(values.search ?? "");
+    });
+    return () => subscription.unsubscribe();
+  }, [watch, onSearch]);
 
   const onSubmit = () => {
     // router
