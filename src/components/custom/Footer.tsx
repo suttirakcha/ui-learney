@@ -17,7 +17,7 @@ export default function Footer() {
 
   return (
     <footer className="border-t border-white/30 bg-white/50 dark:bg-white/5">
-      <div className="section-frame grid gap-8 py-12 md:grid-cols-[1.3fr_1fr_1fr]">
+      <div className="section-frame grid gap-8 py-12 sm:grid-cols-2 xl:grid-cols-[1.3fr_1fr_1fr]">
         <div className="space-y-4">
           <LearneyLogo />
           <p className="max-w-md text-sm text-muted-foreground">
@@ -27,7 +27,7 @@ export default function Footer() {
           </p>
         </div>
 
-        <div className="space-y-3">
+        <div className="space-y-3 sm:col-span-1">
           <p className="text-sm font-medium text-foreground">
             {locale === "th" ? "เส้นทางเรียนรู้" : "Learning Paths"}
           </p>
@@ -40,7 +40,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="space-y-3">
+        <div className="space-y-3 sm:col-span-2 xl:col-span-1">
           <p className="text-sm font-medium text-foreground">
             {locale === "th" ? "จังหวะของ LEARNEY" : "Learney Rhythm"}
           </p>

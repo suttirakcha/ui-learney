@@ -59,7 +59,7 @@ export function CatalogPageView({ data }: { data: CatalogData }) {
       <div className="soft-surface rounded-lg px-6 py-10">
         <div className="max-w-3xl space-y-4">
           <p className="eyebrow">{locale === "th" ? "Course Explorer" : "Course Explorer"}</p>
-          <h1 className="text-3xl font-semibold text-foreground">
+          <h1 className="text-3xl font-semibold text-foreground sm:text-4xl">
             {locale === "th" ? "คอร์สทั้งหมด" : "All Courses"}
           </h1>
           <p className="text-muted-foreground">
@@ -89,12 +89,12 @@ export function CatalogPageView({ data }: { data: CatalogData }) {
         </div>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-[280px_1fr]">
+      <div className="grid gap-6 xl:grid-cols-[280px_1fr]">
         <aside className="glass-panel h-fit rounded-lg p-5">
           <p className="text-sm font-medium text-foreground">
             {locale === "th" ? "ตัวกรอง" : "Filters"}
           </p>
-          <div className="mt-4 space-y-4">
+          <div className="mt-4 grid gap-4 sm:grid-cols-2 xl:grid-cols-1">
             <label className="grid gap-2 text-sm">
               <span className="text-muted-foreground">{locale === "th" ? "หมวดหมู่" : "Category"}</span>
               <select
@@ -186,18 +186,32 @@ export function CatalogPageView({ data }: { data: CatalogData }) {
             })}
           </div>
 
-          <div className="flex items-center justify-between gap-4">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <p className="text-sm text-muted-foreground">
               {locale === "th"
                 ? `พบ ${data.total} คอร์ส`
                 : `${data.total} courses found`}
             </p>
-            <Button variant="outline" onClick={() => filters.update({ search: "", category: "", price: "", level: "", rating: "", promotion: "", sort: "most-popular" })}>
+            <Button
+              variant="outline"
+              className="w-full sm:w-auto"
+              onClick={() =>
+                filters.update({
+                  search: "",
+                  category: "",
+                  price: "",
+                  level: "",
+                  rating: "",
+                  promotion: "",
+                  sort: "most-popular",
+                })
+              }
+            >
               {locale === "th" ? "ล้างตัวกรอง" : "Clear Filters"}
             </Button>
           </div>
 
-          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+          <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
             {data.items.map((course) => (
               <CourseCard key={course.id} course={course} />
             ))}

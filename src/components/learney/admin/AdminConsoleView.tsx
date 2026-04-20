@@ -17,10 +17,10 @@ function SectionSidebar({ active }: { active?: string }) {
 
   return (
     <aside className="glass-panel h-fit rounded-lg p-4">
-      <div className="space-y-1">
+      <div className="scrollbar-none flex gap-2 overflow-x-auto lg:block lg:space-y-1">
         <Link
           href="/admin"
-          className={`block rounded-lg px-3 py-2 text-sm ${
+          className={`flex-none rounded-lg px-3 py-2 text-sm lg:block ${
             !active ? "bg-primary text-primary-foreground" : "text-muted-foreground"
           }`}
         >
@@ -30,7 +30,7 @@ function SectionSidebar({ active }: { active?: string }) {
           <Link
             key={section.slug}
             href={`/admin/${section.slug}`}
-            className={`block rounded-lg px-3 py-2 text-sm ${
+            className={`flex-none rounded-lg px-3 py-2 text-sm lg:block ${
               active === section.slug
                 ? "bg-primary text-primary-foreground"
                 : "text-muted-foreground hover:text-foreground"
@@ -48,7 +48,7 @@ export function AdminOverviewView({ data }: { data: AdminOverviewData }) {
   const { locale } = usePreference();
 
   return (
-    <main className="section-frame grid gap-6 py-10 lg:grid-cols-[280px_1fr]">
+    <main className="section-frame grid gap-6 py-10 xl:grid-cols-[280px_1fr]">
       <SectionSidebar />
       <section className="space-y-6">
         <div className="soft-surface rounded-lg px-6 py-10">
@@ -62,7 +62,7 @@ export function AdminOverviewView({ data }: { data: AdminOverviewData }) {
           </p>
         </div>
 
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
           {data.cards.map((card) => (
             <div key={card.label} className="glass-panel rounded-lg p-5">
               <p className="text-sm text-muted-foreground">{card.label}</p>
@@ -158,7 +158,7 @@ export function AdminSectionView({
   const items = (data.items as Array<Record<string, unknown>> | undefined) ?? [];
 
   return (
-    <main className="section-frame grid gap-6 py-10 lg:grid-cols-[280px_1fr]">
+    <main className="section-frame grid gap-6 py-10 xl:grid-cols-[280px_1fr]">
       <SectionSidebar active={section} />
       <section className="space-y-6">
         <div className="soft-surface rounded-lg px-6 py-10">
@@ -177,7 +177,7 @@ export function AdminSectionView({
             <h2 className="text-xl font-semibold text-foreground">
               {locale === "th" ? "Run AI job" : "Run AI job"}
             </h2>
-            <div className="mt-4 grid gap-4 md:grid-cols-2">
+            <div className="mt-4 grid gap-4 lg:grid-cols-2">
               <Input
                 value={aiForm.title}
                 onChange={(event) =>
@@ -264,7 +264,7 @@ export function AdminSectionView({
                 key={String(item.id ?? item.slug ?? `${section}-${index}`)}
                 className="glass-panel rounded-lg p-5"
               >
-                <div className="flex flex-wrap items-center justify-between gap-4">
+                <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
                   <div>
                     <h2 className="text-lg font-semibold text-foreground">
                       {String(
@@ -293,6 +293,7 @@ export function AdminSectionView({
                       <>
                         <Button
                           variant="outline"
+                          className="w-full sm:w-auto"
                           onClick={() =>
                             void handleAction("toggle_popular", {
                               courseId: item.id,
@@ -303,13 +304,13 @@ export function AdminSectionView({
                           {locale === "th" ? "Toggle Popular" : "Toggle Popular"}
                         </Button>
                         <Button
+                          className="w-full bg-primary text-primary-foreground sm:w-auto"
                           onClick={() =>
                             void handleAction(
                               item.isPublished ? "unpublish_course" : "publish_course",
                               { courseId: item.id },
                             )
                           }
-                          className="bg-primary text-primary-foreground"
                         >
                           {item.isPublished
                             ? locale === "th"
@@ -325,6 +326,7 @@ export function AdminSectionView({
                     {section === "fixed-categories" ? (
                       <Button
                         variant="outline"
+                        className="w-full sm:w-auto"
                         onClick={() =>
                           void handleAction("toggle_visibility", {
                             categoryId: item.id,
@@ -339,6 +341,7 @@ export function AdminSectionView({
                     {section === "instructors" ? (
                       <Button
                         variant="outline"
+                        className="w-full sm:w-auto"
                         onClick={() =>
                           void handleAction("toggle_visibility", {
                             instructorId: item.id,
@@ -354,6 +357,7 @@ export function AdminSectionView({
                       <>
                         <Button
                           variant="outline"
+                          className="w-full sm:w-auto"
                           onClick={() =>
                             void handleAction("toggle_visibility", {
                               reviewId: item.id,
@@ -365,6 +369,7 @@ export function AdminSectionView({
                         </Button>
                         <Button
                           variant="outline"
+                          className="w-full sm:w-auto"
                           onClick={() =>
                             void handleAction("pin_review", {
                               reviewId: item.id,
@@ -382,7 +387,7 @@ export function AdminSectionView({
                     {(section === "content-review-queue" ||
                       section === "ai-draft-approval") && item.id ? (
                       <Button
-                        className="bg-primary text-primary-foreground"
+                        className="w-full bg-primary text-primary-foreground sm:w-auto"
                         onClick={() =>
                           void handleAction("approve_draft", {
                             draftId: item.id,

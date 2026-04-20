@@ -37,13 +37,13 @@ export function DashboardView({ data }: { data: DashboardData | null }) {
   return (
     <main className="section-frame space-y-8 py-12">
       <div className="soft-surface rounded-lg px-6 py-10">
-        <h1 className="text-3xl font-semibold text-foreground">{data.greeting.title}</h1>
+        <h1 className="text-3xl font-semibold text-foreground sm:text-4xl">{data.greeting.title}</h1>
         <p className="mt-3 max-w-2xl text-muted-foreground">
           {pickLocalized(data.greeting.subtitle, locale)}
         </p>
       </div>
 
-      <section className="grid gap-4 md:grid-cols-4">
+      <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {Object.entries(data.stats).map(([key, value]) => (
           <div key={key} className="glass-panel rounded-lg p-5">
             <p className="text-sm text-muted-foreground">{key}</p>
@@ -52,13 +52,13 @@ export function DashboardView({ data }: { data: DashboardData | null }) {
         ))}
       </section>
 
-      <section className="grid gap-6 lg:grid-cols-[1fr_320px]">
+      <section className="grid gap-6 xl:grid-cols-[1fr_320px]">
         <div className="space-y-6">
           <div className="glass-panel rounded-lg p-6">
             <h2 className="text-2xl font-semibold text-foreground">
               {locale === "th" ? "Skill growth" : "Skill growth"}
             </h2>
-            <div className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            <div className="mt-5 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
               {data.learningGraph.map((point) => (
                 <div key={point.category} className="rounded-lg bg-white/60 p-4 dark:bg-white/5">
                   <p className="text-sm text-muted-foreground">{point.category}</p>
@@ -89,8 +89,8 @@ export function DashboardView({ data }: { data: DashboardData | null }) {
                   </p>
                 ) : null}
               </div>
-              <Link href="/skill-test">
-                <Button variant="outline">
+              <Link href="/skill-test" className="w-full sm:w-auto">
+                <Button variant="outline" className="w-full sm:w-auto">
                   {locale === "th" ? "ทำ Skill Test อีกครั้ง" : "Retake skill test"}
                 </Button>
               </Link>
@@ -102,7 +102,7 @@ export function DashboardView({ data }: { data: DashboardData | null }) {
             </div>
           </div>
 
-          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+          <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
             {data.enrolledCourses.map((course) => (
               <CourseCard key={course.id} course={course} />
             ))}
