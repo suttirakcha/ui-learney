@@ -23,7 +23,7 @@ export default function Video({ courseDetails }: { courseDetails: Lesson[] }) {
   const sliderRef = useRef<HTMLDivElement>(null);
 
   /* ── Empty state ── */
-  if (courseDetails.length === 0) {
+  if (!Array.isArray(courseDetails) || courseDetails.length === 0) {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center gap-4 bg-[#0f172a] text-white/30">
         <PlayCircle size={52} />
@@ -70,17 +70,19 @@ export default function Video({ courseDetails }: { courseDetails: Lesson[] }) {
   const goToLesson = (index: number) => {
     setCurrentIndex(index);
     const card = sliderRef.current?.children[index] as HTMLElement | undefined;
-    card?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+    card?.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+      inline: "center",
+    });
   };
 
   return (
     <div className="flex min-h-[calc(100vh-57px)] w-full bg-[#0f172a]">
-
       {/* ══════════════════════════════════
           LEFT — player + slider
       ══════════════════════════════════ */}
       <div className="flex min-w-0 flex-1 flex-col">
-
         {/* ── Video / Docs ── */}
         <div className="w-full bg-black">
           {lesson.type === "VIDEO" && lesson.video ? (
@@ -94,16 +96,16 @@ export default function Video({ courseDetails }: { courseDetails: Lesson[] }) {
               </video>
             </div>
           ) : lesson.type === "DOCS" && lesson.docs ? (
-            <div className="w-full overflow-y-auto p-8 text-white/90" style={{ maxHeight: "400px" }}>
+            <div
+              className="w-full overflow-y-auto p-8 text-white/90"
+              style={{ maxHeight: "400px" }}
+            >
               <pre className="whitespace-pre-wrap font-sans text-sm leading-loose">
                 {lesson.docs}
               </pre>
             </div>
           ) : (
-            <div
-              className="relative w-full"
-              style={{ aspectRatio: "16/9" }}
-            >
+            <div className="relative w-full" style={{ aspectRatio: "16/9" }}>
               <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 text-white/20">
                 <PlayCircle size={56} />
                 <p className="text-sm">ไม่มีเนื้อหาในบทนี้</p>
@@ -152,9 +154,13 @@ export default function Video({ courseDetails }: { courseDetails: Lesson[] }) {
             )}
           >
             {isDone ? (
-              <><CheckCircle2 size={14} /> เรียนแล้ว</>
+              <>
+                <CheckCircle2 size={14} /> เรียนแล้ว
+              </>
             ) : (
-              <><Circle size={14} /> ทำเครื่องหมาย</>
+              <>
+                <Circle size={14} /> ทำเครื่องหมาย
+              </>
             )}
           </button>
         </div>
@@ -175,7 +181,11 @@ export default function Video({ courseDetails }: { courseDetails: Lesson[] }) {
                 : "bg-blue-500/15 text-blue-400",
             )}
           >
-            {lesson.type === "VIDEO" ? <PlayCircle size={10} /> : <FileText size={10} />}
+            {lesson.type === "VIDEO" ? (
+              <PlayCircle size={10} />
+            ) : (
+              <FileText size={10} />
+            )}
             {lesson.type === "VIDEO" ? "วิดีโอ" : "เอกสาร"}
           </span>
         </div>
@@ -244,10 +254,7 @@ export default function Video({ courseDetails }: { courseDetails: Lesson[] }) {
                     )}
                   >
                     {done ? (
-                      <CheckCircle2
-                        size={26}
-                        className="text-green-400"
-                      />
+                      <CheckCircle2 size={26} className="text-green-400" />
                     ) : detail.type === "DOCS" ? (
                       <FileText
                         size={26}

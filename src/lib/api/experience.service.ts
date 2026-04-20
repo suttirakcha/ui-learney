@@ -62,13 +62,30 @@ async function safeFetch<T>(
 ): Promise<T> {
   try {
     const response = await factory();
+
+    console.log(
+      `[safeFetch] ${response.status} ${response.statusText} -> ${response.url}`,
+    );
+
     return await parseJson<T>(response);
   } catch (error) {
-    console.error(
-      "[safeFetch] Handled Exception:",
-      error instanceof Error ? error.message : error,
-    );
-    // รีเทิร์น Fallback เพื่อป้องกันแอปพัง แต่ฝั่ง UI ต้องเช็กข้อมูลก่อนเรนเดอร์
+    if (error instanceof ApiResponseError) {
+      console.error(
+        `[safeFetch] API ERROR ${error.status} at ${error.url}\nBody: ${error.body}`,
+      );
+    } else if (error instanceof Error) {
+      console.error("[safeFetch] Handled Exception:", error.message);
+      console.error(error.stack);
+
+      if (error.message === "fetch failed") {
+        console.error(
+          "[safeFetch] Network error: check NEXT_PUBLIC_API, backend port, backend server, and CORS.",
+        );
+      }
+    } else {
+      console.error("[safeFetch] Unknown Exception:", error);
+    }
+
     return fallback;
   }
 }

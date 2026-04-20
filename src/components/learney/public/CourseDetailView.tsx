@@ -15,11 +15,17 @@ import {
 import { Button } from "@/components/ui/button";
 import { CourseDetailData } from "@/types/learney";
 import { usePreference } from "@/components/learney/providers/PreferenceProvider";
-import { formatCurrency, formatNumber, pickLocalized, roleLabel } from "@/lib/learney";
+import {
+  formatCurrency,
+  formatNumber,
+  pickLocalized,
+  roleLabel,
+} from "@/lib/learney";
 import { addItemToCart } from "@/lib/api/cart/cart.service";
 import { addToWishlist } from "@/lib/api/experience.service";
 import { useAuth } from "@/app/lib/AuthContext";
 import { CourseCard } from "./CourseCard";
+import PromotionBadge from "@/components/PromotionBadge";
 
 export function CourseDetailView({ data }: { data: CourseDetailData }) {
   const { locale } = usePreference();
@@ -38,7 +44,9 @@ export function CourseDetailView({ data }: { data: CourseDetailData }) {
       router.push("/checkout");
     } catch (error) {
       console.error(error);
-      toast.error(locale === "th" ? "เพิ่มคอร์สไม่สำเร็จ" : "Unable to add course");
+      toast.error(
+        locale === "th" ? "เพิ่มคอร์สไม่สำเร็จ" : "Unable to add course",
+      );
     }
   };
 
@@ -64,7 +72,10 @@ export function CourseDetailView({ data }: { data: CourseDetailData }) {
       <section className="soft-surface">
         <div className="section-frame grid gap-8 py-12 lg:grid-cols-[1.1fr_0.9fr]">
           <div className="space-y-5">
-            <Link href="/courses" className="text-sm text-muted-foreground hover:text-foreground">
+            <Link
+              href="/courses"
+              className="text-sm text-muted-foreground hover:text-foreground"
+            >
               {locale === "th" ? "กลับไปหน้าคอร์ส" : "Back to courses"}
             </Link>
             <div className="space-y-3">
@@ -82,7 +93,10 @@ export function CourseDetailView({ data }: { data: CourseDetailData }) {
                 {pickLocalized(course.title, locale)}
               </h1>
               <p className="max-w-2xl text-lg text-muted-foreground">
-                {pickLocalized(course.description ?? course.shortDescription, locale)}
+                {pickLocalized(
+                  course.description ?? course.shortDescription,
+                  locale,
+                )}
               </p>
             </div>
 
@@ -116,6 +130,15 @@ export function CourseDetailView({ data }: { data: CourseDetailData }) {
           </div>
 
           <aside className="glass-panel h-fit rounded-lg p-6">
+            {(course as any).promotion ? (
+              <div className="mb-4">
+                <PromotionBadge
+                  discountType={(course as any).promotion.discountType}
+                  discountValue={(course as any).promotion.discount}
+                  size="md"
+                />
+              </div>
+            ) : null}
             <div className="space-y-2">
               {course.discountPrice ? (
                 <p className="text-sm text-muted-foreground line-through">
@@ -128,10 +151,18 @@ export function CourseDetailView({ data }: { data: CourseDetailData }) {
             </div>
 
             <div className="mt-6 grid gap-3">
-              <Button size="lg" className="bg-primary text-primary-foreground" onClick={() => void handleBuyNow()}>
+              <Button
+                size="lg"
+                className="bg-primary text-primary-foreground"
+                onClick={() => void handleBuyNow()}
+              >
                 {locale === "th" ? "Buy Now" : "Buy Now"}
               </Button>
-              <Button size="lg" variant="outline" onClick={() => void handleWishlist()}>
+              <Button
+                size="lg"
+                variant="outline"
+                onClick={() => void handleWishlist()}
+              >
                 <Heart className="mr-2 h-4 w-4" />
                 {locale === "th" ? "Add to Wishlist" : "Add to Wishlist"}
               </Button>
@@ -145,19 +176,33 @@ export function CourseDetailView({ data }: { data: CourseDetailData }) {
                 </Button>
               </Link>
               <a href="#instructor">
-                <Button size="lg" variant="ghost" className="w-full justify-start">
+                <Button
+                  size="lg"
+                  variant="ghost"
+                  className="w-full justify-start"
+                >
                   {locale === "th" ? "View Instructor" : "View Instructor"}
                 </Button>
               </a>
               <Link href={`/community?courseId=${course.id}`}>
-                <Button size="lg" variant="ghost" className="w-full justify-start">
+                <Button
+                  size="lg"
+                  variant="ghost"
+                  className="w-full justify-start"
+                >
                   <MessageCircle className="mr-2 h-4 w-4" />
                   {locale === "th" ? "Join Discussion" : "Join Discussion"}
                 </Button>
               </Link>
               <a href="#related-courses">
-                <Button size="lg" variant="ghost" className="w-full justify-start">
-                  {locale === "th" ? "View Related Courses" : "View Related Courses"}
+                <Button
+                  size="lg"
+                  variant="ghost"
+                  className="w-full justify-start"
+                >
+                  {locale === "th"
+                    ? "View Related Courses"
+                    : "View Related Courses"}
                 </Button>
               </a>
             </div>
@@ -173,7 +218,10 @@ export function CourseDetailView({ data }: { data: CourseDetailData }) {
             </h2>
             <div className="mt-4 grid gap-3 sm:grid-cols-2">
               {course.willLearnMessages.map((item) => (
-                <div key={item} className="rounded-lg bg-white/60 p-4 text-sm text-muted-foreground dark:bg-white/5">
+                <div
+                  key={item}
+                  className="rounded-lg bg-white/60 p-4 text-sm text-muted-foreground dark:bg-white/5"
+                >
                   {item}
                 </div>
               ))}
@@ -201,7 +249,10 @@ export function CourseDetailView({ data }: { data: CourseDetailData }) {
                   </div>
                   <div className="mt-4 space-y-3">
                     {module.lessons.map((lesson) => (
-                      <div key={lesson.id} className="rounded-lg bg-white/70 p-4 dark:bg-white/5">
+                      <div
+                        key={lesson.id}
+                        className="rounded-lg bg-white/70 p-4 dark:bg-white/5"
+                      >
                         <p className="text-sm font-medium text-foreground">
                           {lesson.order}. {pickLocalized(lesson.title, locale)}
                         </p>
@@ -219,9 +270,14 @@ export function CourseDetailView({ data }: { data: CourseDetailData }) {
           <div id="community-preview" className="glass-panel rounded-lg p-6">
             <div className="flex items-end justify-between gap-4">
               <h2 className="text-2xl font-semibold text-foreground">
-                {locale === "th" ? "Community discussion" : "Community discussion"}
+                {locale === "th"
+                  ? "Community discussion"
+                  : "Community discussion"}
               </h2>
-              <Link href={`/community?courseId=${course.id}`} className="text-sm text-muted-foreground hover:text-foreground">
+              <Link
+                href={`/community?courseId=${course.id}`}
+                className="text-sm text-muted-foreground hover:text-foreground"
+              >
                 {locale === "th" ? "ดูทั้งหมด" : "View all"}
               </Link>
             </div>
@@ -271,12 +327,16 @@ export function CourseDetailView({ data }: { data: CourseDetailData }) {
                   className="rounded-lg border border-white/40 bg-white/50 p-4 dark:bg-white/5"
                 >
                   <div className="flex items-center justify-between">
-                    <p className="font-medium text-foreground">{review.author}</p>
+                    <p className="font-medium text-foreground">
+                      {review.author}
+                    </p>
                     <p className="text-sm text-muted-foreground">
                       {"★".repeat(review.rating)}
                     </p>
                   </div>
-                  <p className="mt-3 text-sm text-muted-foreground">{review.content}</p>
+                  <p className="mt-3 text-sm text-muted-foreground">
+                    {review.content}
+                  </p>
                 </div>
               ))}
             </div>
@@ -285,7 +345,9 @@ export function CourseDetailView({ data }: { data: CourseDetailData }) {
 
         <aside id="instructor" className="space-y-6">
           <div className="glass-panel rounded-lg p-5">
-            <p className="eyebrow">{locale === "th" ? "Instructor profile" : "Instructor profile"}</p>
+            <p className="eyebrow">
+              {locale === "th" ? "Instructor profile" : "Instructor profile"}
+            </p>
             <div className="mt-4 flex items-center gap-4">
               <div className="relative h-16 w-16 overflow-hidden rounded-lg bg-muted">
                 {course.instructor.image ? (
@@ -298,19 +360,29 @@ export function CourseDetailView({ data }: { data: CourseDetailData }) {
                 ) : null}
               </div>
               <div>
-                <p className="text-lg font-semibold text-foreground">{course.instructor.name}</p>
+                <p className="text-lg font-semibold text-foreground">
+                  {course.instructor.name}
+                </p>
                 <p className="text-sm text-muted-foreground">
-                  {pickLocalized(course.instructor.headline ?? { th: "", en: "" }, locale)}
+                  {pickLocalized(
+                    course.instructor.headline ?? { th: "", en: "" },
+                    locale,
+                  )}
                 </p>
               </div>
             </div>
             <p className="mt-4 text-sm text-muted-foreground">
-              {pickLocalized(course.instructor.bio ?? { th: "", en: "" }, locale)}
+              {pickLocalized(
+                course.instructor.bio ?? { th: "", en: "" },
+                locale,
+              )}
             </p>
           </div>
 
           <div className="glass-panel rounded-lg p-5">
-            <p className="eyebrow">{locale === "th" ? "Requirements" : "Requirements"}</p>
+            <p className="eyebrow">
+              {locale === "th" ? "Requirements" : "Requirements"}
+            </p>
             <div className="mt-4 space-y-2 text-sm text-muted-foreground">
               {course.requirements.map((requirement) => (
                 <p key={requirement}>{requirement}</p>
@@ -323,12 +395,17 @@ export function CourseDetailView({ data }: { data: CourseDetailData }) {
       <section id="related-courses" className="section-frame py-12">
         <div className="flex items-end justify-between gap-4">
           <div>
-            <p className="eyebrow">{locale === "th" ? "Recommended next" : "Recommended next"}</p>
+            <p className="eyebrow">
+              {locale === "th" ? "Recommended next" : "Recommended next"}
+            </p>
             <h2 className="mt-2 text-2xl font-semibold text-foreground">
               {locale === "th" ? "คอร์สที่เกี่ยวข้อง" : "Related courses"}
             </h2>
           </div>
-          <Link href="/courses" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground">
+          <Link
+            href="/courses"
+            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground"
+          >
             {locale === "th" ? "ดูทั้งหมด" : "View all"}
             <ArrowRight className="h-4 w-4" />
           </Link>

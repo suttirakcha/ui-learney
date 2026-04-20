@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { CourseCardData } from "@/types/learney";
 import { usePreference } from "@/components/learney/providers/PreferenceProvider";
 import { formatCurrency, formatNumber, pickLocalized } from "@/lib/learney";
+import PromotionBadge from "@/components/PromotionBadge";
 
 export function CourseCard({
   course,
@@ -27,6 +28,14 @@ export function CourseCard({
           className="object-cover"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
+        {(course as any).promotion ? (
+          <div className="absolute right-3 top-3 z-10">
+            <PromotionBadge
+              discountType={(course as any).promotion.discountType}
+              discountValue={(course as any).promotion.discount}
+            />
+          </div>
+        ) : null}
       </div>
 
       <div className="flex flex-1 flex-col gap-4 p-4">
@@ -77,7 +86,8 @@ export function CourseCard({
 
           <Link href={`/courses/${course.slug}`}>
             <Button className="bg-primary text-primary-foreground">
-              {actionLabel ?? (locale === "th" ? "ดูรายละเอียด" : "View Details")}
+              {actionLabel ??
+                (locale === "th" ? "ดูรายละเอียด" : "View Details")}
             </Button>
           </Link>
         </div>

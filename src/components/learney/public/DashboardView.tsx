@@ -15,7 +15,9 @@ export function DashboardView({ data }: { data: DashboardData | null }) {
       <main className="section-frame py-16">
         <div className="glass-panel rounded-lg p-8">
           <h1 className="text-2xl font-semibold text-foreground">
-            {locale === "th" ? "เข้าสู่ระบบเพื่อดูแดชบอร์ด" : "Sign in to view your dashboard"}
+            {locale === "th"
+              ? "เข้าสู่ระบบเพื่อดูแดชบอร์ด"
+              : "Sign in to view your dashboard"}
           </h1>
           <p className="mt-3 text-muted-foreground">
             {locale === "th"
@@ -37,7 +39,9 @@ export function DashboardView({ data }: { data: DashboardData | null }) {
   return (
     <main className="section-frame space-y-8 py-12">
       <div className="soft-surface rounded-lg px-6 py-10">
-        <h1 className="text-3xl font-semibold text-foreground">{data.greeting.title}</h1>
+        <h1 className="text-3xl font-semibold text-foreground">
+          {data.greeting.title}
+        </h1>
         <p className="mt-3 max-w-2xl text-muted-foreground">
           {pickLocalized(data.greeting.subtitle, locale)}
         </p>
@@ -47,21 +51,93 @@ export function DashboardView({ data }: { data: DashboardData | null }) {
         {Object.entries(data.stats).map(([key, value]) => (
           <div key={key} className="glass-panel rounded-lg p-5">
             <p className="text-sm text-muted-foreground">{key}</p>
-            <p className="mt-2 text-2xl font-semibold text-foreground">{value}</p>
+            <p className="mt-2 text-2xl font-semibold text-foreground">
+              {value}
+            </p>
           </div>
         ))}
       </section>
 
       <section className="grid gap-6 lg:grid-cols-[1fr_320px]">
         <div className="space-y-6">
+          {/* ประวัติการทำ Career Assessment */}
+          {(data as any).careerHistory &&
+            (data as any).careerHistory.length > 0 && (
+              <div className="glass-panel rounded-lg p-6">
+                <div className="flex items-end justify-between gap-4 mb-5">
+                  <h2 className="text-2xl font-semibold text-foreground">
+                    {locale === "th"
+                      ? "ประวัติการค้นหาตัวเอง"
+                      : "Career Discovery History"}
+                  </h2>
+                  <Link href="/career-discovery/age">
+                    <Button variant="outline" size="sm">
+                      {locale === "th"
+                        ? "ทำแบบประเมินใหม่"
+                        : "Retake Assessment"}
+                    </Button>
+                  </Link>
+                </div>
+                <div className="grid gap-4 md:grid-cols-2">
+                  {(data as any).careerHistory.map((history: any) => (
+                    <div
+                      key={history.id}
+                      className="rounded-lg bg-white/60 p-5 dark:bg-white/5 border border-slate-100 dark:border-slate-800 flex flex-col justify-between"
+                    >
+                      <div>
+                        <div className="text-xs text-muted-foreground mb-2 font-medium">
+                          {new Date(history.date).toLocaleDateString(
+                            locale === "th" ? "th-TH" : "en-US",
+                            { year: "numeric", month: "short", day: "numeric" },
+                          )}
+                        </div>
+                        <p className="text-sm text-foreground line-clamp-3 mb-3">
+                          {history.summary}
+                        </p>
+                        <div className="flex flex-wrap gap-2 mb-4">
+                          {history.strengths
+                            .slice(0, 3)
+                            .map((strength: string) => (
+                              <span
+                                key={strength}
+                                className="px-2 py-1 bg-primary/10 text-primary text-xs rounded-md font-medium"
+                              >
+                                {strength}
+                              </span>
+                            ))}
+                        </div>
+                      </div>
+                      <Link
+                        href={`/career-discovery/result/${history.sessionId}`}
+                      >
+                        <Button
+                          variant="outline"
+                          className="w-full text-xs h-8"
+                        >
+                          {locale === "th"
+                            ? "ดูผลลัพธ์เต็ม"
+                            : "View Full Result"}
+                        </Button>
+                      </Link>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
           <div className="glass-panel rounded-lg p-6">
             <h2 className="text-2xl font-semibold text-foreground">
               {locale === "th" ? "Skill growth" : "Skill growth"}
             </h2>
             <div className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
               {data.learningGraph.map((point) => (
-                <div key={point.category} className="rounded-lg bg-white/60 p-4 dark:bg-white/5">
-                  <p className="text-sm text-muted-foreground">{point.category}</p>
+                <div
+                  key={point.category}
+                  className="rounded-lg bg-white/60 p-4 dark:bg-white/5"
+                >
+                  <p className="text-sm text-muted-foreground">
+                    {point.category}
+                  </p>
                   <div className="mt-3 space-y-2 text-sm">
                     <div className="flex items-center justify-between">
                       <span>{locale === "th" ? "Before" : "Before"}</span>
@@ -81,7 +157,9 @@ export function DashboardView({ data }: { data: DashboardData | null }) {
             <div className="flex items-end justify-between gap-4">
               <div>
                 <h2 className="text-2xl font-semibold text-foreground">
-                  {locale === "th" ? "Recommended next steps" : "Recommended next steps"}
+                  {locale === "th"
+                    ? "Recommended next steps"
+                    : "Recommended next steps"}
                 </h2>
                 {data.recentDiscovery ? (
                   <p className="mt-2 text-sm text-muted-foreground">
@@ -91,13 +169,17 @@ export function DashboardView({ data }: { data: DashboardData | null }) {
               </div>
               <Link href="/skill-test">
                 <Button variant="outline">
-                  {locale === "th" ? "ทำ Skill Test อีกครั้ง" : "Retake skill test"}
+                  {locale === "th"
+                    ? "ทำ Skill Test อีกครั้ง"
+                    : "Retake skill test"}
                 </Button>
               </Link>
             </div>
             <div className="mt-5 space-y-3 text-sm text-muted-foreground">
               {data.recommendedNextSteps.map((step) => (
-                <p key={pickLocalized(step, locale)}>{pickLocalized(step, locale)}</p>
+                <p key={pickLocalized(step, locale)}>
+                  {pickLocalized(step, locale)}
+                </p>
               ))}
             </div>
           </div>

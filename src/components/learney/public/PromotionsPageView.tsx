@@ -12,20 +12,25 @@ export function PromotionsPageView({ data }: { data: PromotionsData }) {
   return (
     <main className="section-frame space-y-8 py-12">
       <div className="soft-surface rounded-lg px-6 py-10">
-        <p className="eyebrow">{locale === "th" ? "Campaigns and Codes" : "Campaigns and Codes"}</p>
+        <p className="eyebrow">
+          {locale === "th" ? "Campaigns and Codes" : "Campaigns and Codes"}
+        </p>
         <h1 className="mt-2 text-3xl font-semibold text-foreground">
           {locale === "th" ? "Promotion Page" : "Promotion Page"}
         </h1>
         <p className="mt-3 max-w-2xl text-muted-foreground">
           {locale === "th"
-            ? "Flash sale, seasonal campaign, และ promo code ที่เชื่อมกับคอร์สจริงทั้งหมด"
+            ? "Flash sale, seasonal campaign, และ promo code "
             : "Flash sales, seasonal campaigns, and promo codes connected to real courses."}
         </p>
       </div>
 
       <section className="grid gap-6 xl:grid-cols-2">
         {data.promotions.map((promotion) => (
-          <article key={promotion.id} className="glass-panel rounded-lg overflow-hidden">
+          <article
+            key={promotion.id}
+            className="glass-panel rounded-lg overflow-hidden"
+          >
             {promotion.banner ? (
               <div
                 className="h-56 bg-cover bg-center"
