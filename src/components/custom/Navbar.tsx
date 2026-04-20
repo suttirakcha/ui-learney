@@ -1,140 +1,114 @@
 "use client";
 
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { usePathname } from "next/navigation";
+import { MoonStar, ShoppingBag, Sparkles, SunMedium } from "lucide-react";
 import LearneyLogo from "./LearneyLogo";
-
-import {
-  BookOpen,
-  Newspaper,
-  LayoutGrid,
-  Globe,
-  Check,
-} from "lucide-react";
-
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuItem,
-} from "@/components/ui/dropdown-menu";
-
-import { Suspense, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { usePreference } from "@/components/learney/providers/PreferenceProvider";
+import { pickLocalized } from "@/lib/learney";
 import { useAuth } from "@/app/lib/AuthContext";
-import SearchDialog from "../dialogs/SearchDialog";
-import CartLink from "../cart/CartLink";
-import { Skeleton } from "../ui/skeleton";
+
+const navigation = [
+  { href: "/courses", label: { th: "คอร์สทั้งหมด", en: "All Courses" } },
+  { href: "/community", label: { th: "คอมมูนิตี้", en: "Community" } },
+  { href: "/skill-test", label: { th: "Skill Test", en: "Skill Test" } },
+  { href: "/promotions", label: { th: "โปรโมชัน", en: "Promotions" } },
+];
 
 export default function Navbar() {
-  const [lang, setLang] = useState("ไทย");
+  const pathname = usePathname();
+  const { locale, setLocale, theme, setTheme } = usePreference();
   const { user, logout } = useAuth();
 
   return (
-    <nav className="flex items-center justify-between px-8 border-b bg-white fixed inset-x-0 z-10 h-18">
-      <div className="flex items-center gap-8">
-        <LearneyLogo />
-        <div className="flex items-center gap-6 text-sm">
-          <Link
-            href="/course"
-            className="flex items-center gap-1 hover:text-cyan-600"
-          >
-            <BookOpen className="w-4 h-4" />
-            คอร์สเรียน
-          </Link>
+    <header className="glass-panel fixed inset-x-0 top-0 z-40 border-b border-white/40">
+      <div className="section-frame flex h-[72px] items-center justify-between gap-4">
+        <div className="flex items-center gap-6">
+          <LearneyLogo />
+          <nav className="hidden items-center gap-5 md:flex">
+            {navigation.map((item) => {
+              const active = pathname === item.href;
 
-          <Link
-            href="/blog"
-            className="flex items-center gap-1 hover:text-cyan-600"
-          >
-            <Newspaper className="w-4 h-4" />
-            บทความ
-          </Link>
-
-          <Link
-            href="/categories"
-            className="flex items-center gap-1 hover:text-cyan-600"
-          >
-            <LayoutGrid className="w-4 h-4" />
-            หมวดหมู่
-          </Link>
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`text-sm ${
+                    active ? "text-foreground" : "text-muted-foreground"
+                  } hover:text-foreground`}
+                >
+                  {pickLocalized(item.label, locale)}
+                </Link>
+              );
+            })}
+          </nav>
         </div>
-      </div>
-      <div className="flex items-center gap-6">
-        <SearchDialog />
-        {user && <CartLink />}
 
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <button className="flex items-center gap-1 text-sm hover:text-cyan-600">
-              <Globe className="w-4 h-4" />
-              {lang}
-            </button>
-          </DropdownMenuTrigger>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => setLocale(locale === "th" ? "en" : "th")}
+            className="rounded-lg border border-white/50 bg-white/60 px-3 py-2 text-sm text-muted-foreground transition hover:text-foreground dark:bg-white/5"
+          >
+            {locale === "th" ? "EN" : "TH"}
+          </button>
 
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem onClick={() => setLang("ไทย")}>
-              ไทย {lang === "ไทย" && <Check className="w-4 h-4 ml-2" />}
-            </DropdownMenuItem>
+          <button
+            type="button"
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            className="rounded-lg border border-white/50 bg-white/60 p-2 text-muted-foreground transition hover:text-foreground dark:bg-white/5"
+            aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+          >
+            {theme === "dark" ? (
+              <SunMedium className="h-4 w-4" />
+            ) : (
+              <MoonStar className="h-4 w-4" />
+            )}
+          </button>
 
-            <DropdownMenuItem onClick={() => setLang("EN")}>
-              EN {lang === "EN" && <Check className="w-4 h-4 ml-2" />}
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-
-        <Suspense fallback={<Skeleton className="w-20 h-8" />}>
-          {!user ? (
+          {user ? (
+            <>
+              <Link href="/cart" className="rounded-lg border border-white/50 bg-white/60 p-2 text-muted-foreground hover:text-foreground dark:bg-white/5">
+                <ShoppingBag className="h-4 w-4" />
+              </Link>
+              <Link href="/dashboard">
+                <Button size="sm" variant="outline">
+                  {locale === "th" ? "แดชบอร์ด" : "Dashboard"}
+                </Button>
+              </Link>
+              {user.role === "ADMIN" ? (
+                <Link href="/admin">
+                  <Button size="sm" className="bg-primary text-primary-foreground">
+                    <Sparkles className="mr-1 h-4 w-4" />
+                    {locale === "th" ? "Admin" : "Admin"}
+                  </Button>
+                </Link>
+              ) : null}
+              <button
+                type="button"
+                onClick={() => void logout()}
+                className="hidden rounded-lg px-3 py-2 text-sm text-muted-foreground hover:text-foreground sm:inline-flex"
+              >
+                {locale === "th" ? "ออกจากระบบ" : "Logout"}
+              </button>
+            </>
+          ) : (
             <>
               <Link href="/login">
-                <Button variant="ghost">Sign in</Button>
+                <Button size="sm" variant="outline">
+                  {locale === "th" ? "เข้าสู่ระบบ" : "Sign in"}
+                </Button>
               </Link>
-
               <Link href="/register">
-                <Button className="bg-cyan-500 hover:bg-cyan-600">
-                  Sign up
+                <Button size="sm" className="bg-primary text-primary-foreground">
+                  {locale === "th" ? "เริ่มต้นเรียน" : "Start Learning"}
                 </Button>
               </Link>
             </>
-          ) : (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <button className="flex items-center gap-2 text-sm hover:text-cyan-600">
-                  {/* Avatar */}
-                  <div className="w-8 h-8 rounded-full bg-cyan-500 text-white flex items-center justify-center text-sm font-semibold">
-                    {user.fullname?.charAt(0)}
-                  </div>
-
-                  {/* Name */}
-                  {user.fullname}
-                </button>
-              </DropdownMenuTrigger>
-
-              <DropdownMenuContent align="end" className="w-52">
-                <DropdownMenuItem asChild>
-                  <Link href="/profile">👤 โปรไฟล์</Link>
-                </DropdownMenuItem>
-
-                <DropdownMenuItem asChild>
-                  <Link href="/dashboard">📊 Dashboard</Link>
-                </DropdownMenuItem>
-
-                <DropdownMenuItem asChild>
-                  <Link href="/my-courses">🎓 คอร์สของฉัน</Link>
-                </DropdownMenuItem>
-
-                <div className="border-t my-2" />
-
-                <DropdownMenuItem
-                  onClick={logout}
-                  className="text-red-500 cursor-pointer"
-                >
-                  🚪 ออกจากระบบ
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
           )}
-        </Suspense>
+        </div>
       </div>
-    </nav>
+    </header>
   );
 }

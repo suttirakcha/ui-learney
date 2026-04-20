@@ -31,6 +31,7 @@ export async function fetchWithAuth(
 
   const res = await fetch(`${API_URL}${endpoint}`, {
     ...options,
+    cache: options.cache ?? "no-store",
     credentials: "include",
     headers: requestHeaders,
   });
@@ -49,6 +50,7 @@ export async function fetchWithAuth(
 
     return fetch(`${API_URL}${endpoint}`, {
       ...options,
+      cache: options.cache ?? "no-store",
       credentials: "include",
       headers: refreshedRequestHeaders,
     });

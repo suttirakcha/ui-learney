@@ -1,16 +1,5 @@
-import ProfileSidebar from "@/components/profile/ProfileSidebar";
-import StudentCourseCard from "@/components/student/StudentCourseCard";
-import { Metadata } from "next";
+import { redirect } from "next/navigation";
 
-export const metadata: Metadata = {
-  title: "ภาพรวมของฉัน",
-};
-
-export default function page() {
-  return (
-    <div className="">
-      <ProfileSidebar role="USER" />
-      <StudentCourseCard />
-    </div>
-  );
+export default function LegacyStudentPage() {
+  redirect("/dashboard");
 }

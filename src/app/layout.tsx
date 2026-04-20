@@ -5,6 +5,8 @@ import { AuthProvider } from "@/app/lib/AuthContext";
 import MainContainer from "@/components/custom/MainContainer";
 import { kanit } from "@/styles/font";
 import ChatWidget from "@/components/ai-chat/ChatWidget";
+import { cookies } from "next/headers";
+import { PreferenceProvider } from "@/components/learney/providers/PreferenceProvider";
 
 export const metadata: Metadata = {
   title: {
@@ -14,19 +16,29 @@ export const metadata: Metadata = {
   description: "...",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const cookieStore = await cookies();
+  const locale = cookieStore.get("learney-locale")?.value === "en" ? "en" : "th";
+  const theme = cookieStore.get("learney-theme")?.value === "dark" ? "dark" : "light";
+
   return (
-    <html lang="en" className={`${kanit.variable} h-full antialiased font-sans`}>
+    <html
+      lang={locale}
+      suppressHydrationWarning
+      className={`${kanit.variable} h-full antialiased font-sans ${theme === "dark" ? "dark" : ""}`}
+    >
       <body className={`${kanit.className} min-h-full flex flex-col`}>
-        <AuthProvider>
-          <MainContainer>{children}</MainContainer>
-          <ChatWidget />
-          <Toaster position="top-center" />
-        </AuthProvider>
+        <PreferenceProvider initialLocale={locale} initialTheme={theme}>
+          <AuthProvider>
+            <MainContainer>{children}</MainContainer>
+            <ChatWidget />
+            <Toaster position="top-center" />
+          </AuthProvider>
+        </PreferenceProvider>
       </body>
     </html>
   );

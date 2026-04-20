@@ -1,3 +1,5 @@
-import PendingCoursesPage from "@/app/dashboard/(admin)/pending-courses/page";
+import { redirect } from "next/navigation";
 
-export default PendingCoursesPage;
+export default function LegacyAdminPendingPage() {
+  redirect("/admin/content-review-queue");
+}

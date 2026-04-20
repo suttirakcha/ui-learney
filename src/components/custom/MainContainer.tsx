@@ -11,19 +11,24 @@ interface MainContainerProps {
 
 export default function MainContainer({ children }: MainContainerProps) {
   const pathname = usePathname();
-  const isAuthPage = pathname === "/login" || pathname === "/register";
+  const isAuthPage =
+    pathname === "/login" ||
+    pathname === "/register" ||
+    pathname === "/forgot-password" ||
+    pathname.startsWith("/reset-password");
+  const isAdminPage = pathname.startsWith("/admin");
+
+  if (isAuthPage) {
+    return <>{children}</>;
+  }
 
   return (
     <Fragment>
-      {isAuthPage ? (
-        <>{children}</>
-      ) : (
-        <div className="flex flex-col">
-          <Navbar />
-          <main className="mt-18">{children}</main>
-          <Footer />
-        </div>
-      )}
+      <div className="flex min-h-screen flex-col">
+        <Navbar />
+        <main className="mt-18 flex-1">{children}</main>
+        {!isAdminPage ? <Footer /> : null}
+      </div>
     </Fragment>
   );
 }

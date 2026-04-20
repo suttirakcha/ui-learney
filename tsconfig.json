@@ -37,6 +37,20 @@
     ".next/dev/types/**/*.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "src/lib/api/assessment.controller.ts",
+    "src/lib/api/admin-chatbot.ts",
+    "src/lib/api/apiClient.ts",
+    "src/lib/api/career-assessment.ts",
+    "src/lib/api/chatbot.ts",
+    "src/lib/api/page.tsx",
+    "src/lib/api/submit-attempt.dto.ts",
+    "src/lib/api/tests.ts",
+    "src/lib/api/useAuthStore.ts",
+    "src/lib/api/useChatbotStore.ts",
+    "src/lib/api/ChatMessage.tsx",
+    "src/lib/api/ChatWidget.tsx",
+    "src/lib/api/ChatWindow.tsx",
+    "src/lib/api/ComparisonChart.tsx"
   ]
 }

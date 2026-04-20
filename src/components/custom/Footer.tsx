@@ -1,88 +1,59 @@
-// import Link from "next/link";
-// import LearneyLogo from "./LearneyLogo";
-
-// export default function Footer() {
-//   return (
-//     <footer className="p-8 ">
-//       <div className="grid grid-cols-3 items-center  ">
-//         <div className="flex gap-4 justify-start">
-//           <Link href="/about">About</Link>
-//           <Link href="/contact">Contact</Link>
-//           <Link href="/privacy">Privacy</Link>
-//         </div>
-//         <div className="flex items-center  justify-center">
-//           <LearneyLogo />
-//         </div>
-//         {/* <p>เสริมพลังงานผู้เรียนทั่วโลกด้วยการศึกษาออนไลน์คุณภาพสูง</p>
-//         <div className="flex gap-4 justify-center">
-//         <Link href="/about">About</Link>
-//         <Link href="/contact">Contact</Link>
-//         <Link href="/privacy">Privacy</Link>
-//         </div> */}
-//         <p className="text-end ">© 2026 Learney. All rights reserved. </p>
-//       </div>{" "}
-//     </footer>
-//   );
-// }
+"use client";
 
 import Link from "next/link";
 import LearneyLogo from "./LearneyLogo";
-import FacebookSolidIcon from "../icons/FacebookIcon";
-import InstagramIcon from "../icons/InstagramIcon";
-// import { Facebook, Twitter, Youtube } from "lucide-react";
+import { usePreference } from "@/components/learney/providers/PreferenceProvider";
+import { pickLocalized } from "@/lib/learney";
+
+const footerLinks = [
+  { href: "/courses", label: { th: "คอร์สทั้งหมด", en: "All Courses" } },
+  { href: "/community", label: { th: "คอมมูนิตี้", en: "Community" } },
+  { href: "/skill-test", label: { th: "Skill Test", en: "Skill Test" } },
+  { href: "/promotions", label: { th: "โปรโมชัน", en: "Promotions" } },
+];
 
 export default function Footer() {
+  const { locale } = usePreference();
+
   return (
-    <footer className="bg-gray-50 border-t mt-20">
-      <div className="max-w-7xl mx-auto px-8 py-12 grid grid-cols-1 md:grid-cols-3 gap-10">
-        {/* LEFT - BRAND */}
+    <footer className="border-t border-white/30 bg-white/50 dark:bg-white/5">
+      <div className="section-frame grid gap-8 py-12 md:grid-cols-[1.3fr_1fr_1fr]">
         <div className="space-y-4">
           <LearneyLogo />
-          <p className="text-gray-600 text-sm leading-relaxed">
-            เสริมพลังการเรียนรู้ของคุณ ด้วยแพลตฟอร์มรวมวิดีโอการศึกษาคุณภาพ
-            จากทั่วโลก เรียนได้ทุกที่ ทุกเวลา
+          <p className="max-w-md text-sm text-muted-foreground">
+            {locale === "th"
+              ? "แพลตฟอร์มเรียนออนไลน์สำหรับยุค AI ที่ให้คุณค้นพบจุดแข็ง อัปสกิลอย่างมีทิศทาง และเติบโตแบบอบอุ่นแต่จริงจัง"
+              : "An online learning platform for the AI era that helps you discover strengths, build skills, and grow with clarity."}
           </p>
         </div>
 
-        {/* CENTER - LINKS */}
-        <div className="flex flex-col items-start md:items-center space-y-3">
-          <h3 className="font-semibold text-gray-800">Explore</h3>
-          <Link
-            href="/about"
-            className="text-gray-600 hover:text-blue-500 transition"
-          >
-            About
-          </Link>
-          <Link
-            href="/contact"
-            className="text-gray-600 hover:text-blue-500 transition"
-          >
-            Contact
-          </Link>
-          <Link
-            href="/privacy"
-            className="text-gray-600 hover:text-blue-500 transition"
-          >
-            Privacy Policy
-          </Link>
+        <div className="space-y-3">
+          <p className="text-sm font-medium text-foreground">
+            {locale === "th" ? "เส้นทางเรียนรู้" : "Learning Paths"}
+          </p>
+          <div className="space-y-2 text-sm text-muted-foreground">
+            {footerLinks.map((link) => (
+              <Link key={link.href} href={link.href} className="block hover:text-foreground">
+                {pickLocalized(link.label, locale)}
+              </Link>
+            ))}
+          </div>
         </div>
 
-        {/* RIGHT - SOCIAL */}
-        <div className="flex flex-col items-start md:items-end space-y-4">
-          <h3 className="font-semibold text-gray-800">Follow us</h3>
-          <div className="flex gap-4">
-            <FacebookSolidIcon />
-            <InstagramIcon />
-            {/* <Facebook className="w-5 h-5 text-gray-600 hover:text-blue-500 cursor-pointer transition" />
-            <Twitter className="w-5 h-5 text-gray-600 hover:text-blue-500 cursor-pointer transition" />
-            <Youtube className="w-5 h-5 text-gray-600 hover:text-red-500 cursor-pointer transition" /> */}
+        <div className="space-y-3">
+          <p className="text-sm font-medium text-foreground">
+            {locale === "th" ? "จังหวะของ LEARNEY" : "Learney Rhythm"}
+          </p>
+          <div className="space-y-2 text-sm text-muted-foreground">
+            <p>{locale === "th" ? "คอร์สใหม่ทุกสัปดาห์" : "Fresh drops every week"}</p>
+            <p>{locale === "th" ? "คอมมูนิตี้ถามตอบที่เป็นมิตร" : "Warm Q&A community"}</p>
+            <p>{locale === "th" ? "ผลลัพธ์ที่วัดการเติบโตได้" : "Growth you can actually measure"}</p>
           </div>
         </div>
       </div>
 
-      {/* BOTTOM */}
-      <div className="border-t text-center py-4 text-sm text-gray-500">
-        © 2026 Learney. All rights reserved.
+      <div className="border-t border-white/30 py-4 text-center text-xs text-muted-foreground">
+        © 2026 Learney. {locale === "th" ? "พร้อมเติบโตไปกับคุณ" : "Ready to grow with you."}
       </div>
     </footer>
   );
