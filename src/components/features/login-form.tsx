@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { login } from "@/lib/api/auth/auth.service";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { toast } from "react-hot-toast";
 import { useAuth } from "@/app/lib/AuthContext";
@@ -10,7 +9,6 @@ import LearneyLogo from "../custom/LearneyLogo";
 import { setAccessToken } from "@/lib/api/auth/auth-store";
 
 export default function LoginForm() {
-  const router = useRouter();
   const { setUser } = useAuth();
 
   const [email, setEmail] = useState("");
@@ -41,13 +39,14 @@ export default function LoginForm() {
 
       toast.success("เข้าสู่ระบบสำเร็จ 🎉");
 
-      if (res.user.role === "ADMIN") {
-        router.push("/admin");
-      } else if (res.user.role === "INSTRUCTOR") {
-        router.push("/instructor/dashboard");
-      } else {
-        router.push("/profile");
-      }
+      const destination =
+        res.user.role === "ADMIN"
+          ? "/admin"
+          : res.user.role === "INSTRUCTOR"
+            ? "/instructor/dashboard"
+            : "/profile";
+
+      window.location.assign(destination);
     } catch (err: unknown) {
       const error = err as { message?: string };
 
@@ -112,9 +111,12 @@ export default function LoginForm() {
           จดจำฉัน
         </label>
 
-        <span className="text-cyan-500 hover:underline cursor-pointer">
+        <Link
+          href="/forgot-password"
+          className="text-cyan-500 hover:underline"
+        >
           ลืมรหัสผ่าน?
-        </span>
+        </Link>
       </div>
 
       <button

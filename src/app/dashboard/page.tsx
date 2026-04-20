@@ -1,6 +1,8 @@
 import { getDashboardData } from "@/lib/api/experience.service";
 import { DashboardView } from "@/components/learney/public/DashboardView";
 
+export const dynamic = "force-dynamic";
+
 export default async function DashboardPage() {
   const data = await getDashboardData();
 
