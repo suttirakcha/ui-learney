@@ -29,6 +29,7 @@ export default async function RootLayout({
     <html
       lang={locale}
       suppressHydrationWarning
+      data-scroll-behavior="smooth"
       className={`${kanit.variable} h-full antialiased font-sans ${theme === "dark" ? "dark" : ""}`}
     >
       <body className={`${kanit.className} min-h-full flex flex-col`}>

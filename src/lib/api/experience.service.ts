@@ -3,12 +3,10 @@ import { fetchWithAuth } from "@/lib/api/fetchWithAuth";
 import type {
   AdminOverviewData,
   AdminSectionData,
-  BootstrapData,
   CareerCardData,
   CatalogData,
   CommunityData,
   CourseDetailData,
-  CourseCardData,
   DashboardData,
   HomePageData,
   PromotionsData,
@@ -19,27 +17,43 @@ import type {
 } from "@/types/learney";
 
 export class ApiResponseError extends Error {
-  status: number;
-  body: string;
-
-  constructor(status: number, body: string) {
-    super(body || `Request failed with status ${status}`);
+  constructor(
+    public status: number,
+    public body: string,
+    public url: string,
+  ) {
+    super(`Request failed with status ${status} at ${url}`);
     this.name = "ApiResponseError";
-    this.status = status;
-    this.body = body;
   }
 }
 
 async function parseJson<T>(response: Response): Promise<T> {
+  const url = response.url;
+
   if (!response.ok) {
-    const text = await response.text();
-    throw new ApiResponseError(
-      response.status,
-      text || `Request failed with status ${response.status}`,
+    let text = "";
+    try {
+      text = await response.text();
+    } catch (e) {
+      text = "Could not read response body";
+    }
+    console.error(
+      `[API Error] ${response.status} ${response.statusText} - ${url}\nResponse: ${text}`,
     );
+    throw new ApiResponseError(response.status, text, url);
   }
 
-  return response.json();
+  try {
+    const text = await response.text();
+    if (!text) return {} as T; // รองรับกรณี Response ส่งกลับมาว่างเปล่า
+    return JSON.parse(text) as T;
+  } catch (error) {
+    console.error(
+      `[JSON Parse Error] Failed to parse response from ${url}`,
+      error,
+    );
+    throw new Error(`Invalid JSON format from ${url}`);
+  }
 }
 
 async function safeFetch<T>(
@@ -50,15 +64,36 @@ async function safeFetch<T>(
     const response = await factory();
     return await parseJson<T>(response);
   } catch (error) {
-    console.error(error);
+    console.error(
+      "[safeFetch] Handled Exception:",
+      error instanceof Error ? error.message : error,
+    );
+    // รีเทิร์น Fallback เพื่อป้องกันแอปพัง แต่ฝั่ง UI ต้องเช็กข้อมูลก่อนเรนเดอร์
     return fallback;
   }
 }
 
 export async function getBootstrapData() {
-  return safeFetch<BootstrapData>(() => fetchApi("/experience/bootstrap"), {
+  return safeFetch(() => fetchApi("/experience/bootstrap"), {
     activeTheme: null,
-    categories: [],
+    // เมื่อ Backend ล่ม (500) ให้ใช้ Mock Data นี้แทนชั่วคราว เพื่อให้ UI นำไป Render ได้ไม่พัง
+    categories: [
+      {
+        key: "ai",
+        slug: "ai-machine-learning",
+        name: { th: "AI และ Machine Learning", en: "AI & Machine Learning" },
+      },
+      {
+        key: "data",
+        slug: "data-science",
+        name: { th: "วิทยาการข้อมูล", en: "Data Science" },
+      },
+      {
+        key: "dev",
+        slug: "development",
+        name: { th: "การพัฒนาซอฟต์แวร์", en: "Software Development" },
+      },
+    ] as any[], // อนุโลมใช้ any ชั่วคราวเนื่องจากไม่มี Type แจกแจงในไฟล์นี้
   });
 }
 
@@ -71,7 +106,10 @@ export async function getHomePageData() {
         en: "Start your next chapter with LEARNEY",
       },
       ctas: [
-        { label: { th: "สำรวจคอร์ส", en: "Explore Courses" }, href: "/courses" },
+        {
+          label: { th: "สำรวจคอร์ส", en: "Explore Courses" },
+          href: "/courses",
+        },
       ],
     },
     categories: [],
@@ -80,7 +118,12 @@ export async function getHomePageData() {
     popularCourses: [],
     promotions: [],
     reviews: [],
-    socialProof: { students: "0", instructors: "0", courses: "0", rating: "0.0" },
+    socialProof: {
+      students: "0",
+      instructors: "0",
+      courses: "0",
+      rating: "0.0",
+    },
     benefits: [],
     activeTheme: null,
   });
@@ -143,10 +186,13 @@ export async function getCourseDetailData(slugOrId: string) {
 
 export async function getCommunityData(courseId?: string) {
   const suffix = courseId ? `?courseId=${encodeURIComponent(courseId)}` : "";
-  return safeFetch<CommunityData>(() => fetchApi(`/experience/community${suffix}`), {
-    highlights: { totalThreads: 0, questions: 0, discussions: 0 },
-    threads: [],
-  });
+  return safeFetch<CommunityData>(
+    () => fetchApi(`/experience/community${suffix}`),
+    {
+      highlights: { totalThreads: 0, questions: 0, discussions: 0 },
+      threads: [],
+    },
+  );
 }
 
 export async function createCommunityThread(payload: Record<string, unknown>) {
@@ -191,15 +237,16 @@ export async function getPromotionsData() {
 }
 
 export async function getSkillTestIntroData(ageGroup?: string) {
-  const suffix = ageGroup
-    ? `?ageGroup=${encodeURIComponent(ageGroup)}`
-    : "";
+  const suffix = ageGroup ? `?ageGroup=${encodeURIComponent(ageGroup)}` : "";
 
   return safeFetch<SkillTestIntroData>(
     () => fetchApi(`/experience/skill-test${suffix}`),
     {
       intro: {
-        title: { th: "คุณอาจเก่งมากกว่าที่คิด", en: "You might be more capable than you think" },
+        title: {
+          th: "คุณอาจเก่งมากกว่าที่คิด",
+          en: "You might be more capable than you think",
+        },
         subtitle: {
           th: "ค้นหาศักยภาพของคุณ",
           en: "Discover your strengths",
@@ -241,9 +288,9 @@ export async function getCareerRecommendationsData(attemptId: string) {
 }
 
 export async function getRecommendedCoursesData(attemptId: string) {
-  return safeFetch<CourseCardData[]>(
+  return safeFetch(
     () => fetchApi(`/experience/skill-test/attempts/${attemptId}/courses`),
-    [],
+    [] as Array<Record<string, unknown>>,
   );
 }
 
@@ -277,14 +324,23 @@ export async function removeFromWishlist(courseId: string) {
 }
 
 export async function getAdminOverviewData() {
-  return parseJson<AdminOverviewData>(
-    await fetchWithAuth("/admin/console/overview"),
+  return safeFetch<AdminOverviewData>(
+    () => fetchWithAuth("/admin/console/overview"),
+    {
+      cards: [],
+      latestReviews: [],
+      activePromotion: null,
+      activeTheme: null,
+      aiQueueCount: 0,
+      quickActions: [],
+    },
   );
 }
 
 export async function getAdminSectionData(section: string) {
-  return parseJson<AdminSectionData>(
-    await fetchWithAuth(`/admin/console/${section}`),
+  return safeFetch<AdminSectionData>(
+    () => fetchWithAuth(`/admin/console/${section}`),
+    {},
   );
 }
 

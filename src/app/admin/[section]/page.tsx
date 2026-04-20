@@ -1,50 +1,40 @@
-import { redirect } from "next/navigation";
-import { getAdminSectionData } from "@/lib/api/experience.service";
-import { AdminSectionView } from "@/components/learney/admin/AdminConsoleView";
-import { ApiResponseError } from "@/lib/api/experience.service";
+import { WorkspaceSectionClient } from "@/components/workspace/WorkspaceSectionClient";
+import { WorkspaceShell } from "@/components/workspace/WorkspaceShell";
+import { loadWorkspacePage } from "@/lib/workspace-route";
 
 export const dynamic = "force-dynamic";
 
-type AdminSectionPageProps = {
+type PageProps = {
   params: Promise<{ section: string }>;
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
 };
-
-function handleAdminAccessError(error: unknown): never {
-  if (
-    error instanceof Error &&
-    /Session expired|No token provided|No refresh token|Unauthorized/i.test(
-      error.message,
-    )
-  ) {
-    redirect("/login");
-  }
-
-  if (error instanceof ApiResponseError) {
-    if (error.status === 401) {
-      redirect("/login");
-    }
-
-    if (error.status === 403) {
-      redirect("/dashboard");
-    }
-  }
-
-  throw error;
-}
-
-async function loadAdminSectionData(section: string) {
-  try {
-    return await getAdminSectionData(section);
-  } catch (error) {
-    handleAdminAccessError(error);
-  }
-}
 
 export default async function AdminSectionPage({
   params,
-}: AdminSectionPageProps) {
+  searchParams,
+}: PageProps) {
   const { section } = await params;
-  const data = await loadAdminSectionData(section);
+  const query = await searchParams;
+  const queryString = new URLSearchParams(
+    Object.entries(query ?? {}).flatMap(([key, value]) =>
+      Array.isArray(value)
+        ? value.map((item) => [key, item])
+        : typeof value === "string"
+          ? [[key, value]]
+          : [],
+    ),
+  ).toString();
+  const { session, data } = await loadWorkspacePage("admin", section, queryString);
 
-  return <AdminSectionView section={section} data={data} />;
+  return (
+    <WorkspaceShell
+      role="admin"
+      session={session}
+      title={data.title}
+      description={data.description}
+    >
+      <WorkspaceSectionClient role="admin" section={section} data={data} />
+    </WorkspaceShell>
+  );
 }
+

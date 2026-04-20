@@ -49,8 +49,11 @@ export default function LoginForm() {
       window.location.assign(destination);
     } catch (err: unknown) {
       const error = err as { message?: string };
-
-      const message = error.message || "เข้าสู่ระบบไม่สำเร็จ";
+      const message =
+        error.message &&
+        /load failed|failed to fetch|networkerror/i.test(error.message)
+          ? "เชื่อมต่อเซิร์ฟเวอร์ไม่ได้ กรุณาตรวจสอบว่าเปิด API อยู่ และใช้ localhost หรือ 127.0.0.1 ให้ตรงกัน"
+          : error.message || "เข้าสู่ระบบไม่สำเร็จ";
 
       setErrorMessage(message);
       toast.error(message);

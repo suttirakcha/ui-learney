@@ -1,45 +1,21 @@
-import { redirect } from "next/navigation";
-import { AdminOverviewView } from "@/components/learney/admin/AdminConsoleView";
-import {
-  ApiResponseError,
-  getAdminOverviewData,
-} from "@/lib/api/experience.service";
+import { WorkspaceSectionClient } from "@/components/workspace/WorkspaceSectionClient";
+import { WorkspaceShell } from "@/components/workspace/WorkspaceShell";
+import { loadWorkspacePage } from "@/lib/workspace-route";
 
 export const dynamic = "force-dynamic";
 
-function handleAdminAccessError(error: unknown): never {
-  if (
-    error instanceof Error &&
-    /Session expired|No token provided|No refresh token|Unauthorized/i.test(
-      error.message,
-    )
-  ) {
-    redirect("/login");
-  }
-
-  if (error instanceof ApiResponseError) {
-    if (error.status === 401) {
-      redirect("/login");
-    }
-
-    if (error.status === 403) {
-      redirect("/dashboard");
-    }
-  }
-
-  throw error;
-}
-
-async function loadAdminOverviewData() {
-  try {
-    return await getAdminOverviewData();
-  } catch (error) {
-    handleAdminAccessError(error);
-  }
-}
-
 export default async function AdminPage() {
-  const data = await loadAdminOverviewData();
+  const { session, data } = await loadWorkspacePage("admin");
 
-  return <AdminOverviewView data={data} />;
+  return (
+    <WorkspaceShell
+      role="admin"
+      session={session}
+      title={data.title}
+      description={data.description}
+    >
+      <WorkspaceSectionClient role="admin" section="overview" data={data} />
+    </WorkspaceShell>
+  );
 }
+
