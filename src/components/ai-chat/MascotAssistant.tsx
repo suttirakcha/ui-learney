@@ -87,12 +87,14 @@ const modeIllustrationStyles: Record<
   MascotMode,
   { objectPosition: string; scale: number }
 > = {
-  welcome: { objectPosition: "29% 31%", scale: 1.6 },
-  recommend: { objectPosition: "65% 22%", scale: 1.9 },
-  quiz: { objectPosition: "76% 22%", scale: 1.9 },
-  success: { objectPosition: "36% 76%", scale: 1.7 },
-  error: { objectPosition: "83% 21%", scale: 1.9 },
-  assistant: { objectPosition: "81% 48%", scale: 1.8 },
+  // The replacement mascot is a centered portrait illustration, so we keep
+  // one consistent crop that shows the face clearly in both the bubble and panel.
+  welcome: { objectPosition: "50% 36%", scale: 1.55 },
+  recommend: { objectPosition: "50% 36%", scale: 1.55 },
+  quiz: { objectPosition: "50% 36%", scale: 1.55 },
+  success: { objectPosition: "50% 36%", scale: 1.55 },
+  error: { objectPosition: "50% 36%", scale: 1.55 },
+  assistant: { objectPosition: "50% 36%", scale: 1.55 },
 };
 
 const iconMap = {
@@ -128,7 +130,7 @@ export function MascotAssistant({
   message,
   position = "bottom-right",
   size = "md",
-  imageSrc = "/mascot/crossy-reference.png",
+  imageSrc = "/mascot/learney-mascot-replacement.png",
 }: MascotAssistantProps) {
   const { locale } = usePreference();
   const mascotLocale = toMascotLocale(locale);

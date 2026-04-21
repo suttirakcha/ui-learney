@@ -11,5 +11,5 @@ export default async function SkillCareerPage({
   const { attemptId } = await params;
   const careers = await getCareerRecommendationsData(attemptId);
 
-  return <CareerRecommendationView careers={careers} />;
+  return <CareerRecommendationView careers={careers} attemptId={attemptId} />;
 }

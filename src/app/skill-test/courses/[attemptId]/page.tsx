@@ -11,5 +11,5 @@ export default async function SkillCoursePage({
   const { attemptId } = await params;
   const courses = await getRecommendedCoursesData(attemptId);
 
-  return <RecommendedCoursesView courses={courses} />;
+  return <RecommendedCoursesView courses={courses} attemptId={attemptId} />;
 }
