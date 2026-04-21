@@ -80,7 +80,7 @@ export default function RegisterForm() {
             onClick={() => setValue("role", "STUDENT")}
             className={`flex-1 p-3 rounded-xl border ${
               role === "STUDENT"
-                ? "border-cyan-500 bg-cyan-50"
+                ? "border-primary bg-pink-100"
                 : "border-gray-300"
             }`}
           >
@@ -92,7 +92,7 @@ export default function RegisterForm() {
             onClick={() => setValue("role", "TEACHER")}
             className={`flex-1 p-3 rounded-xl border ${
               role === "TEACHER"
-                ? "border-cyan-500 bg-cyan-50"
+                ? "border-primary bg-pink-100"
                 : "border-gray-300"
             }`}
           >
@@ -154,8 +154,7 @@ export default function RegisterForm() {
               type="password"
               {...register("confirmPassword", {
                 required: "กรุณายืนยันรหัสผ่าน",
-                validate: (value) =>
-                  value === password || "รหัสผ่านไม่ตรงกัน",
+                validate: (value) => value === password || "รหัสผ่านไม่ตรงกัน",
               })}
               className="input"
               placeholder="กรุณายืนยันรหัสผ่าน"
@@ -177,8 +176,8 @@ export default function RegisterForm() {
               />
               <span>
                 ฉันยอมรับ{" "}
-                <span className="text-cyan-500">ข้อกำหนดการให้บริการ</span> และ{" "}
-                <span className="text-cyan-500">นโยบายความเป็นส่วนตัว</span>
+                <span className="text-primary">ข้อกำหนดการให้บริการ</span> และ{" "}
+                <span className="text-primary">นโยบายความเป็นส่วนตัว</span>
               </span>
             </label>
 
@@ -192,7 +191,7 @@ export default function RegisterForm() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full bg-cyan-500 text-white py-3 rounded-xl"
+            className="w-full bg-primary text-white py-3 rounded-xl"
           >
             {isSubmitting ? "กำลังสมัคร..." : "สมัครสมาชิก"}
           </button>
@@ -200,7 +199,7 @@ export default function RegisterForm() {
 
         <div className="text-center mt-4 text-sm">
           มีบัญชีแล้ว?{" "}
-          <Link href="/login" className="text-cyan-500">
+          <Link href="/login" className="text-primary">
             เข้าสู่ระบบ
           </Link>
         </div>
