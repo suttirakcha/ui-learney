@@ -16,7 +16,7 @@ export default function LnTabs({ tabs, className }: LnTabsProps) {
       <TabsList className="bg-transparent gap-4 w-full">
         {tabs.map((tab) => (
           <TabsTrigger
-            className="h-12 data-active:bg-primary shadow-none! outline data-active:outline-primary text-base data-active:text-background"
+            className="h-12 text-base shadow-none! outline data-active:bg-primary data-active:text-primary-foreground data-active:outline-primary"
             key={tab.value}
             value={tab.value}
           >

@@ -7,6 +7,7 @@ import { kanit } from "@/styles/font";
 import ChatWidget from "@/components/ai-chat/ChatWidget";
 import { cookies } from "next/headers";
 import { PreferenceProvider } from "@/components/learney/providers/PreferenceProvider";
+import { ThemeProvider } from "@/components/ThemeProvider";
 
 export const metadata: Metadata = {
   title: {
@@ -22,8 +23,10 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const cookieStore = await cookies();
-  const locale = cookieStore.get("learney-locale")?.value === "en" ? "en" : "th";
-  const theme = cookieStore.get("learney-theme")?.value === "dark" ? "dark" : "light";
+  const locale =
+    cookieStore.get("learney-locale")?.value === "en" ? "en" : "th";
+  const theme =
+    cookieStore.get("learney-theme")?.value === "dark" ? "dark" : "light";
 
   return (
     <html
@@ -33,13 +36,15 @@ export default async function RootLayout({
       className={`${kanit.variable} h-full antialiased font-sans ${theme === "dark" ? "dark" : ""}`}
     >
       <body className={`${kanit.className} min-h-full flex flex-col`}>
-        <PreferenceProvider initialLocale={locale} initialTheme={theme}>
-          <AuthProvider>
-            <MainContainer>{children}</MainContainer>
-            <ChatWidget />
-            <Toaster position="top-center" />
-          </AuthProvider>
-        </PreferenceProvider>
+        <ThemeProvider>
+          <PreferenceProvider initialLocale={locale} initialTheme={theme}>
+            <AuthProvider>
+              <MainContainer>{children}</MainContainer>
+              <ChatWidget />
+              <Toaster position="top-center" />
+            </AuthProvider>
+          </PreferenceProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

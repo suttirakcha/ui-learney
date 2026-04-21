@@ -19,7 +19,7 @@ export default function Hero() {
   };
 
   return (
-    <section className="bg-primary text-white text-center py-20 px-4 space-y-6">
+    <section className="hero-surface text-primary-foreground text-center py-20 px-4 space-y-6">
       {/* Headline */}
       <div
         className="space-y-4 animate-fadeIn"
@@ -39,7 +39,7 @@ export default function Hero() {
 
         {/* Description */}
         <p
-          className="text-xl max-w-lg mx-auto opacity-90 animate-fadeIn"
+          className="text-xl max-w-lg mx-auto opacity-80 animate-fadeIn"
           style={{ animationDelay: "400ms" }}
         >
           ค้นพบหลักสูตรออนไลน์หลากหลาย พัฒนาทักษะใหม่ๆ

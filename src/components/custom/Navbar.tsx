@@ -23,7 +23,7 @@ export default function Navbar() {
   const { user, logout } = useAuth();
 
   return (
-    <header className="glass-panel fixed inset-x-0 top-0 z-40 border-b border-white/40">
+    <header className="glass-panel fixed inset-x-0 top-0 z-40 border-b border-border/70">
       <div className="section-frame flex h-[72px] items-center justify-between gap-3">
         <div className="flex min-w-0 flex-1 items-center gap-3 lg:gap-6">
           <LearneyLogo />
@@ -52,7 +52,7 @@ export default function Navbar() {
           <button
             type="button"
             onClick={() => setLocale(locale === "th" ? "en" : "th")}
-            className="rounded-lg border border-white/50 bg-white/60 px-3 py-2 text-sm text-muted-foreground transition hover:text-foreground dark:bg-white/5"
+            className="glass-chip rounded-xl px-3 py-2 text-sm font-medium text-muted-foreground transition hover:text-foreground"
           >
             {locale === "th" ? "EN" : "TH"}
           </button>
@@ -60,7 +60,7 @@ export default function Navbar() {
           <button
             type="button"
             onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            className="rounded-lg border border-white/50 bg-white/60 p-2 text-muted-foreground transition hover:text-foreground dark:bg-white/5"
+            className="glass-chip rounded-xl p-2 text-muted-foreground transition hover:text-foreground"
             aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
           >
             {theme === "dark" ? (
@@ -72,7 +72,10 @@ export default function Navbar() {
 
           {user ? (
             <>
-              <Link href="/cart" className="rounded-lg border border-white/50 bg-white/60 p-2 text-muted-foreground hover:text-foreground dark:bg-white/5">
+              <Link
+                href="/cart"
+                className="glass-chip rounded-xl p-2 text-muted-foreground transition hover:text-foreground"
+              >
                 <ShoppingBag className="h-4 w-4" />
               </Link>
               <Link href="/dashboard" className="hidden sm:inline-flex">
@@ -82,7 +85,7 @@ export default function Navbar() {
               </Link>
               {user.role === "ADMIN" ? (
                 <Link href="/admin" className="hidden sm:inline-flex">
-                  <Button size="sm" className="bg-primary text-primary-foreground">
+                  <Button size="sm">
                     <Sparkles className="mr-1 h-4 w-4" />
                     {locale === "th" ? "Admin" : "Admin"}
                   </Button>
@@ -104,7 +107,7 @@ export default function Navbar() {
                 </Button>
               </Link>
               <Link href="/register" className="hidden sm:inline-flex">
-                <Button size="sm" className="bg-primary text-primary-foreground">
+                <Button size="sm">
                   {locale === "th" ? "เริ่มต้นเรียน" : "Start Learning"}
                 </Button>
               </Link>
@@ -113,7 +116,7 @@ export default function Navbar() {
         </div>
       </div>
 
-      <div className="border-t border-white/30 lg:hidden">
+      <div className="border-t border-border/60 lg:hidden">
         <div className="section-frame scrollbar-none flex gap-2 overflow-x-auto py-3">
           {navigation.map((item) => {
             const active = pathname === item.href;
@@ -122,10 +125,10 @@ export default function Navbar() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex-none rounded-lg px-3 py-2 text-sm ${
+                className={`flex-none rounded-xl px-3 py-2 text-sm font-medium transition ${
                   active
-                    ? "bg-primary text-primary-foreground"
-                    : "border border-white/40 bg-white/70 text-muted-foreground dark:bg-white/5"
+                    ? "btn-gradient text-primary-foreground shadow-sm"
+                    : "glass-chip text-muted-foreground hover:text-foreground"
                 }`}
               >
                 {pickLocalized(item.label, locale)}
@@ -137,14 +140,14 @@ export default function Navbar() {
             <>
               <Link
                 href="/dashboard"
-                className="flex-none rounded-lg border border-white/40 bg-white/70 px-3 py-2 text-sm text-muted-foreground dark:bg-white/5"
+                className="glass-chip flex-none rounded-xl px-3 py-2 text-sm font-medium text-muted-foreground transition hover:text-foreground"
               >
                 {locale === "th" ? "แดชบอร์ด" : "Dashboard"}
               </Link>
               {user.role === "ADMIN" ? (
                 <Link
                   href="/admin"
-                  className="flex-none rounded-lg bg-primary px-3 py-2 text-sm text-primary-foreground"
+                  className="btn-gradient flex-none rounded-xl px-3 py-2 text-sm font-medium text-primary-foreground"
                 >
                   {locale === "th" ? "หลังบ้าน" : "Admin"}
                 </Link>
@@ -154,13 +157,13 @@ export default function Navbar() {
             <>
               <Link
                 href="/login"
-                className="flex-none rounded-lg border border-white/40 bg-white/70 px-3 py-2 text-sm text-muted-foreground dark:bg-white/5"
+                className="glass-chip flex-none rounded-xl px-3 py-2 text-sm font-medium text-muted-foreground transition hover:text-foreground"
               >
                 {locale === "th" ? "เข้าสู่ระบบ" : "Sign in"}
               </Link>
               <Link
                 href="/register"
-                className="flex-none rounded-lg bg-primary px-3 py-2 text-sm text-primary-foreground"
+                className="btn-gradient flex-none rounded-xl px-3 py-2 text-sm font-medium text-primary-foreground"
               >
                 {locale === "th" ? "เริ่มต้นเรียน" : "Start Learning"}
               </Link>

@@ -10,11 +10,7 @@ export default function LnButton(
 ) {
   const buttonProps = {
     ...props,
-    className: cn(
-      "text-base px-4 py-2 h-fit",
-      props.className,
-      props.variant === undefined && "text-white",
-    ),
+    className: cn("text-base px-4 py-2 h-fit", props.className),
   };
 
   return <Button {...buttonProps}>{props.children}</Button>;

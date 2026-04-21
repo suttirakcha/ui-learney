@@ -22,8 +22,8 @@ export default function ProfileSidebar({ role }: ProfileSidebarProps) {
 
   return (
     <div className="space-y-4 lg:sticky top-24">
-      <div className="border border-accent rounded-xl w-full">
-        <div className="border-b border-accent/60 px-4 py-5 space-y-3">
+      <div className="surface-card w-full rounded-2xl">
+        <div className="border-b border-border/70 px-4 py-5 space-y-3">
           <p className="text-sm font-medium text-muted-foreground">
             {description}
           </p>
@@ -36,8 +36,8 @@ export default function ProfileSidebar({ role }: ProfileSidebarProps) {
               href={menuLink}
               key={menu.label}
               className={cn(
-                "flex items-center px-4 py-3 m-4 gap-2 hover:bg-primary hover:text-white rounded-lg transition-all duration-200",
-                pathname === menuLink && "bg-primary text-white",
+                "mx-4 my-2 flex items-center gap-2 rounded-xl px-4 py-3 text-sm transition-all duration-200 hover:bg-primary/12 hover:text-foreground",
+                pathname === menuLink && "btn-gradient text-primary-foreground shadow-sm",
               )}
             >
               {menu.icon}
@@ -48,7 +48,7 @@ export default function ProfileSidebar({ role }: ProfileSidebarProps) {
         <button
           type="button"
           onClick={() => void logout()}
-          className="flex items-center px-4 py-3 m-4 gap-2 hover:bg-primary hover:text-white rounded-lg transition-all duration-200"
+          className="mx-4 mt-2 mb-4 flex items-center gap-2 rounded-xl px-4 py-3 text-sm transition-all duration-200 hover:bg-primary/12 hover:text-foreground"
         >
           <LogOut />
           <p>ออกจากระบบ</p>
@@ -56,12 +56,12 @@ export default function ProfileSidebar({ role }: ProfileSidebarProps) {
       </div>
 
       {role === "ADMIN" && (
-        <div className="border border-accent rounded-xl p-4 space-y-2">
+        <div className="surface-card rounded-2xl p-4 space-y-2">
           <p className="text-xl font-semibold">ทางลัดสำหรับผู้ดูแลระบบ</p>
 
           <Link
             href="/admin/pending"
-            className="flex w-full text-left px-4 py-3 rounded-lg hover:bg-primary hover:text-white transition-all duration-200"
+            className="flex w-full rounded-xl px-4 py-3 text-left transition-all duration-200 hover:bg-primary/12 hover:text-foreground"
           >
             อนุมัติคอร์ส
           </Link>

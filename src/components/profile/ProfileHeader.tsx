@@ -15,7 +15,7 @@ export default function ProfileHeader({ user }: ProfileHeaderProps) {
   const avatarInitial = displayName.trim().charAt(0) || role.charAt(0);
 
   return (
-    <div className="bg-primary text-white">
+    <div className="hero-surface text-primary-foreground">
       <div className="mx-auto flex max-w-7xl w-full flex-col gap-6 p-8 sm:flex-row sm:items-center">
         {user?.image ? (
           // eslint-disable-next-line @next/next/no-img-element
@@ -31,11 +31,11 @@ export default function ProfileHeader({ user }: ProfileHeaderProps) {
         )}
         <div className="space-y-3">
           <div className="space-y-1">
-            <p className="text-sm font-medium text-white/70">{description}</p>
+            <p className="text-sm font-medium text-primary-foreground/70">{description}</p>
             <h1 className="text-4xl font-bold sm:text-5xl">{displayName}</h1>
           </div>
           <ProfileRoleBadge role={role} variant="inverse" />
-          {user?.email && <p className="text-lg text-white/80">{user.email}</p>}
+          {user?.email && <p className="text-lg text-primary-foreground/80">{user.email}</p>}
         </div>
       </div>
     </div>

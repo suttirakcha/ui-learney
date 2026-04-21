@@ -71,17 +71,17 @@ export default function RegisterForm() {
   return (
     <div className="flex flex-col items-center gap-2">
       <LearneyLogo />
-      <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow">
-        <h2 className="text-xl font-semibold text-center mb-4">สร้างบัญชี</h2>
+      <div className="surface-card w-full max-w-md rounded-[1.75rem] p-8 shadow-[var(--shadow-soft)]">
+        <h2 className="mb-4 text-center text-xl font-semibold text-foreground">สร้างบัญชี</h2>
 
-        <div className="flex gap-3 mb-6">
+        <div className="mb-6 flex gap-3">
           <button
             type="button"
             onClick={() => setValue("role", "STUDENT")}
             className={`flex-1 p-3 rounded-xl border ${
               role === "STUDENT"
-                ? "border-primary bg-pink-100"
-                : "border-gray-300"
+                ? "border-primary bg-primary/10 text-primary"
+                : "border-border bg-background/70 text-muted-foreground hover:border-primary/40"
             }`}
           >
             นักเรียน
@@ -92,8 +92,8 @@ export default function RegisterForm() {
             onClick={() => setValue("role", "TEACHER")}
             className={`flex-1 p-3 rounded-xl border ${
               role === "TEACHER"
-                ? "border-primary bg-pink-100"
-                : "border-gray-300"
+                ? "border-primary bg-primary/10 text-primary"
+                : "border-border bg-background/70 text-muted-foreground hover:border-primary/40"
             }`}
           >
             ผู้สอน
@@ -102,12 +102,12 @@ export default function RegisterForm() {
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
-            <label className="block text-sm mb-1">ชื่อ-นามสกุล</label>
+            <label className="mb-1 block text-sm text-foreground">ชื่อ-นามสกุล</label>
             <input
               {...register("fullname", {
                 required: "กรุณากรอกชื่อ",
               })}
-              className="input"
+              className="h-11 w-full rounded-xl border border-input bg-background/80 px-4 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-4 focus:ring-primary/10"
               placeholder="ชื่อ-นามสกุล"
             />
             {errors.fullname && (
@@ -116,12 +116,12 @@ export default function RegisterForm() {
           </div>
 
           <div>
-            <label className="block text-sm mb-1">อีเมล</label>
+            <label className="mb-1 block text-sm text-foreground">อีเมล</label>
             <input
               {...register("email", {
                 required: "กรุณากรอกอีเมล",
               })}
-              className="input"
+              className="h-11 w-full rounded-xl border border-input bg-background/80 px-4 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-4 focus:ring-primary/10"
               placeholder="Example@mail.com"
             />
             {errors.email && (
@@ -130,7 +130,7 @@ export default function RegisterForm() {
           </div>
 
           <div>
-            <label className="block text-sm mb-1">รหัสผ่าน</label>
+            <label className="mb-1 block text-sm text-foreground">รหัสผ่าน</label>
             <input
               type="password"
               {...register("password", {
@@ -140,7 +140,7 @@ export default function RegisterForm() {
                   message: "รหัสผ่านอย่างน้อย 6 ตัว",
                 },
               })}
-              className="input"
+              className="h-11 w-full rounded-xl border border-input bg-background/80 px-4 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-4 focus:ring-primary/10"
               placeholder="กรุณากรอกรหัสผ่าน"
             />
             {errors.password && (
@@ -149,14 +149,14 @@ export default function RegisterForm() {
           </div>
 
           <div>
-            <label className="block text-sm mb-1">ยืนยันรหัสผ่าน</label>
+            <label className="mb-1 block text-sm text-foreground">ยืนยันรหัสผ่าน</label>
             <input
               type="password"
               {...register("confirmPassword", {
                 required: "กรุณายืนยันรหัสผ่าน",
                 validate: (value) => value === password || "รหัสผ่านไม่ตรงกัน",
               })}
-              className="input"
+              className="h-11 w-full rounded-xl border border-input bg-background/80 px-4 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-4 focus:ring-primary/10"
               placeholder="กรุณายืนยันรหัสผ่าน"
             />
             {errors.confirmPassword && (
@@ -191,15 +191,15 @@ export default function RegisterForm() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full bg-primary text-white py-3 rounded-xl"
+            className="btn-gradient w-full rounded-xl py-3 font-semibold text-primary-foreground transition-transform hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-60"
           >
             {isSubmitting ? "กำลังสมัคร..." : "สมัครสมาชิก"}
           </button>
         </form>
 
-        <div className="text-center mt-4 text-sm">
+        <div className="mt-4 text-center text-sm text-muted-foreground">
           มีบัญชีแล้ว?{" "}
-          <Link href="/login" className="text-primary">
+          <Link href="/login" className="font-semibold text-primary">
             เข้าสู่ระบบ
           </Link>
         </div>

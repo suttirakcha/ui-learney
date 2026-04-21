@@ -177,7 +177,7 @@ export default function LoginForm() {
         type="button"
         onClick={handleLogin}
         disabled={loading}
-        className="w-full bg-gradient-to-r from-primary via-primary/95 to-primary-foreground text-primary py-3 rounded-2xl hover:from-primary-foreground/90 hover:shadow-2xl hover:shadow-primary/40 glass-panel transition-all duration-300 font-semibold text-lg shadow-xl hover:shadow-2xl hover:shadow-primary/30 hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed animate-fadeIn ring-2 ring-primary/20 hover:ring-primary/40"
+        className="btn-gradient w-full rounded-2xl py-3 text-lg font-semibold text-primary-foreground transition-all duration-300 hover:shadow-primary/30 hover:-translate-y-1 disabled:cursor-not-allowed disabled:opacity-50 animate-fadeIn ring-2 ring-primary/20 hover:ring-primary/40"
       >
         {pickLocalized(
           {
