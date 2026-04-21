@@ -13,6 +13,7 @@ const navigation = [
   { href: "/courses", label: { th: "คอร์สทั้งหมด", en: "All Courses" } },
   { href: "/community", label: { th: "คอมมูนิตี้", en: "Community" } },
   { href: "/skill-test", label: { th: "Skill Test", en: "Skill Test" } },
+  { href: "/recommendations", label: { th: "AI Planner", en: "AI Planner" } },
   { href: "/promotions", label: { th: "โปรโมชัน", en: "Promotions" } },
 ];
 
@@ -28,7 +29,9 @@ export default function Navbar() {
           <LearneyLogo />
           <nav className="hidden items-center gap-5 md:flex">
             {navigation.map((item) => {
-              const active = pathname === item.href;
+              const active =
+                pathname === item.href ||
+                pathname.startsWith(`${item.href}/`);
 
               return (
                 <Link

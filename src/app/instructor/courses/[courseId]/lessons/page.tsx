@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import Link from "next/link";
 import toast from "react-hot-toast";
 import {
@@ -24,7 +24,6 @@ import { cn } from "@/lib/utils";
 export default function InstructorLessonsPage() {
   const params = useParams();
   const courseId = params.courseId as string;
-  const router = useRouter();
 
   const [lessons, setLessons] = useState<Lesson[]>([]);
   const [loading, setLoading] = useState(true);

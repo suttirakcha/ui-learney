@@ -17,6 +17,7 @@ export function CourseCard({
   actionLabel?: string;
 }) {
   const { locale } = usePreference();
+  const promotion = course.promotion ?? null;
 
   return (
     <article className="glass-panel flex h-full flex-col overflow-hidden rounded-lg">
@@ -28,11 +29,12 @@ export function CourseCard({
           className="object-cover"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
-        {(course as any).promotion ? (
+        {promotion ? (
           <div className="absolute right-3 top-3 z-10">
             <PromotionBadge
-              discountType={(course as any).promotion.discountType}
-              discountValue={(course as any).promotion.discount}
+              discountType={promotion.type}
+              discountValue={promotion.discount}
+              label={pickLocalized(promotion.title, locale)}
             />
           </div>
         ) : null}

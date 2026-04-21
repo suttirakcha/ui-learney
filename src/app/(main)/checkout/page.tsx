@@ -19,13 +19,28 @@ import { usePreference } from "@/components/learney/providers/PreferenceProvider
 import { useAuth } from "@/app/lib/AuthContext";
 
 const API_URL = process.env.NEXT_PUBLIC_API!;
+const FALLBACK_COURSE_IMAGE =
+  "https://placehold.co/960x720/f7dfe5/4a3245?text=LEARNEY";
+
+type CartItem = {
+  id: string;
+  course: {
+    id: string;
+    slug?: string | null;
+    title: { th?: string; en?: string };
+    coverImage?: string | null;
+    thumbnail?: string | null;
+    price: number;
+    discountPrice?: number | null;
+  };
+};
 
 export default function CheckoutPage() {
   const { locale } = usePreference();
   const { user } = useAuth();
   const router = useRouter();
 
-  const [cartItems, setCartItems] = useState<any[]>([]);
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [isProcessing, setIsProcessing] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState<
@@ -102,10 +117,15 @@ export default function CheckoutPage() {
 
       // เด้งไปหน้า Dashboard หรือ My Courses เพื่อเข้าเรียน
       router.push("/dashboard");
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : locale === "th"
+            ? "เกิดข้อผิดพลาดในการชำระเงิน"
+            : "Payment error";
       toast.error(
-        error.message ||
-          (locale === "th" ? "เกิดข้อผิดพลาดในการชำระเงิน" : "Payment error"),
+        errorMessage,
       );
     } finally {
       setIsProcessing(false);
@@ -227,7 +247,7 @@ export default function CheckoutPage() {
                 <div key={item.id} className="flex gap-4 items-start">
                   <div className="w-16 h-12 relative rounded-md overflow-hidden shrink-0">
                     <Image
-                      src={course.coverImage || course.thumbnail}
+                      src={course.coverImage || course.thumbnail || FALLBACK_COURSE_IMAGE}
                       alt="course"
                       fill
                       className="object-cover"

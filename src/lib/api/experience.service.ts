@@ -3,9 +3,11 @@ import { fetchWithAuth } from "@/lib/api/fetchWithAuth";
 import type {
   AdminOverviewData,
   AdminSectionData,
+  BootstrapData,
   CareerCardData,
   CatalogData,
   CommunityData,
+  CourseCardData,
   CourseDetailData,
   DashboardData,
   HomePageData,
@@ -34,7 +36,7 @@ async function parseJson<T>(response: Response): Promise<T> {
     let text = "";
     try {
       text = await response.text();
-    } catch (e) {
+    } catch {
       text = "Could not read response body";
     }
     console.error(
@@ -91,7 +93,7 @@ async function safeFetch<T>(
 }
 
 export async function getBootstrapData() {
-  return safeFetch(() => fetchApi("/experience/bootstrap"), {
+  return safeFetch<BootstrapData>(() => fetchApi("/experience/bootstrap"), {
     activeTheme: null,
     // เมื่อ Backend ล่ม (500) ให้ใช้ Mock Data นี้แทนชั่วคราว เพื่อให้ UI นำไป Render ได้ไม่พัง
     categories: [
@@ -110,7 +112,7 @@ export async function getBootstrapData() {
         slug: "development",
         name: { th: "การพัฒนาซอฟต์แวร์", en: "Software Development" },
       },
-    ] as any[], // อนุโลมใช้ any ชั่วคราวเนื่องจากไม่มี Type แจกแจงในไฟล์นี้
+    ] as BootstrapData["categories"],
   });
 }
 
@@ -305,9 +307,9 @@ export async function getCareerRecommendationsData(attemptId: string) {
 }
 
 export async function getRecommendedCoursesData(attemptId: string) {
-  return safeFetch(
+  return safeFetch<Array<CourseCardData & { matchPercentage?: number }>>(
     () => fetchApi(`/experience/skill-test/attempts/${attemptId}/courses`),
-    [] as Array<Record<string, unknown>>,
+    [],
   );
 }
 

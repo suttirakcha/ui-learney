@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
-import { Trash2, ShoppingCart, ArrowRight, Loader2 } from "lucide-react";
+import { Trash2, ShoppingCart, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { formatCurrency, pickLocalized } from "@/lib/learney";
 import { usePreference } from "@/components/learney/providers/PreferenceProvider";
@@ -13,13 +13,39 @@ import CartSummary from "@/components/cart/CartSummary";
 import { useAuth } from "@/app/lib/AuthContext";
 
 const API_URL = process.env.NEXT_PUBLIC_API!;
+const FALLBACK_COURSE_IMAGE =
+  "https://placehold.co/960x720/f7dfe5/4a3245?text=LEARNEY";
+
+type CartItem = {
+  id: string;
+  course: {
+    id: string;
+    slug?: string | null;
+    title: { th?: string; en?: string };
+    instructor?: {
+      fullname?: string;
+      name?: string;
+    };
+    coverImage?: string | null;
+    thumbnail?: string | null;
+    price: number;
+    discountPrice?: number | null;
+  };
+};
+
+type CheckoutSummary = {
+  subtotal: number;
+  discountAmount: number;
+  finalTotal: number;
+  appliedPromo: string | null;
+};
 
 export default function CartPage() {
   const { locale } = usePreference();
   const { user } = useAuth();
   const router = useRouter();
 
-  const [cartItems, setCartItems] = useState<any[]>([]);
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [removingId, setRemovingId] = useState<string | null>(null);
 
@@ -62,7 +88,7 @@ export default function CartPage() {
           locale === "th" ? "ลบคอร์สออกจากตะกร้าแล้ว" : "Removed from cart",
         );
       }
-    } catch (error) {
+    } catch {
       toast.error(
         locale === "th" ? "ลบสินค้าไม่สำเร็จ" : "Failed to remove item",
       );
@@ -71,9 +97,8 @@ export default function CartPage() {
     }
   };
 
-  const handleCheckout = (finalData: any) => {
-    // ส่งข้อมูลไปหน้า Checkout พร้อมกับยอดที่สรุปแล้ว
-    console.log("Proceeding to checkout with:", finalData);
+  const handleCheckout = (summary: CheckoutSummary) => {
+    void summary;
     router.push("/checkout");
   };
 
@@ -148,7 +173,7 @@ export default function CartPage() {
                     className="shrink-0 w-full sm:w-40 h-28 relative rounded-xl overflow-hidden group"
                   >
                     <Image
-                      src={course.coverImage || course.thumbnail}
+                      src={course.coverImage || course.thumbnail || FALLBACK_COURSE_IMAGE}
                       alt={pickLocalized(course.title, locale)}
                       fill
                       className="object-cover group-hover:scale-105 transition-transform duration-500"

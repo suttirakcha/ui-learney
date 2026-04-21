@@ -9,6 +9,7 @@ const footerLinks = [
   { href: "/courses", label: { th: "คอร์สทั้งหมด", en: "All Courses" } },
   { href: "/community", label: { th: "คอมมูนิตี้", en: "Community" } },
   { href: "/skill-test", label: { th: "Skill Test", en: "Skill Test" } },
+  { href: "/recommendations", label: { th: "AI Planner", en: "AI Planner" } },
   { href: "/promotions", label: { th: "โปรโมชัน", en: "Promotions" } },
 ];
 

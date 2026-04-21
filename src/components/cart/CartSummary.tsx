@@ -10,9 +10,18 @@ import { usePreference } from "@/components/learney/providers/PreferenceProvider
 
 const API_URL = process.env.NEXT_PUBLIC_API!;
 
+type CartItem = {
+  id: string;
+  course: {
+    id: string;
+    price: number;
+    discountPrice?: number | null;
+  };
+};
+
 interface CartSummaryProps {
   initialSubtotal: number;
-  cartItems: any[];
+  cartItems: CartItem[];
   onCheckout: (finalData: {
     subtotal: number;
     discountAmount: number;
@@ -71,8 +80,12 @@ export default function CartSummary({
       toast.success(
         locale === "th" ? "ใช้โค้ดส่วนลดสำเร็จ! 🎉" : "Promo code applied!",
       );
-    } catch (error: any) {
-      toast.error(error.message || "เกิดข้อผิดพลาดในการใช้โค้ดส่วนลด");
+    } catch (error: unknown) {
+      const message =
+        error instanceof Error
+          ? error.message
+          : "เกิดข้อผิดพลาดในการใช้โค้ดส่วนลด";
+      toast.error(message);
       setPromoCodeInput("");
     } finally {
       setIsApplying(false);

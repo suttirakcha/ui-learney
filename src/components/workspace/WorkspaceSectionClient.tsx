@@ -182,6 +182,7 @@ export function WorkspaceSectionClient({
   const [submitting, setSubmitting] = useState(false);
 
   const items = useMemo(() => data.items ?? [], [data.items]);
+  const columns = useMemo(() => data.columns ?? [], [data.columns]);
 
   const buildQuery = (next: Record<string, string | null>) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -198,7 +199,10 @@ export function WorkspaceSectionClient({
     router.replace(query ? `${pathname}?${query}` : pathname);
   };
 
-  const openForm = (seed?: Record<string, unknown>, actionOverride?: string) => {
+  const openForm = (
+    seed?: Record<string, unknown> | null,
+    actionOverride?: string,
+  ) => {
     const nextValues = Object.fromEntries(
       (data.form?.fields ?? []).map((field) => [
         field.key,
@@ -212,14 +216,14 @@ export function WorkspaceSectionClient({
   };
 
   const exportCsv = () => {
-    if (!data.columns?.length || !items.length) {
+    if (!columns.length || !items.length) {
       toast.error("ไม่มีข้อมูลสำหรับส่งออก");
       return;
     }
 
-    const header = data.columns.map((column) => column.label).join(",");
+    const header = columns.map((column) => column.label).join(",");
     const rows = items.map((item) =>
-      data.columns!
+      columns
         .map((column) => {
           const value = item[column.key];
           const text = formatCellValue(value, column.type).replaceAll('"', '""');
@@ -440,7 +444,7 @@ export function WorkspaceSectionClient({
         </section>
       ) : null}
 
-      {data.item && data.form && !data.columns?.length ? (
+      {data.item && data.form && !columns.length ? (
         <section className="rounded-lg border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-950">
           <div className="flex items-start justify-between gap-4">
             <div>
@@ -457,7 +461,7 @@ export function WorkspaceSectionClient({
         </section>
       ) : null}
 
-      {data.columns?.length ? (
+      {columns.length ? (
         <section className="rounded-lg border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-950">
           <div className="border-b border-slate-200 p-4 dark:border-slate-800">
             <div className="flex flex-wrap items-center justify-between gap-3">
@@ -599,7 +603,7 @@ export function WorkspaceSectionClient({
                           }
                         />
                       </th>
-                      {data.columns.map((column) => (
+                      {columns.map((column) => (
                         <th
                           key={column.key}
                           className="px-4 py-3 text-left font-medium text-slate-500"
@@ -633,7 +637,7 @@ export function WorkspaceSectionClient({
                               }
                             />
                           </td>
-                          {data.columns.map((column) => {
+                          {columns.map((column) => {
                             const value = item[column.key];
 
                             return (
@@ -907,4 +911,3 @@ export function WorkspaceSectionClient({
     </div>
   );
 }
-

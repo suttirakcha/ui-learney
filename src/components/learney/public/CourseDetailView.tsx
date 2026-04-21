@@ -32,6 +32,7 @@ export function CourseDetailView({ data }: { data: CourseDetailData }) {
   const { user } = useAuth();
   const router = useRouter();
   const { course } = data;
+  const promotion = course.promotion ?? null;
 
   const handleBuyNow = async () => {
     if (!user) {
@@ -130,11 +131,12 @@ export function CourseDetailView({ data }: { data: CourseDetailData }) {
           </div>
 
           <aside className="glass-panel h-fit rounded-lg p-6">
-            {(course as any).promotion ? (
+            {promotion ? (
               <div className="mb-4">
                 <PromotionBadge
-                  discountType={(course as any).promotion.discountType}
-                  discountValue={(course as any).promotion.discount}
+                  discountType={promotion.type}
+                  discountValue={promotion.discount}
+                  label={pickLocalized(promotion.title, locale)}
                   size="md"
                 />
               </div>
