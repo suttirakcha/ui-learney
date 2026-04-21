@@ -4,7 +4,7 @@ import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "@/app/lib/AuthContext";
 import MainContainer from "@/components/custom/MainContainer";
 import { kanit } from "@/styles/font";
-import ChatWidget from "@/components/ai-chat/ChatWidget";
+import { RouteMascotAssistant } from "@/components/ai-chat/RouteMascotAssistant";
 import { cookies } from "next/headers";
 import { PreferenceProvider } from "@/components/learney/providers/PreferenceProvider";
 import { ThemeProvider } from "@/components/ThemeProvider";
@@ -40,7 +40,7 @@ export default async function RootLayout({
           <PreferenceProvider initialLocale={locale} initialTheme={theme}>
             <AuthProvider>
               <MainContainer>{children}</MainContainer>
-              <ChatWidget />
+              <RouteMascotAssistant />
               <Toaster position="top-center" />
             </AuthProvider>
           </PreferenceProvider>

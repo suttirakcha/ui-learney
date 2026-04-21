@@ -1,30 +1,62 @@
 import Anthropic from "@anthropic-ai/sdk";
+import {
+  buildMascotFallbackReply,
+  createMascotSystemPrompt,
+  type MascotMode,
+} from "@/lib/mascot";
 
-const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+type ChatMessage = {
+  role: "user" | "assistant";
+  content: string;
+};
 
-const SYSTEM_PROMPT = `คุณคือผู้ช่วย AI ของแพลตฟอร์ม Learney ซึ่งเป็นแพลตฟอร์มเรียนออนไลน์ภาษาไทย
-หน้าที่ของคุณคือช่วยผู้เรียนในเรื่องต่อไปนี้:
-- แนะนำคอร์สเรียนที่เหมาะสมกับเป้าหมายและระดับของผู้เรียน
-- ตอบคำถามเกี่ยวกับเนื้อหาการเรียน เช่น คณิตศาสตร์, โปรแกรมมิ่ง, ดีไซน์, ภาษา, AI
-- ให้คำแนะนำในการพัฒนาทักษะและวางแผนการเรียนรู้
-- อธิบายแนวคิดยากๆ ให้เข้าใจง่าย
+const client = process.env.ANTHROPIC_API_KEY
+  ? new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
+  : null;
 
-ตอบเป็นภาษาไทยเสมอ ยกเว้นคำศัพท์เทคนิคที่ควรใช้ภาษาอังกฤษ ตอบกระชับและเป็นประโยชน์`;
+function textResponse(text: string) {
+  return new Response(text, {
+    headers: { "Content-Type": "text/plain; charset=utf-8" },
+  });
+}
 
 export async function POST(req: Request) {
   try {
-    const { messages } = await req.json();
+    const { messages, mode } = (await req.json()) as {
+      messages?: ChatMessage[];
+      mode?: MascotMode;
+    };
+    const resolvedMode = mode ?? "assistant";
 
     if (!Array.isArray(messages) || messages.length === 0) {
       return new Response("Invalid messages", { status: 400 });
     }
 
-    const stream = await client.messages.stream({
-      model: "claude-opus-4-6",
-      max_tokens: 1024,
-      system: SYSTEM_PROMPT,
-      messages,
-    });
+    const lastUserMessage =
+      [...messages].reverse().find((item) => item.role === "user")?.content ??
+      "";
+
+    if (!client) {
+      return textResponse(
+        buildMascotFallbackReply(lastUserMessage, resolvedMode, "th"),
+      );
+    }
+
+    let stream;
+
+    try {
+      stream = await client.messages.stream({
+        model: process.env.ANTHROPIC_MODEL || "claude-opus-4-6",
+        max_tokens: 1024,
+        system: createMascotSystemPrompt(resolvedMode),
+        messages: messages.map(({ role, content }) => ({ role, content })),
+      });
+    } catch (error) {
+      console.error("[chat/route:init]", error);
+      return textResponse(
+        buildMascotFallbackReply(lastUserMessage, resolvedMode, "th"),
+      );
+    }
 
     const encoder = new TextEncoder();
     const readable = new ReadableStream({
@@ -46,6 +78,6 @@ export async function POST(req: Request) {
     });
   } catch (err) {
     console.error("[chat/route]", err);
-    return new Response("Internal Server Error", { status: 500 });
+    return textResponse(buildMascotFallbackReply("", "assistant", "th"));
   }
 }

@@ -133,7 +133,12 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   };
 
   useEffect(() => {
-    document.documentElement.className = `theme-${theme}`;
+    const root = document.documentElement;
+    Array.from(root.classList)
+      .filter((className) => className.startsWith("theme-"))
+      .forEach((className) => root.classList.remove(className));
+
+    root.classList.add(`theme-${theme}`);
   }, [theme]);
 
   return (
