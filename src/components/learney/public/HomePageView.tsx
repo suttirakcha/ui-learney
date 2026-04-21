@@ -14,31 +14,31 @@ export function HomePageView({ data }: { data: HomePageData }) {
   return (
     <main className="pb-16">
       <section className="soft-surface">
-        <div className="section-frame grid min-h-[76vh] items-end gap-10 py-16 lg:grid-cols-[1.1fr_0.9fr] lg:py-20">
+        <div className="section-frame grid min-h-[76vh] items-end gap-10 py-14 lg:grid-cols-[1.1fr_0.9fr] lg:py-20">
           <div className="space-y-6 pb-6">
             <p className="eyebrow">
               {locale === "th" ? "LEARNEY FOR THE AI ERA" : "LEARNEY FOR THE AI ERA"}
             </p>
             <div className="space-y-4">
-              <h1 className="balance-text max-w-3xl text-4xl font-semibold leading-tight text-foreground sm:text-5xl">
+              <h1 className="balance-text max-w-3xl text-3xl font-semibold leading-tight text-foreground sm:text-4xl lg:text-5xl">
                 {pickLocalized(data.hero.title, locale)}
               </h1>
-              <p className="max-w-2xl text-lg text-muted-foreground">
+              <p className="max-w-2xl text-base text-muted-foreground sm:text-lg">
                 {pickLocalized(data.hero.subtitle, locale)}
               </p>
             </div>
 
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               {data.hero.ctas.map((cta) => (
-                <Link key={cta.href} href={cta.href}>
+                <Link key={cta.href} href={cta.href} className="w-full sm:w-auto">
                   <Button
                     size="lg"
                     variant={cta.href === "/courses" ? "default" : "outline"}
-                    className={
+                    className={`w-full sm:w-auto ${
                       cta.href === "/courses"
                         ? "bg-primary text-primary-foreground"
-                        : undefined
-                    }
+                        : ""
+                    }`}
                   >
                     {pickLocalized(cta.label, locale)}
                   </Button>
@@ -46,7 +46,7 @@ export function HomePageView({ data }: { data: HomePageData }) {
               ))}
             </div>
 
-            <div className="grid gap-4 sm:grid-cols-4">
+            <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
               <div className="glass-panel rounded-lg p-4">
                 <p className="text-sm text-muted-foreground">
                   {locale === "th" ? "ผู้เรียน" : "Learners"}
@@ -106,7 +106,7 @@ export function HomePageView({ data }: { data: HomePageData }) {
       </section>
 
       <section className="section-frame py-16">
-        <div className="grid gap-4 md:grid-cols-3">
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
           {data.benefits.map((benefit, index) => {
             const Icon = [Brain, Users, BadgeCheck][index] ?? Sparkles;
 
@@ -125,7 +125,7 @@ export function HomePageView({ data }: { data: HomePageData }) {
       <section className="section-frame space-y-12 py-4">
         {data.audienceSections.map((section) => (
           <div key={section.key} className="space-y-5">
-            <div className="flex items-end justify-between gap-4">
+            <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
               <div>
                 <p className="eyebrow">{section.key.toUpperCase()}</p>
                 <h2 className="mt-2 text-2xl font-semibold text-foreground">
@@ -144,7 +144,7 @@ export function HomePageView({ data }: { data: HomePageData }) {
               </Link>
             </div>
 
-            <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+            <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
               {section.courses.map((course) => (
                 <CourseCard key={course.id} course={course} />
               ))}
@@ -154,7 +154,7 @@ export function HomePageView({ data }: { data: HomePageData }) {
       </section>
 
       <section className="section-frame py-16">
-        <div className="flex items-end justify-between gap-4">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="eyebrow">{locale === "th" ? "Popular Right Now" : "Popular Right Now"}</p>
             <h2 className="mt-2 text-2xl font-semibold">
@@ -167,7 +167,7 @@ export function HomePageView({ data }: { data: HomePageData }) {
             </Button>
           </Link>
         </div>
-        <div className="mt-6 grid gap-5 md:grid-cols-3">
+        <div className="mt-6 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
           {data.featuredCourses.map((item) => (
             <div key={item.course.id} className="space-y-3">
               <p className="eyebrow">
@@ -179,7 +179,7 @@ export function HomePageView({ data }: { data: HomePageData }) {
         </div>
       </section>
 
-      <section className="section-frame grid gap-5 py-16 lg:grid-cols-2">
+      <section className="section-frame grid gap-5 py-16 xl:grid-cols-2">
         <div className="glass-panel rounded-lg p-6">
           <p className="eyebrow">{locale === "th" ? "Promotions" : "Promotions"}</p>
           <div className="mt-4 space-y-4">

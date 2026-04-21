@@ -3,7 +3,6 @@ import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "@/app/lib/AuthContext";
 import MainContainer from "@/components/custom/MainContainer";
-import { kanit } from "@/styles/font";
 import ChatWidget from "@/components/ai-chat/ChatWidget";
 import { cookies } from "next/headers";
 import { PreferenceProvider } from "@/components/learney/providers/PreferenceProvider";
@@ -32,7 +31,15 @@ export default async function RootLayout({
       data-scroll-behavior="smooth"
       className={`${kanit.variable} h-full antialiased font-sans ${theme === "dark" ? "dark" : ""}`}
     >
-      <body className={`${kanit.className} min-h-full flex flex-col`}>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700&display=swap"
+        />
+      </head>
+      <body className="min-h-full flex flex-col">
         <PreferenceProvider initialLocale={locale} initialTheme={theme}>
           <AuthProvider>
             <MainContainer>{children}</MainContainer>

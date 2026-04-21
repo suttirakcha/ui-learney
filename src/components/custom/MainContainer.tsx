@@ -26,7 +26,7 @@ export default function MainContainer({ children }: MainContainerProps) {
     <Fragment>
       <div className="flex min-h-screen flex-col">
         <Navbar />
-        <main className="mt-18 flex-1">{children}</main>
+        <main className="flex-1 pt-[124px] lg:pt-[72px]">{children}</main>
         {!isAdminPage ? <Footer /> : null}
       </div>
     </Fragment>

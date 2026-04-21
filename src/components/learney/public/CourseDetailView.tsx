@@ -90,14 +90,11 @@ export function CourseDetailView({ data }: { data: CourseDetailData }) {
                   </span>
                 ))}
               </div>
-              <h1 className="max-w-3xl text-4xl font-semibold text-foreground">
+              <h1 className="max-w-3xl text-3xl font-semibold text-foreground sm:text-4xl">
                 {pickLocalized(course.title, locale)}
               </h1>
-              <p className="max-w-2xl text-lg text-muted-foreground">
-                {pickLocalized(
-                  course.description ?? course.shortDescription,
-                  locale,
-                )}
+              <p className="max-w-2xl text-base text-muted-foreground sm:text-lg">
+                {pickLocalized(course.description ?? course.shortDescription, locale)}
               </p>
             </div>
 
@@ -212,7 +209,7 @@ export function CourseDetailView({ data }: { data: CourseDetailData }) {
         </div>
       </section>
 
-      <section className="section-frame grid gap-8 py-12 lg:grid-cols-[1fr_320px]">
+      <section className="section-frame grid gap-8 py-12 xl:grid-cols-[1fr_320px]">
         <div className="space-y-8">
           <div className="glass-panel rounded-lg p-6">
             <h2 className="text-2xl font-semibold text-foreground">
@@ -322,7 +319,7 @@ export function CourseDetailView({ data }: { data: CourseDetailData }) {
             <h2 className="text-2xl font-semibold text-foreground">
               {locale === "th" ? "Reviews" : "Reviews"}
             </h2>
-            <div className="mt-4 grid gap-4 md:grid-cols-2">
+            <div className="mt-4 grid gap-4 sm:grid-cols-2">
               {data.reviews.map((review) => (
                 <div
                   key={review.id}
@@ -412,7 +409,7 @@ export function CourseDetailView({ data }: { data: CourseDetailData }) {
             <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
-        <div className="mt-6 grid gap-5 md:grid-cols-3">
+        <div className="mt-6 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
           {data.relatedCourses.map((relatedCourse) => (
             <CourseCard key={relatedCourse.id} course={relatedCourse} />
           ))}

@@ -50,16 +50,16 @@ export function CourseCard({
               </span>
             ) : null}
           </div>
-          <h3 className="text-lg font-semibold text-foreground">
+          <h3 className="text-lg font-semibold leading-snug break-words text-foreground">
             {pickLocalized(course.title, locale)}
           </h3>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-sm leading-6 text-muted-foreground">
             {pickLocalized(course.shortDescription, locale)}
           </p>
         </div>
 
-        <div className="flex items-center justify-between gap-3 text-sm text-muted-foreground">
-          <span>{course.instructor.name}</span>
+        <div className="flex flex-wrap items-center justify-between gap-3 text-sm text-muted-foreground">
+          <span className="min-w-0 break-words">{course.instructor.name}</span>
           <span>{course.level}</span>
         </div>
 
@@ -74,7 +74,7 @@ export function CourseCard({
           </span>
         </div>
 
-        <div className="mt-auto flex items-end justify-between gap-3">
+        <div className="mt-auto flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div className="space-y-1">
             {course.discountPrice ? (
               <p className="text-sm text-muted-foreground line-through">
@@ -86,10 +86,9 @@ export function CourseCard({
             </p>
           </div>
 
-          <Link href={`/courses/${course.slug}`}>
-            <Button className="bg-primary text-primary-foreground">
-              {actionLabel ??
-                (locale === "th" ? "ดูรายละเอียด" : "View Details")}
+          <Link href={`/courses/${course.slug}`} className="w-full sm:w-auto">
+            <Button className="w-full bg-primary text-primary-foreground sm:w-auto">
+              {actionLabel ?? (locale === "th" ? "ดูรายละเอียด" : "View Details")}
             </Button>
           </Link>
         </div>

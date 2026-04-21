@@ -38,7 +38,7 @@ export function CommunityPageView({ data }: { data: CommunityData }) {
     <main className="section-frame space-y-8 py-12">
       <div className="soft-surface rounded-lg px-6 py-10">
         <p className="eyebrow">{locale === "th" ? "Public Read, Members Write" : "Public Read, Members Write"}</p>
-        <h1 className="mt-2 text-3xl font-semibold text-foreground">
+        <h1 className="mt-2 text-3xl font-semibold text-foreground sm:text-4xl">
           {locale === "th" ? "Learney Community" : "Learney Community"}
         </h1>
         <p className="mt-3 max-w-2xl text-muted-foreground">
@@ -46,7 +46,7 @@ export function CommunityPageView({ data }: { data: CommunityData }) {
             ? "ถามคำถาม แชร์ use case และอ่านบทสนทนาที่ช่วยให้เรียนต่อได้ลึกขึ้น"
             : "Ask questions, share use cases, and learn from thoughtful discussions."}
         </p>
-        <div className="mt-6 grid gap-4 sm:grid-cols-3">
+          <div className="mt-6 grid gap-4 sm:grid-cols-3">
           <div className="glass-panel rounded-lg p-4">
             <p className="text-sm text-muted-foreground">{locale === "th" ? "ทั้งหมด" : "Total"}</p>
             <p className="mt-2 text-2xl font-semibold">{data.highlights.totalThreads}</p>
@@ -78,7 +78,7 @@ export function CommunityPageView({ data }: { data: CommunityData }) {
         />
         <div className="mt-4 flex justify-end">
           <Button
-            className="bg-primary text-primary-foreground"
+            className="w-full bg-primary text-primary-foreground sm:w-auto"
             onClick={async () => {
               if (!requireLogin()) {
                 return;
@@ -128,9 +128,10 @@ export function CommunityPageView({ data }: { data: CommunityData }) {
                 </p>
               </div>
 
-              <Button
-                variant="ghost"
-                onClick={async () => {
+                <Button
+                  variant="ghost"
+                  className="w-full sm:w-auto"
+                  onClick={async () => {
                   if (!requireLogin()) {
                     return;
                   }
@@ -191,6 +192,7 @@ export function CommunityPageView({ data }: { data: CommunityData }) {
               <div className="flex justify-end">
                 <Button
                   variant="outline"
+                  className="w-full sm:w-auto"
                   onClick={async () => {
                     if (!requireLogin()) {
                       return;
