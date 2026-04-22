@@ -8,14 +8,17 @@ interface HomeShowcaseFloatingCardsProps {
 
 const SHOWCASE_FLOATING_CARDS = [
   {
-    text: "AI แนะนำคอร์สเฉพาะคุณ",
-    color: "from-pink-500 to-purple-500",
+    text: "แผนการเรียนเฉพาะตัว",
+    color: "#ff8bb8, #b399ff",
   },
   {
-    text: "คอร์สใหม่กว่า 1,000+",
-    color: "from-blue-500 to-indigo-500",
+    text: "AI-ready skills",
+    color: "#91c8ff, #8b9dff",
   },
-  { text: "ผู้เรียน 50,000+", color: "from-emerald-500 to-teal-500" },
+  {
+    text: "ค้นหาอาชีพที่ใช่",
+    color: "#8ae1cb, #7bd1ff",
+  },
 ];
 
 export function HomeShowcaseFloatingCards({

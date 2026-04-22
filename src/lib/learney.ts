@@ -43,6 +43,10 @@ export function roleLabel(role: string, locale: Locale) {
 }
 
 export const adminSections = [
+  {
+    slug: "home-showcase",
+    label: { th: "Home Showcase", en: "Home Showcase" },
+  },
   { slug: "courses", label: { th: "จัดการคอร์ส", en: "Manage Courses" } },
   {
     slug: "fixed-categories",

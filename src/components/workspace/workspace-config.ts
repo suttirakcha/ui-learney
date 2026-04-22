@@ -6,6 +6,7 @@ export const workspaceMenus: Record<
 > = {
   admin: [
     { key: "overview", label: "แดชบอร์ด", href: "/admin" },
+    { key: "home-showcase", label: "Home Showcase", href: "/admin/home-showcase" },
     { key: "courses", label: "จัดการคอร์ส", href: "/admin/courses" },
     { key: "video-previews", label: "วิดีโอพรีวิว", href: "/admin/video-previews" },
     { key: "course-approvals", label: "คอร์สรออนุมัติ", href: "/admin/course-approvals" },
@@ -47,4 +48,3 @@ export const workspaceMenus: Record<
     { key: "notifications", label: "การแจ้งเตือน", href: "/student/notifications" },
   ],
 };
-

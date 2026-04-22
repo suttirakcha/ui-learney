@@ -7,124 +7,28 @@ import { usePreference } from "@/components/learney/providers/PreferenceProvider
 import { pickLocalized } from "@/lib/learney";
 import { CourseCard } from "./CourseCard";
 import { Button } from "@/components/ui/button";
-import { HomeShowcase } from "@/modules/home-showcase/components/HomeShowcase";
+import { HomeHeroPremium } from "./HomeHeroPremium";
+import type { HomeShowcase } from "@/modules/home-showcase/types/home-showcase.type";
 
-export function HomePageView({ data }: { data: HomePageData }) {
+export function HomePageView({
+  data,
+  initialShowcase,
+  initialShowcaseState,
+}: {
+  data: HomePageData;
+  initialShowcase?: HomeShowcase | null;
+  initialShowcaseState?: "ready" | "empty" | "error";
+}) {
   const { locale } = usePreference();
 
   return (
     <main className="pb-20">
-      <section className="hero-surface relative overflow-hidden">
-        <div className="orb-pink pointer-events-none absolute -left-20 -top-28 h-72 w-72 rounded-full blur-3xl sm:h-96 sm:w-96" />
-        <div className="orb-purple pointer-events-none absolute bottom-[-8rem] left-[38%] h-72 w-72 rounded-full blur-3xl sm:h-[28rem] sm:w-[28rem]" />
-        <div className="orb-yellow pointer-events-none absolute -right-16 top-20 h-64 w-64 rounded-full blur-3xl sm:h-80 sm:w-80" />
-
-        <div className="section-frame relative grid min-h-[76vh] items-end gap-10 py-14 lg:grid-cols-[1.1fr_0.9fr] lg:py-20">
-          <div className="space-y-6 pb-6">
-            <p className="eyebrow">
-              {locale === "th"
-                ? "LEARNEY FOR THE AI ERA"
-                : "LEARNEY FOR THE AI ERA"}
-            </p>
-            <div className="space-y-4">
-              <h1 className="balance-text max-w-4xl text-5xl sm:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl font-black leading-[1.05] bg-gradient-to-r from-primary via-foreground/95 to-secondary bg-clip-text text-transparent drop-shadow-3xl [text-shadow:0_0_20px_rgba(99,102,241,0.5)] animate-pulse-hero transition-all duration-1000 ease-out hover:scale-[1.03] hover:drop-shadow-4xl">
-                {pickLocalized(data.hero.title, locale)}
-              </h1>
-              <p className="max-w-3xl text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-semibold text-foreground/95 leading-relaxed mt-8 backdrop-blur-sm bg-white/20 dark:bg-black/20 rounded-2xl p-6 border border-white/20 shadow-2xl transition-all duration-1000 ease-out delay-500 hover:bg-white/30 dark:hover:bg-black/30">
-                {pickLocalized(data.hero.subtitle, locale)}
-              </p>
-            </div>
-
-            <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-              {data.hero.ctas.map((cta) => (
-                <Link
-                  key={cta.href}
-                  href={cta.href}
-                  className="w-full sm:w-auto"
-                >
-                  <Button
-                    size="lg"
-                    variant={cta.href === "/courses" ? "default" : "outline"}
-                    className={`w-full sm:w-auto ${
-                      cta.href === "/courses"
-                        ? ""
-                        : "border-white/55 bg-white/70 hover:bg-white/85 dark:border-white/10 dark:bg-white/10 dark:hover:bg-white/16"
-                    }`}
-                  >
-                    {pickLocalized(cta.label, locale)}
-                  </Button>
-                </Link>
-              ))}
-            </div>
-
-            <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
-              <div className="glass-panel rounded-[1.5rem] p-4">
-                <p className="text-sm text-muted-foreground">
-                  {locale === "th" ? "ผู้เรียน" : "Learners"}
-                </p>
-                <p className="mt-2 text-2xl font-semibold">
-                  {data.socialProof.students}
-                </p>
-              </div>
-              <div className="glass-panel rounded-[1.5rem] p-4">
-                <p className="text-sm text-muted-foreground">
-                  {locale === "th" ? "ผู้สอน" : "Instructors"}
-                </p>
-                <p className="mt-2 text-2xl font-semibold">
-                  {data.socialProof.instructors}
-                </p>
-              </div>
-              <div className="glass-panel rounded-[1.5rem] p-4">
-                <p className="text-sm text-muted-foreground">
-                  {locale === "th" ? "คอร์ส" : "Courses"}
-                </p>
-                <p className="mt-2 text-2xl font-semibold">
-                  {data.socialProof.courses}
-                </p>
-              </div>
-              <div className="glass-panel rounded-[1.5rem] p-4">
-                <p className="text-sm text-muted-foreground">
-                  {locale === "th" ? "เรตติ้ง" : "Rating"}
-                </p>
-                <p className="mt-2 text-2xl font-semibold">
-                  {data.socialProof.rating}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="grid gap-4 sm:grid-cols-2">
-            {data.categories.slice(0, 4).map((category) => (
-              <Link
-                key={category.slug}
-                href={`/courses?category=${category.slug}`}
-                className="card-hover rounded-[1.5rem] p-5 text-foreground transition duration-300 hover:-translate-y-1.5"
-              >
-                <div className="space-y-3">
-                  <div
-                    className="h-11 w-11 rounded-2xl shadow-sm"
-                    style={{
-                      background: `linear-gradient(135deg, ${category.color ?? "#ef8ea8"} 0%, color-mix(in srgb, ${category.color ?? "#ef8ea8"} 38%, #ffffff 62%) 100%)`,
-                    }}
-                  />
-                  <div>
-                    <h2 className="text-lg font-semibold">
-                      {pickLocalized(category.name, locale)}
-                    </h2>
-                    <p className="mt-1 text-sm text-muted-foreground">
-                      {locale === "th"
-                        ? "เข้าสู่คอร์สที่คัดมาแล้วในหมวดนี้"
-                        : "Jump into curated courses in this category."}
-                    </p>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <HomeShowcase />
+      <HomeHeroPremium
+        hero={data.hero}
+        socialProof={data.socialProof}
+        initialShowcase={initialShowcase}
+        initialShowcaseState={initialShowcaseState}
+      />
 
       <section className="section-frame py-16">
         <div className="section-surface-alt rounded-[2rem] p-6 sm:p-8">

@@ -1,111 +1,117 @@
 "use client";
 
-import Link from "next/link";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useState } from "react";
-import { useHomeShowcase } from "../hooks/useHomeShowcase";
+import { AlertCircle, Sparkles } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
+import type { HomeShowcase as HomeShowcaseBanner } from "../types/home-showcase.type";
 import { HomeShowcaseSkeleton } from "./HomeShowcaseSkeleton";
 import { HomeShowcaseMedia } from "./HomeShowcaseMedia";
 import { HomeShowcaseFloatingCards } from "./HomeShowcaseFloatingCards";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 
-export function HomeShowcase() {
-  const [queryClient] = useState(
-    () =>
-      new QueryClient({
-        defaultOptions: {
-          queries: {
-            staleTime: 1000 * 60 * 5,
-            retry: 1,
-          },
-        },
-      }),
-  );
+type HomeShowcaseState = "loading" | "ready" | "empty" | "error";
+
+interface HomeShowcaseProps {
+  banner?: HomeShowcaseBanner | null;
+  state?: HomeShowcaseState;
+  className?: string;
+}
+
+function HomeShowcaseFallback({
+  state,
+  title,
+}: {
+  state: Exclude<HomeShowcaseState, "ready" | "loading">;
+  title?: string;
+}) {
+  const isError = state === "error";
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <HomeShowcaseContent />
-    </QueryClientProvider>
+    <div className="relative flex min-h-[320px] flex-col justify-between rounded-[1.75rem] border border-white/60 bg-[radial-gradient(circle_at_top_right,rgba(255,198,223,0.55),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(169,208,255,0.55),transparent_30%),linear-gradient(135deg,rgba(255,255,255,0.92),rgba(249,242,255,0.9),rgba(236,248,255,0.94))] p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.7)] dark:border-white/10 dark:bg-[radial-gradient(circle_at_top_right,rgba(255,143,188,0.16),transparent_28%),radial-gradient(circle_at_bottom_left,rgba(122,191,255,0.16),transparent_30%),linear-gradient(135deg,rgba(33,25,52,0.92),rgba(34,25,56,0.94),rgba(22,37,61,0.9))]">
+      <div className="absolute left-6 top-5 h-24 w-24 rounded-full bg-white/45 blur-3xl dark:bg-white/8" />
+      <div className="absolute bottom-5 right-5 h-24 w-24 rounded-full bg-pink-200/60 blur-3xl dark:bg-pink-400/10" />
+      <div className="relative flex items-center gap-3">
+        <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-white/70 bg-white/80 text-rose-500 shadow-sm dark:border-white/10 dark:bg-white/10">
+          {isError ? <AlertCircle className="h-5 w-5" /> : <Sparkles className="h-5 w-5" />}
+        </div>
+        <div>
+          <p className="text-xs uppercase tracking-[0.22em] text-muted-foreground">
+            {isError ? "Showcase error" : "Showcase standby"}
+          </p>
+          <p className="text-base font-semibold text-foreground">
+            {title || "Learney premium showcase"}
+          </p>
+        </div>
+      </div>
+
+      <div className="relative mt-8 space-y-3">
+        <Badge
+          variant="secondary"
+          className="inline-flex rounded-full border border-white/70 bg-white/80 px-3 py-1 text-[0.7rem] font-medium tracking-[0.16em] text-foreground/80 uppercase dark:border-white/10 dark:bg-white/10"
+        >
+          {isError ? "Temporarily unavailable" : "No active showcase"}
+        </Badge>
+        <p className="max-w-md text-sm leading-7 text-foreground/75">
+          {isError
+            ? "The media panel could not be loaded right now, so the Home page falls back to a safe premium gradient instead of breaking."
+            : "Activate a showcase from the admin panel to replace this fallback box with a live promotional image and CTA content."}
+        </p>
+      </div>
+
+      <div className="relative mt-6 grid gap-3 sm:grid-cols-3">
+        {[
+          "Pastel gradient",
+          "Glass surface",
+          isError ? "Error-safe fallback" : "Ready for activation",
+        ].map((item) => (
+          <div
+            key={item}
+            className="rounded-[1.25rem] border border-white/65 bg-white/75 px-4 py-3 text-sm text-foreground/75 shadow-sm dark:border-white/10 dark:bg-white/6"
+          >
+            {item}
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
 
-function HomeShowcaseContent() {
-  const { data: banner, isLoading, error } = useHomeShowcase();
+export function HomeShowcase({
+  banner,
+  state = banner ? "ready" : "empty",
+  className,
+}: HomeShowcaseProps) {
+  if (state === "loading") {
+    return <HomeShowcaseSkeleton className={className} />;
+  }
 
-  if (error || !banner) return null;
-  if (isLoading) return <HomeShowcaseSkeleton />;
-
-  const isLeftMedia = banner.mediaPosition === "left";
+  const readyBanner = state === "ready" ? banner ?? null : null;
 
   return (
-    <section className="section-frame py-16">
-      <div className="group relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-purple-500/20 via-pink-500/20 to-blue-500/20 p-8 md:p-12 backdrop-blur-xl shadow-2xl transition-all duration-1000 hover:shadow-3xl">
-        {banner.enableFloating && <HomeShowcaseFloatingCards />}
-
-        <div className="relative z-10 grid gap-8 lg:grid-cols-2 lg:items-center">
-          {/* Text Content */}
-          <div
-            className={`space-y-6 ${isLeftMedia ? "order-2 lg:order-1" : ""}`}
-          >
-            {banner.badge && (
-              <Badge
-                variant="secondary"
-                className="text-xs px-3 py-1 bg-white/20 backdrop-blur-sm border-white/30"
-              >
-                {banner.badge}
-              </Badge>
-            )}
-
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-black bg-gradient-to-r from-white to-primary bg-clip-text text-transparent drop-shadow-lg">
-              {banner.title}
-            </h2>
-
-            {banner.subtitle && (
-              <p className="text-xl md:text-2xl text-foreground/90 leading-relaxed max-w-lg">
-                {banner.subtitle}
-              </p>
-            )}
-
-            {banner.description && (
-              <p className="text-lg text-foreground/80 max-w-md">
-                {banner.description}
-              </p>
-            )}
-
-            <div className="flex flex-col sm:flex-row gap-4">
-              {banner.primaryText && banner.primaryHref && (
-                <Link href={banner.primaryHref}>
-                  <Button
-                    size="lg"
-                    className="group text-lg px-8 font-semibold shadow-xl hover:shadow-2xl"
-                  >
-                    {banner.primaryText}
-                  </Button>
-                </Link>
-              )}
-              {banner.secondaryText && banner.secondaryHref && (
-                <Link href={banner.secondaryHref}>
-                  <Button
-                    variant="outline"
-                    size="lg"
-                    className="text-lg px-8 border-white/50 bg-white/20 backdrop-blur-sm hover:bg-white/30"
-                  >
-                    {banner.secondaryText}
-                  </Button>
-                </Link>
-              )}
-            </div>
-          </div>
-
-          {/* Media */}
-          <div
-            className={`relative ${isLeftMedia ? "order-1 lg:order-2" : ""}`}
-          >
-            <HomeShowcaseMedia banner={banner} />
-          </div>
-        </div>
+    <div
+      className={cn(
+        "group relative isolate overflow-hidden rounded-[2rem] border border-white/60 bg-white/50 p-4 shadow-[0_30px_80px_rgba(155,118,190,0.18)] backdrop-blur-xl dark:border-white/10 dark:bg-white/5",
+        className,
+      )}
+    >
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,180,214,0.45),transparent_30%),radial-gradient(circle_at_bottom_right,rgba(158,208,255,0.4),transparent_32%)]" />
+      {readyBanner?.enableFloating ? <HomeShowcaseFloatingCards /> : null}
+      <div
+        className={cn(
+          "relative",
+          readyBanner?.enableAnimation
+            ? "transition duration-500 ease-out group-hover:-translate-y-1 group-hover:scale-[1.01]"
+            : "",
+        )}
+      >
+        {readyBanner ? (
+          <HomeShowcaseMedia banner={readyBanner} />
+        ) : (
+          <HomeShowcaseFallback
+            state={state === "error" ? "error" : "empty"}
+            title={banner?.title}
+          />
+        )}
       </div>
-    </section>
+    </div>
   );
 }
