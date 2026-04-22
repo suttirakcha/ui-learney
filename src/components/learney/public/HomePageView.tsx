@@ -7,6 +7,7 @@ import { usePreference } from "@/components/learney/providers/PreferenceProvider
 import { pickLocalized } from "@/lib/learney";
 import { CourseCard } from "./CourseCard";
 import { Button } from "@/components/ui/button";
+import { HomeShowcase } from "@/modules/home-showcase/components/HomeShowcase";
 
 export function HomePageView({ data }: { data: HomePageData }) {
   const { locale } = usePreference();
@@ -21,20 +22,26 @@ export function HomePageView({ data }: { data: HomePageData }) {
         <div className="section-frame relative grid min-h-[76vh] items-end gap-10 py-14 lg:grid-cols-[1.1fr_0.9fr] lg:py-20">
           <div className="space-y-6 pb-6">
             <p className="eyebrow">
-              {locale === "th" ? "LEARNEY FOR THE AI ERA" : "LEARNEY FOR THE AI ERA"}
+              {locale === "th"
+                ? "LEARNEY FOR THE AI ERA"
+                : "LEARNEY FOR THE AI ERA"}
             </p>
             <div className="space-y-4">
-              <h1 className="balance-text max-w-3xl text-3xl font-semibold leading-tight text-foreground sm:text-4xl lg:text-5xl">
+              <h1 className="balance-text max-w-4xl text-5xl sm:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl font-black leading-[1.05] bg-gradient-to-r from-primary via-foreground/95 to-secondary bg-clip-text text-transparent drop-shadow-3xl [text-shadow:0_0_20px_rgba(99,102,241,0.5)] animate-pulse-hero transition-all duration-1000 ease-out hover:scale-[1.03] hover:drop-shadow-4xl">
                 {pickLocalized(data.hero.title, locale)}
               </h1>
-              <p className="max-w-2xl text-base text-muted-foreground sm:text-lg">
+              <p className="max-w-3xl text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-semibold text-foreground/95 leading-relaxed mt-8 backdrop-blur-sm bg-white/20 dark:bg-black/20 rounded-2xl p-6 border border-white/20 shadow-2xl transition-all duration-1000 ease-out delay-500 hover:bg-white/30 dark:hover:bg-black/30">
                 {pickLocalized(data.hero.subtitle, locale)}
               </p>
             </div>
 
             <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               {data.hero.ctas.map((cta) => (
-                <Link key={cta.href} href={cta.href} className="w-full sm:w-auto">
+                <Link
+                  key={cta.href}
+                  href={cta.href}
+                  className="w-full sm:w-auto"
+                >
                   <Button
                     size="lg"
                     variant={cta.href === "/courses" ? "default" : "outline"}
@@ -55,25 +62,33 @@ export function HomePageView({ data }: { data: HomePageData }) {
                 <p className="text-sm text-muted-foreground">
                   {locale === "th" ? "ผู้เรียน" : "Learners"}
                 </p>
-                <p className="mt-2 text-2xl font-semibold">{data.socialProof.students}</p>
+                <p className="mt-2 text-2xl font-semibold">
+                  {data.socialProof.students}
+                </p>
               </div>
               <div className="glass-panel rounded-[1.5rem] p-4">
                 <p className="text-sm text-muted-foreground">
                   {locale === "th" ? "ผู้สอน" : "Instructors"}
                 </p>
-                <p className="mt-2 text-2xl font-semibold">{data.socialProof.instructors}</p>
+                <p className="mt-2 text-2xl font-semibold">
+                  {data.socialProof.instructors}
+                </p>
               </div>
               <div className="glass-panel rounded-[1.5rem] p-4">
                 <p className="text-sm text-muted-foreground">
                   {locale === "th" ? "คอร์ส" : "Courses"}
                 </p>
-                <p className="mt-2 text-2xl font-semibold">{data.socialProof.courses}</p>
+                <p className="mt-2 text-2xl font-semibold">
+                  {data.socialProof.courses}
+                </p>
               </div>
               <div className="glass-panel rounded-[1.5rem] p-4">
                 <p className="text-sm text-muted-foreground">
                   {locale === "th" ? "เรตติ้ง" : "Rating"}
                 </p>
-                <p className="mt-2 text-2xl font-semibold">{data.socialProof.rating}</p>
+                <p className="mt-2 text-2xl font-semibold">
+                  {data.socialProof.rating}
+                </p>
               </div>
             </div>
           </div>
@@ -109,6 +124,8 @@ export function HomePageView({ data }: { data: HomePageData }) {
         </div>
       </section>
 
+      <HomeShowcase />
+
       <section className="section-frame py-16">
         <div className="section-surface-alt rounded-[2rem] p-6 sm:p-8">
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
@@ -130,7 +147,10 @@ export function HomePageView({ data }: { data: HomePageData }) {
 
       <section className="section-frame space-y-12 py-4">
         {data.audienceSections.map((section) => (
-          <div key={section.key} className="section-surface rounded-[2rem] p-6 sm:p-8">
+          <div
+            key={section.key}
+            className="section-surface rounded-[2rem] p-6 sm:p-8"
+          >
             <div className="space-y-5">
               <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
                 <div>
@@ -165,9 +185,13 @@ export function HomePageView({ data }: { data: HomePageData }) {
         <div className="highlight-surface rounded-[2rem] p-6 sm:p-8">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <p className="eyebrow">{locale === "th" ? "Popular Right Now" : "Popular Right Now"}</p>
+              <p className="eyebrow">
+                {locale === "th" ? "Popular Right Now" : "Popular Right Now"}
+              </p>
               <h2 className="mt-2 text-2xl font-semibold">
-                {locale === "th" ? "คอร์สจัดอันดับโดยแอดมิน" : "Admin-ranked popular courses"}
+                {locale === "th"
+                  ? "คอร์สยอดนิยม"
+                  : "Admin-ranked popular courses"}
               </h2>
             </div>
             <Link href="/courses?sort=most-popular">
@@ -192,7 +216,9 @@ export function HomePageView({ data }: { data: HomePageData }) {
       <section className="section-frame grid gap-5 py-16 xl:grid-cols-2">
         <div className="psychology-surface rounded-[2rem] p-6">
           <div className="glass-panel rounded-[1.5rem] p-6">
-            <p className="eyebrow">{locale === "th" ? "Promotions" : "Promotions"}</p>
+            <p className="eyebrow">
+              {locale === "th" ? "Promotions" : "Promotions"}
+            </p>
             <div className="mt-4 space-y-4">
               {data.promotions.slice(0, 3).map((promotion) => (
                 <Link
@@ -232,7 +258,9 @@ export function HomePageView({ data }: { data: HomePageData }) {
                       {"★".repeat(review.rating)}
                     </p>
                   </div>
-                  <p className="mt-3 text-sm text-muted-foreground">{review.content}</p>
+                  <p className="mt-3 text-sm text-muted-foreground">
+                    {review.content}
+                  </p>
                 </div>
               ))}
             </div>
