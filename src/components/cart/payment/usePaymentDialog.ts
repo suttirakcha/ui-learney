@@ -1,5 +1,6 @@
 "use client";
 
+import { useAuth } from "@/app/lib/AuthContext";
 import {
   confirmMockPayment,
   createMockPaymentSession,
@@ -9,19 +10,18 @@ import {
   getSessionStatusMessage,
   toPaymentNumber,
 } from "@/lib/payment/mock-payment";
-import { Cart } from "@/types/cart/cart";
-import { Course } from "@/types/course";
+import { Cart, CartCourse } from "@/types/cart/cart";
 import {
   MockPaymentDetailResponse,
   MockPaymentSessionResponse,
 } from "@/types/payment/mock-payment";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { startTransition, useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 type UsePaymentDialogParams = {
   cart: Cart;
-  courses: Course[];
+  courses: CartCourse[];
 };
 
 type PaymentNoticeTone = "info" | "success" | "error";
@@ -38,6 +38,7 @@ export function usePaymentDialog({
   cart,
   courses,
 }: UsePaymentDialogParams) {
+  const { user, setUser } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -95,6 +96,29 @@ export function usePaymentDialog({
     return detail;
   }, []);
 
+  const syncLocalCourseAccess = useCallback(() => {
+    if (!user) {
+      return;
+    }
+
+    const nextCourseIds = new Set([
+      ...(user.enrolledCourses ?? []).map((course) => course.courseId),
+      ...courses.map((course) => course.id),
+    ]);
+    const nextUser = {
+      ...user,
+      enrolledCourses: Array.from(nextCourseIds).map((courseId) => ({
+        courseId,
+      })),
+    };
+
+    if (typeof window !== "undefined") {
+      localStorage.setItem("user", JSON.stringify(nextUser));
+    }
+
+    setUser(nextUser);
+  }, [courses, setUser, user]);
+
   const handleCreateSession = useCallback(async () => {
     setIsCreatingSession(true);
     setErrorMessage(null);
@@ -144,12 +168,15 @@ export function usePaymentDialog({
     setErrorMessage(null);
 
     try {
-      await confirmMockPayment(session.paymentId);
-      toast.success("บันทึกการชำระเงินจำลองเรียบร้อยแล้ว");
-      updateDialogState(false);
-      startTransition(() => {
-        router.refresh();
-      });
+      const result = await confirmMockPayment(session.paymentId);
+      syncLocalCourseAccess();
+      toast.success("ชำระเงินสำเร็จและปลดล็อกคอร์สเรียบร้อยแล้ว");
+      resetDialogState();
+      router.replace(
+        `/payment/success?paymentId=${encodeURIComponent(
+          session.paymentId,
+        )}&enrolled=${result.enrolledCourseCount}`,
+      );
     } catch (error) {
       const message = getErrorMessage(error);
       setErrorMessage(message);

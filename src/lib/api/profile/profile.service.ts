@@ -16,6 +16,7 @@ type InstructorCourseApi = {
   createdAt: string;
   price: number | string;
   reviews: Array<{ rating: number }>;
+  enrolledCourses?: Array<{ id: string }>;
   cartItems: Array<{
     cart: {
       payment: {
@@ -69,9 +70,10 @@ export async function getInstructorCourses(): Promise<InstructorCourseView[]> {
   );
 
   return courses.map((course) => {
-    const successfulSales = course.cartItems.filter(
-      (item) => item.cart.payment?.status === "SUCCESS",
-    ).length;
+    const successfulSales =
+      course.enrolledCourses?.length ??
+      course.cartItems.filter((item) => item.cart.payment?.status === "SUCCESS")
+        .length;
     const ratingCount = course.reviews.length;
     const rating =
       ratingCount > 0

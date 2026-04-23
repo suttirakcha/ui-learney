@@ -16,9 +16,9 @@ export default function PromptPayOption() {
             <p className="text-[17px] font-semibold text-foreground">
               QR Code (PromptPay)
             </p>
-            <p className="text-muted-foreground text-sm">
+            {/* <p className="text-muted-foreground text-sm">
               ชำระเงินแบบจำลองเพื่อบันทึกข้อมูลเข้า dashboard
-            </p>
+            </p> */}
           </div>
         </div>
       </div>

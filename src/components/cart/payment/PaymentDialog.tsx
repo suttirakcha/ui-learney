@@ -8,8 +8,7 @@ import {
   DialogDescription,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Cart } from "@/types/cart/cart";
-import { Course } from "@/types/course";
+import { Cart, CartCourse } from "@/types/cart/cart";
 import MockQrPanel from "./MockQrPanel";
 import PaymentStatusNotice from "./PaymentStatusNotice";
 import PaymentSummary from "./PaymentSummary";
@@ -18,7 +17,7 @@ import { usePaymentDialog } from "./usePaymentDialog";
 
 interface PaymentDialogProps {
   cart: Cart;
-  courses: Course[];
+  courses: CartCourse[];
 }
 
 const confirmButtonClassName =
@@ -101,8 +100,7 @@ export default function PaymentDialog({
             </Button>
 
             <p className="text-muted-foreground text-center text-xs">
-              การชำระเงินนี้เป็นโหมดจำลองสำหรับเดโม และจะบันทึกข้อมูลเข้า
-              dashboard เท่านั้น
+              โหมดจำลองนี้ใช้ทดสอบ flow การชำระเงินจริงทั้งระบบ และจะปลดล็อกคอร์สให้ทันทีหลังชำระสำเร็จ
             </p>
           </div>
         </DialogContent>
