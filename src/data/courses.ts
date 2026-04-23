@@ -1,3 +1,5 @@
+import { getMockCourseImageUrl } from "./course-image-map";
+
 export interface Course {
   id: string;
   price: string;
@@ -22,7 +24,11 @@ export const coursesData: Course[] = [
     students: 12543,
     duration: "42 ชั่วโมง",
     level: "ระดับเริ่มต้น",
-    image: "https://res.cloudinary.com/dxggc6pvz/image/upload/v1774557163/red_ovxuru.jpg",
+    image: getMockCourseImageUrl({
+      id: "1",
+      title: "ปลดล็อกสกิลคณิต เข้าใจง่าย ไม่ปวดหัว",
+      category: "คณิตศาสตร์",
+    }),
   },
   {
     id: "2",
@@ -34,7 +40,11 @@ export const coursesData: Course[] = [
     students: 8932,
     duration: "28 ชั่วโมง",
     level: "ระดับขั้นสูง",
-    image: "https://res.cloudinary.com/dxggc6pvz/image/upload/v1774557869/pink1_cnqvpv.jpg",
+    image: getMockCourseImageUrl({
+      id: "2",
+      title: "อัปสกิล Frontend ด้วย Advanced React & Redux",
+      category: "การพัฒนาซอฟต์แวร์",
+    }),
   },
   {
     id: "3",
@@ -46,7 +56,11 @@ export const coursesData: Course[] = [
     students: 15672,
     duration: "35 ชั่วโมง",
     level: "ระดับกลาง",
-    image: "https://res.cloudinary.com/dxggc6pvz/image/upload/v1774557162/green_pyjvnz.jpg",
+    image: getMockCourseImageUrl({
+      id: "3",
+      title: "เจาะลึกการออกแบบ UI/UX สู่มืออาชีพ (สอนใช้ Figma)",
+      category: "การออกแบบ",
+    }),
   },
   {
     id: "4",
@@ -58,7 +72,11 @@ export const coursesData: Course[] = [
     students: 10234,
     duration: "45 ชั่วโมง",
     level: "ระดับเริ่มต้น",
-    image: "https://res.cloudinary.com/dxggc6pvz/image/upload/v1774557161/blue_wapfkn.jpg",
+    image: getMockCourseImageUrl({
+      id: "4",
+      title: "ภาษาอังกฤษเพื่อการเดินทางและท่องเที่ยว",
+      category: "ภาษา",
+    }),
   },
   {
     id: "5",
@@ -70,7 +88,11 @@ export const coursesData: Course[] = [
     students: 7320,
     duration: "32 ชั่วโมง",
     level: "ระดับกลาง",
-    image: "https://res.cloudinary.com/dxggc6pvz/image/upload/v1774557869/pink1_cnqvpv.jpg",
+    image: getMockCourseImageUrl({
+      id: "5",
+      title: "Node.js & Express ตั้งแต่ศูนย์สู่ Production",
+      category: "การพัฒนาซอฟต์แวร์",
+    }),
   },
   {
     id: "6",
@@ -82,7 +104,11 @@ export const coursesData: Course[] = [
     students: 21000,
     duration: "60 ชั่วโมง",
     level: "ระดับกลาง",
-    image: "https://res.cloudinary.com/dxggc6pvz/image/upload/v1774557163/red_ovxuru.jpg",
+    image: getMockCourseImageUrl({
+      id: "6",
+      title: "Python สำหรับ AI, Data Science และ Machine Learning",
+      category: "AI & Data Science",
+    }),
   },
   {
     id: "9",
@@ -94,7 +120,11 @@ export const coursesData: Course[] = [
     students: 18500,
     duration: "24 ชั่วโมง",
     level: "ระดับเริ่มต้น",
-    image: "https://res.cloudinary.com/dxggc6pvz/image/upload/v1774557163/red_ovxuru.jpg",
+    image: getMockCourseImageUrl({
+      id: "9",
+      title: "ChatGPT & AI Tools สำหรับนักพัฒนา",
+      category: "AI & Data Science",
+    }),
   },
   {
     id: "10",
@@ -106,7 +136,11 @@ export const coursesData: Course[] = [
     students: 9200,
     duration: "38 ชั่วโมง",
     level: "ระดับขั้นสูง",
-    image: "https://res.cloudinary.com/dxggc6pvz/image/upload/v1774557869/pink1_cnqvpv.jpg",
+    image: getMockCourseImageUrl({
+      id: "10",
+      title: "สร้าง AI Chatbot ด้วย LangChain และ OpenAI API",
+      category: "AI & Data Science",
+    }),
   },
   {
     id: "7",
@@ -118,7 +152,11 @@ export const coursesData: Course[] = [
     students: 9100,
     duration: "20 ชั่วโมง",
     level: "ระดับเริ่มต้น",
-    image: "https://res.cloudinary.com/dxggc6pvz/image/upload/v1774557162/green_pyjvnz.jpg",
+    image: getMockCourseImageUrl({
+      id: "7",
+      title: "Graphic Design ด้วย Adobe Illustrator",
+      category: "การออกแบบ",
+    }),
   },
   {
     id: "8",
@@ -130,6 +168,10 @@ export const coursesData: Course[] = [
     students: 13400,
     duration: "50 ชั่วโมง",
     level: "ระดับเริ่มต้น",
-    image: "https://res.cloudinary.com/dxggc6pvz/image/upload/v1774557161/blue_wapfkn.jpg",
+    image: getMockCourseImageUrl({
+      id: "8",
+      title: "ภาษาญี่ปุ่นสำหรับผู้เริ่มต้น N5-N4",
+      category: "ภาษา",
+    }),
   },
 ];

@@ -33,6 +33,9 @@ export function CourseDetailView({ data }: { data: CourseDetailData }) {
   const router = useRouter();
   const { course } = data;
   const promotion = course.promotion ?? null;
+  const isEnrolled = Boolean(
+    user?.enrolledCourses?.some((item) => item.courseId === course.id),
+  );
 
   const handleBuyNow = async () => {
     if (!user) {
@@ -40,14 +43,23 @@ export function CourseDetailView({ data }: { data: CourseDetailData }) {
       return;
     }
 
+    if (isEnrolled) {
+      router.push("/dashboard");
+      return;
+    }
+
     try {
-      await addItemToCart(course.id);
-      router.push("/checkout");
+      const result = await addItemToCart(course.id);
+      toast.success(result.message);
+      router.push("/cart?payment=open");
     } catch (error) {
-      console.error(error);
-      toast.error(
-        locale === "th" ? "เพิ่มคอร์สไม่สำเร็จ" : "Unable to add course",
-      );
+      const message =
+        error instanceof Error
+          ? error.message
+          : locale === "th"
+            ? "เพิ่มคอร์สไม่สำเร็จ"
+            : "Unable to add course";
+      toast.error(message);
     }
   };
 
@@ -155,7 +167,13 @@ export function CourseDetailView({ data }: { data: CourseDetailData }) {
                 className="bg-primary text-primary-foreground"
                 onClick={() => void handleBuyNow()}
               >
-                {locale === "th" ? "Buy Now" : "Buy Now"}
+                {isEnrolled
+                  ? locale === "th"
+                    ? "ไปที่แดชบอร์ดการเรียน"
+                    : "Go to Dashboard"
+                  : locale === "th"
+                    ? "ซื้อและชำระเงิน"
+                    : "Buy Now"}
               </Button>
               <Button
                 size="lg"
