@@ -20,6 +20,7 @@ export default function CartItem({ course }: CartItemProps) {
     try {
       const res = await deleteItemFromCart(courseId);
       toast.success(res.message);
+      window.dispatchEvent(new Event("cart-updated"));
       revalidateCart();
     } catch (error) {
       console.error(error);

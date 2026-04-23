@@ -24,10 +24,7 @@ interface PaymentDialogProps {
 const confirmButtonClassName =
   "h-12 w-full rounded-[14px] bg-primary text-primary-foreground hover:bg-primary/90";
 
-export default function PaymentDialog({
-  cart,
-  courses,
-}: PaymentDialogProps) {
+export default function PaymentDialog({ cart, courses }: PaymentDialogProps) {
   const {
     amount,
     handleConfirmPayment,
@@ -52,7 +49,7 @@ export default function PaymentDialog({
       </LnButton>
 
       <Dialog open={isOpen} onOpenChange={updateDialogState}>
-        <DialogContent className="max-w-[calc(100%-2rem)] gap-0 overflow-hidden rounded-[24px] border border-gray-200 p-0 shadow-[0_20px_60px_rgba(15,23,42,0.18)] sm:max-w-[560px]">
+        <DialogContent className="max-w-[calc(100%-2rem)] gap-0 overflow-auto h-[90vh] rounded-[24px] border border-gray-200 p-0 shadow-[0_20px_60px_rgba(15,23,42,0.18)] sm:max-w-[560px]">
           <div className="space-y-5 bg-white p-5 sm:p-6">
             <div className="sr-only">
               <DialogTitle>ชำระเงิน</DialogTitle>
@@ -77,7 +74,9 @@ export default function PaymentDialog({
                 disabled={isCreatingSession || isConfirming}
                 onClick={handleCreateSession}
               >
-                {isCreatingSession ? "กำลังสร้าง QR จำลอง..." : "สร้าง QR จำลอง"}
+                {isCreatingSession
+                  ? "กำลังสร้าง QR จำลอง..."
+                  : "สร้าง QR จำลอง"}
               </Button>
             ) : (
               <button

@@ -38,6 +38,7 @@ export default function CourseDetailsPage({ course }: CourseDetailsPageProps) {
     try {
       const res = await addItemToCart(courseId);
       toast.success(res.message);
+      window.dispatchEvent(new Event("cart-updated"));
     } catch (error) {
       console.error(error);
     }

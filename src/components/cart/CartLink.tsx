@@ -10,7 +10,7 @@ export default function CartLink() {
   const [carts, setCarts] = useState<Cart[] | null>(null);
 
   useEffect(() => {
-    const run = async () => {
+    const fetchCart = async () => {
       try {
         const currentCart = await getCurrentCart();
         setCarts(currentCart.courses);
@@ -18,7 +18,11 @@ export default function CartLink() {
         console.error(error);
       }
     };
-    run();
+
+    fetchCart();
+
+    window.addEventListener("cart-updated", fetchCart);
+    return () => window.removeEventListener("cart-updated", fetchCart);
   }, []);
 
   return (
