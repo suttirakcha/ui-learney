@@ -411,6 +411,15 @@
   input[type="submit"]:not(:disabled) {
     @apply cursor-pointer;
   }
+
+  .loading-circle {
+    @apply w-5 h-5 rounded-full;
+    background-color: var(--seasonal-accent);
+  }
+
+  .anim-loading {
+    animation: loading-anim 1.2s infinite;
+  }
 }
 
 @layer utilities {
@@ -588,4 +597,19 @@
 
 .animate-fadeIn {
   animation: fadeIn 0.45s ease-out both;
+}
+
+@keyframes loading-anim {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(0.5);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
